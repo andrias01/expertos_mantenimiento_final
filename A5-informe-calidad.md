@@ -268,3 +268,11 @@ decisión de tratamiento.
 ---
 
 [Guía del rol](GUIA-TRABAJO-RNF.md) · [A1 Catálogo](A1-catalogo-rnf.md) · [A2 Matriz de impacto](A2-matriz-impacto-calidad.md) · [A3 Criterios](A3-criterios-verificacion.md) · [A4 Hallazgos](A4-hallazgos-rnf.md)
+
+---
+
+## Addendum de validación integral · José · 15-nov-2026
+
+Este addendum **no reemplaza ni firma la declaración de cierre** de la entrega anterior. Se revisó la aplicación desplegada con los tres roles, se registraron rutas y fallos visibles, y se inspeccionó el código local sin modificarlo. La matriz de 23 criterios en [resumen-ejecutivo](evidencias-rnf/jose-validacion-2026-11/resumen-ejecutivo.md) mantiene resultados parciales y pendientes; no declara el cumplimiento integral de RNF por evidencias limitadas.
+
+Los errores de pantallas siguen sin causa raíz; las rutas entre roles probadas devolvieron 403; logout cerró la sesión de navegador y las rutas privadas volvieron al login. Los resultados de seguridad y de CI deben leerse con el SHA exacto y las limitaciones documentadas en [línea base](evidencias-rnf/jose-validacion-2026-11/linea-base.md).

@@ -21,6 +21,10 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 > verificar el día 15, y «los requisitos no funcionales fueron verificados» es un criterio de
 > finalización (§13).
 
+> **Vigencia.** La tabla original se basa en los SHAs indicados en los metadatos. El seguimiento
+> del 15-nov al final de este archivo agrega una comprobación posterior del backend `c1b1950` y
+> corrige la hipótesis de causa de H-11. Consulta ese seguimiento antes de reutilizar los estados.
+
 ---
 
 ## Resumen
@@ -32,7 +36,7 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 | [H-08](#h-08-alta--rnf-20-vigila-la-cobertura-de-dos-de-los-cuatro-módulos-obligatorios) | **Alta** | Mantenibilidad | RNF-20 vigila la cobertura de dos de los cuatro módulos obligatorios | Ambos | 🟢 **Corregido y verificado** · 15-nov · falta PR |
 | [H-10](#h-10-media--rnf-11-tls-12-no-es-verificable-sin-entorno-de-producción) | Media | Seguridad | RNF-11 (TLS 1.2+) no es verificable sin entorno de producción | José | 🟢 **Cerrado** · 15-nov · la premisa cambió: hay producción |
 | [H-01](#h-01-alta--el-análisis-de-dependencias-del-backend-está-apagado) | **Alta** | Seguridad | El análisis de dependencias del backend está apagado | José | 🔴 **Abierto · 8 días** · reconfirmado por API |
-| [H-11](#h-11-alta--la-incidencia-0000053-no-tiene-dueño-y-es-de-perfil-no-funcional) | **Alta** | Rendimiento / fiabilidad | La incidencia 0000053 no tiene dueño y es de perfil no funcional | Andrés | 🔴 **Nuevo** · 15-nov |
+| [H-11](#h-11-alta--0000053-sin-dueño-y-con-impacto-rnf-por-confirmar) | **Alta** | Rendimiento / fiabilidad | 0000053 sin dueño; impacto RNF y causa por confirmar | Andrés | 🔴 **Nuevo** · 15-nov |
 | [H-03](#h-03-media--alta-el-15-nov--el-e2e-de-navegador-cubre-un-solo-flujo) | **Alta** ⬆ | Mantenibilidad | El E2E de navegador cubre un solo flujo, y el producto creció ocho módulos | Ambos | 🔴 **Abierto · sube de media a alta** |
 | [H-02](#h-02-alta--nueve-requisitos-de-rendimiento-sin-un-solo-instrumento-de-medición) | **Alta** | Rendimiento | Nueve requisitos de rendimiento sin un solo instrumento de medición | Andrés | 🟡 **En corrección** · instrumento creado, sin ejecutar |
 | [H-09](#h-09-media--rnf-18-no-tiene-medición-de-uptime-ni-de-mttr) | Media | Disponibilidad | RNF-18 no tiene medición de uptime ni de MTTR | José | 🟡 **En corrección** · uptime medido; MTTR sin evento |
@@ -246,6 +250,11 @@ deja en 1 MB.
 ---
 
 ## H-08 (alta) — RNF-20 vigila la cobertura de dos de los cuatro módulos obligatorios
+
+> **Nota de vigencia · 15-nov-2026.** La evidencia de corrección citada en esta sección es
+> histórica y se atribuye a `d6fa7e1`. En el backend inspeccionado para esta auditoría (`c1b1950`)
+> la regla por paquete de `estadisticas` no está presente; no transferir el cierre a esa rama.
+> Véase el [seguimiento](evidencias-rnf/jose-validacion-2026-11/mantenibilidad.md).
 
 **Atributo.** Mantenibilidad.
 **RNF comprometido.** **RNF-20 (a)** — incumplimiento directo y demostrable.
@@ -765,10 +774,10 @@ real de cobertura global (92,39 %).
 
 ---
 
-## H-11 (alta) — La incidencia 0000053 no tiene dueño y es de perfil no funcional
+## H-11 (alta) — 0000053 sin dueño y con impacto RNF por confirmar
 
 **Atributo de calidad afectado.** Rendimiento / fiabilidad.
-**RNF comprometido.** RNF-01, RNF-02 (concurrencia), RNF-04, RNF-06.
+**RNF potencial.** RNF-01 podría aplicar si se demuestra afectación al límite de concurrencia o tiempos de respuesta. RNF-02, RNF-04 y RNF-06 requieren impactos medidos; no se atribuyen por el texto del ticket.
 
 **Qué se encontró.** La exportación de Mantis del 15 de noviembre (`estado de mantis.csv`) tiene
 una incidencia que no aparece en la hoja «Reparto de incidencias» del libro del equipo y que no
@@ -788,41 +797,31 @@ tiene responsable asignado:
 **Cómo se reproduce.** Por definición, no se reproduce de forma confiable: la propia incidencia
 dice *a veces*. Eso es lo que la hace nuestra.
 
-**Por qué es un asunto de RNF y no solo funcional.** Tres señales juntas:
+**Clasificación provisional.** «Intermitente», «a veces» y «en múltiples módulos» describen el
+síntoma y su alcance reportado, pero no demuestran que sea un RNF ni que la causa sea concurrencia,
+una carrera entre solicitudes o tiempo de respuesta. ERR-002 es un antecedente posible en
+Estadísticas, no evidencia de que 0000053 comparta su causa. Hace falta reproducir, registrar
+frecuencia y solicitudes/respuestas y contrastar el comportamiento con el SRS.
 
-1. **«Intermitente» y «a veces»** es el perfil de un problema de concurrencia, de carrera entre
-   peticiones o de tiempo de respuesta, no de lógica de negocio. Una regla de negocio mal escrita
-   falla siempre; esto falla a veces.
-2. **«En múltiples módulos y en todos los roles»** apunta a algo compartido —la carga en cascada
-   de los combos— y no a un módulo concreto.
-3. Hay un antecedente directo en el propio registro del equipo: **ERR-002**, donde Tomás Gómez
-   documentó que en Estadísticas «una respuesta vieja podía sobrescribir la más reciente» porque
-   las peticiones no cancelaban las anteriores. Ese es exactamente el mecanismo que produce un
-   combo que a veces carga y a veces no. Si el patrón se repitió en los módulos que tocaron
-   0000044, 0000045 y 0000046 —que son los de filtros en cascada— 0000053 es la misma causa raíz
-   replicada.
+**Impacto potencial.** Si la falla impide consultar o seleccionar semestre/asignatura/RA, puede
+bloquear la tarea del usuario. Esta revisión no confirmó que el control aparezca vacío ni que se
+interprete como ausencia de datos; registrar esa conducta durante una reproducción antes de
+afirmarla.
 
-**Riesgo si no se corrige.** Un profesor abre Evaluaciones o Estadísticas, el combo de semestre
-aparece vacío, y concluye que no tiene asignaturas. No es un error visible con mensaje: es un
-listado vacío, que el usuario lee como «no hay datos». Es el peor modo de falla posible para un
-sistema de registro académico, porque no se nota.
+**Clasificación de Mantis.** Prioridad alta/severidad mayor, estado nueva y sin responsable en la
+exportación. El manual indica que defectos altos confirmados bloquean la entrega; el equipo debe
+confirmar la clasificación y el impacto funcional con evidencia.
 
-**Severidad y por qué.** **Alta.** Prioridad alta y severidad mayor en Mantis, y según el §7 del
-manual los defectos altos **bloquean la entrega**. Agravante: lleva un día sin dueño, y la entrega
-es hoy.
+**Dueño de la corrección.** Por asignar. Primero triage de QA/desarrollo para reproducir y localizar
+el componente; asignar responsable después de conocer la causa.
 
-**Dueño de la corrección.** Por asignar. Nuestra propuesta: quien haya trabajado el patrón de
-filtros en cascada (Tomás Marín por 0000045, Salomé González por 0000044, Tomás Gómez por 0000047),
-porque la causa raíz probablemente sea común a los tres.
+**Criterio de verificación.** Reproducir primero en QA aislado con una línea base de una sesión y
+repeticiones controladas; registrar ruta, datos sintéticos, frecuencia, solicitudes y respuestas.
+Solo si existe evidencia de concurrencia, ejecutar después el plan JMeter contra QA. Una carga de 20
+hilos por sí sola no demuestra la causa ni garantiza reproducibilidad.
 
-**Criterio de verificación de la corrección.** `jmeter/RNF-01-06-rendimiento.jmx` con
-`-Jusuarios=20` sobre los endpoints de catálogo, contra PostgreSQL local. Si el defecto es de
-concurrencia o de cancelación de peticiones, 20 hilos lo vuelven **determinista**, y entonces se
-puede corregir y comprobar. Mientras solo se pruebe a mano, va a seguir siendo «a veces».
-
-**Lo que esto significa para nuestro rol.** Es el mejor argumento que tenemos para que el equipo
-adopte JMeter: no es burocracia de calidad, es la única forma práctica de cazar un defecto abierto
-de severidad alta que hoy nadie tiene asignado.
+**Seguimiento de nuestro rol.** JMeter podría medir impacto de rendimiento si la reproducción
+apunta a concurrencia. No sustituye el diagnóstico funcional inicial.
 
 **Estado.** 🔴 **Abierto** · nuevo el 15 de noviembre de 2026.
 
@@ -1026,3 +1025,14 @@ cuesta credibilidad al rol. H-06 es el recordatorio de por qué esto importa.
 ---
 
 [Guía del rol](GUIA-TRABAJO-RNF.md) · [A1 Catálogo](A1-catalogo-rnf.md) · [A2 Matriz de impacto](A2-matriz-impacto-calidad.md) · [A3 Criterios](A3-criterios-verificacion.md) · [A5 Informe](A5-informe-calidad.md)
+
+---
+
+## Seguimiento de evidencia productiva · José · 15-nov-2026
+
+- El recorrido de Vercel identificó errores genéricos puntuales en `/admin/ra`, `/admin/estudiantes`, `/admin/reportes` y `/profesor/estadisticas`. Quedan como observación nueva **OBS-01**, con frecuencia no determinada, sin causa raíz ni SHA del despliegue. No se duplica 0000041 (alcance de Reportes) ni 0000048 (organización de Estadísticas), cuyos enunciados son distintos.
+- **Corrección de la hipótesis de H-11/0000053:** el ticket actual describe carga intermitente de combos de semestre/asignatura/RA. La sesión observó estados iniciales de carga y errores en algunas vistas, pero no correlacionó solicitudes ni ejecutó concurrencia. La hipótesis de carrera o concurrencia y la afirmación de que 20 hilos la vuelven determinista no se han demostrado; no deben presentarse como causa raíz hasta reproducir en QA aislado.
+- **H-08/RNF-20(a):** el backend inspeccionado en `c1b1950` sigue sin regla JaCoCo por paquete para `estadisticas`; `d6fa7e1` no forma parte del clon revisado. El cierre consignado para ese commit no se transfiere a esta rama.
+- **OBS-02:** en la respuesta de login de Vercel no se observaron varias cabeceras de endurecimiento, aunque HSTS sí. Esta observación no constituye vulnerabilidad confirmada y requiere contrastar configuración de edge.
+
+Detalle reproducible y límites: [hallazgos de esta auditoría](evidencias-rnf/jose-validacion-2026-11/hallazgos.md), [seguridad](evidencias-rnf/jose-validacion-2026-11/seguridad.md), [mantenibilidad](evidencias-rnf/jose-validacion-2026-11/mantenibilidad.md).
