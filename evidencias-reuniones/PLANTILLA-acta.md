@@ -18,7 +18,7 @@
 
 ## 1. Lo que veníamos debiendo
 
-Se copia de la tabla de compromisos del [README](../README.md), filtrando los nuestros que
+Se copia de la tabla de compromisos del [README](README.md), filtrando los nuestros que
 estaban pendientes. **Esto es lo que hace el cruce entre reuniones.** En la reunión 1 esta sección
 va vacía.
 

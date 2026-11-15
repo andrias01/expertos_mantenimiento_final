@@ -22,16 +22,28 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 
 ## 0. Balance, para decirlo de entrada
 
-| Estado | Cantidad | RNF |
-| --- | --- | --- |
-| 🟢 **Ejecutable hoy, sin trabajo adicional** | 7 | 10, 12, 13, 15, 16, 17, 20 (b) |
-| 🟡 **Ejecutable con reservas que hay que declarar** | 3 | 14, 19, 20 (a) |
-| 🟠 **Necesita una decisión del equipo primero** | 2 | 21, 11 |
-| 🔴 **No verificable en el alcance de 15 días** | 9 | 01 a 09 (rendimiento) |
+> **Actualizado el 15 de noviembre de 2026** (Entrega 2, verificación inicial). El semáforo con el
+> veredicto y la evidencia de cada criterio está en [A6](A6-semaforo-rnf.md); aquí vive el
+> **cómo se ejecuta** cada uno.
 
-**De 21 requisitos no funcionales, 7 se verifican hoy y 9 no tienen cómo verificarse.** Esa es la
-cifra que hay que llevar a la reunión del 8, y la razón por la que el rendimiento es el tema
-central del diagnóstico.
+Base de 23 criterios: RNF-18 cuenta como dos y RNF-20 también.
+
+| Estado | 8-nov | **15-nov** | Criterios |
+| --- | --- | --- | --- |
+| 🟢 **Ejecutado, con evidencia** | 7 | **9** | 10, **11**, 12, 13, 15, 16, 17, **20 (a)**, 20 (b) |
+| 🟡 **Con reserva declarada** | 3 | **9** | **01**, **03**, **04**, **06**, **08**, 14, **18 uptime**, 19, **21** |
+| 🔴 **Sin instrumento o fuera de alcance** | 13 | **5** | 02, 05, 07, 09, 18 MTTR |
+
+**Los tres instrumentos nuevos de esta entrega**, y qué cubre cada uno:
+
+| Instrumento | Estado | Criterios que habilita | Sección |
+| --- | --- | --- | --- |
+| **`curl` contra el despliegue de Render** | ✅ Ejecutado | RNF-11 (TLS 1.2+) | §1 · RNF-11 |
+| **Apache JMeter 5.6.3** | ✅ Un plan ejecutado, uno listo | RNF-18 uptime (ejecutado) · RNF-01, 03, 04, 06 (listos) | §2 y §3 |
+| **SonarQube / SonarCloud** | ⏳ Plan listo, sin ejecutar | RNF-20 (mantenibilidad, más allá de cobertura) | [§7](#7-seguridad-de-dependencias-y-análisis-estático--transversal) |
+
+**De 23 criterios, 9 están verificados con evidencia y 5 no tienen cómo verificarse.** El 8 de
+noviembre eran 7 y 13.
 
 ---
 
@@ -47,17 +59,33 @@ central del diagnóstico.
 | **Evidencia** | Salida del comando en el PR. |
 | **Al revisar un PR** | Si agrega un DTO de respuesta que incluya un `Usuario`, confirmar que no arrastre el campo de contraseña por serialización. |
 
-### RNF-11 · HTTPS con TLS 1.2+ en producción · 🟠
+### RNF-11 · HTTPS con TLS 1.2+ en producción · 🟢
+
+> **Cambió el 15 de noviembre de 2026.** Este criterio estaba en 🟠 porque dimos por hecho que no
+> había entorno de producción. Sí lo hay, y el criterio pleno se puede ejecutar. Ver
+> [H-10](A4-hallazgos-rnf.md), cerrado.
 
 | | |
 | --- | --- |
-| **Criterio pleno** | El entorno de producción sirve por HTTPS con TLS 1.2 o superior. |
-| **Estado** | **No verificable en el alcance**: no hay entorno de producción en operación ([H-10](A4-hallazgos-rnf.md)). |
-| **Criterio sustituto, ejecutable hoy** | Ningún archivo del frontend construye una URL `http://` hacia el backend fuera de los entornos de desarrollo; todos los servicios leen de `environment.apiUrl`. |
-| **Comando** | `grep -rn "http://" software4-SIGRA-frontend/src --include=*.ts \| grep -v environment.development` |
-| **Umbral** | Cero resultados que apunten al backend. |
-| **Evidencia** | Salida del comando. |
-| **Qué declarar en el informe** | Que la verificación plena requiere el entorno de producción, y que lo verificado es la ausencia de URLs absolutas insegurasen el código. |
+| **Criterio** | El entorno de producción sirve por HTTPS con TLS 1.2 o superior, no acepta versiones anteriores, y no deja tráfico en claro. |
+| **Dónde** | `https://software4-sigra-backend.onrender.com` — la URL que el frontend tiene compilada en `src/environments/environment.ts:3` para `production`. Render termina TLS por defecto. |
+| **Comando** | las cinco invocaciones de `curl` del bloque de abajo |
+| **Umbral** | TLS 1.2 → 200 · TLS 1.3 → 200 · **TLS 1.0 → fallo de handshake** · HTTP → 301 hacia HTTPS |
+| **Resultado 15-nov** | 🟢 Los cuatro se cumplen. Detalle en [A6 §3.1](A6-semaforo-rnf.md) |
+| **Evidencia** | Salidas de `curl` pegadas en A6 §3.1 y en el hallazgo H-10 |
+| **Reserva que queda** | Esto verifica el **backend**. El frontend está en Vercel y hay que medirle lo mismo, pero **su URL de producción no está escrita en ningún archivo de los dos repositorios** (pedido P-08) |
+| **Criterio complementario de código** | Ningún archivo del frontend construye una URL `http://` hacia el backend fuera de desarrollo: `grep -rn "http://" software4-SIGRA-frontend/src --include=*.ts \| grep -v environment.development` → cero resultados que apunten al backend |
+
+```bash
+H=https://software4-sigra-backend.onrender.com/actuator/health
+
+curl -s -o /dev/null -w "%{http_code} %{http_version}\n" "$H"                   # 200 h2
+curl -s -o /dev/null --tlsv1.2 --tls-max 1.2 -w "%{http_code}\n" "$H"           # 200
+curl -s -o /dev/null --tlsv1.3               -w "%{http_code}\n" "$H"           # 200
+curl -s -o /dev/null --tlsv1.0 --tls-max 1.0 -w "%{http_code}\n" "$H"           # debe FALLAR (exit 35)
+curl -s -o /dev/null -w "%{http_code} %{redirect_url}\n" "${H/https/http}"      # 301 -> https
+```
+
 
 ### RNF-12 · JWT HS256+ con emisión y expiración, sin datos sensibles · 🟢
 
@@ -122,76 +150,121 @@ central del diagnóstico.
 
 ---
 
-## 2. Rendimiento · RNF-01 a RNF-09 · titular Andrés · 🔴
+## 2. Rendimiento · RNF-01 a RNF-09 · titular Andrés · 🟡
 
-**Ninguno de los nueve tiene instrumento** ([H-02](A4-hallazgos-rnf.md)). Esta sección no lista
-criterios ejecutables porque no existen todavía: lista lo que **se puede** hacer en 15 días y lo
-que hay que **declarar fuera de alcance**.
+> **Cambió el 15 de noviembre de 2026.** El 8 de noviembre esta sección decía «no lista criterios
+> ejecutables porque no existen todavía». Ya existen: **Apache JMeter 5.6.3**, con dos planes
+> versionados en [`jmeter/`](jmeter/README.md) y los umbrales del SRS puestos como condición de
+> fallo. Ver [H-02](A4-hallazgos-rnf.md), en corrección.
 
-### Lo que el SRS exige
+### 2.1 Lo que el SRS exige y qué instrumento le corresponde
 
-| RNF | Umbral | ¿Alcanzable en 15 días? |
-| --- | --- | --- |
-| RNF-01 | 20 usuarios concurrentes | ❌ Requiere herramienta de carga |
-| RNF-02 | 10 en lectura/escritura simultánea | ❌ Requiere herramienta de carga |
-| RNF-03 | 95 % de autenticaciones < 4 s | 🟡 Medición manual con muestra pequeña |
-| RNF-04 | 95 % de CRUD de catálogo < 3 s | 🟡 Medición manual con muestra pequeña |
-| RNF-05 | 95 % de registros de calificación < 3 s | 🟡 Medición manual con muestra pequeña |
-| RNF-06 | 90 % de estadísticas < 5 s | 🟡 Medición manual con muestra pequeña |
-| RNF-07 | 50 evaluaciones por asignatura/semestre | 🟡 Verificable con datos de prueba |
-| RNF-08 | 95 % de páginas < 3 s con ≥ 5 Mbps | 🟡 Presupuesto de bundle + medición manual |
-| RNF-09 | Sostenido 4 meses | ❌ Fuera de la ventana del proyecto |
+| RNF | Umbral | Instrumento | Estado |
+| --- | --- | --- | --- |
+| RNF-01 | 20 usuarios concurrentes | JMeter, `-Jusuarios=20` | 🟡 listo, sin ejecutar |
+| RNF-02 | 10 en lectura/escritura simultánea | JMeter + POST de calificación | 🔴 el plan solo lee |
+| RNF-03 | 95 % de autenticaciones < 4 s | JMeter, Duration Assertion 4 000 ms | 🟡 listo, sin ejecutar |
+| RNF-04 | 95 % de CRUD de catálogo < 3 s | JMeter, Duration Assertion 3 000 ms | 🟡 listo, sin ejecutar |
+| RNF-05 | 95 % de calificaciones < 3 s | JMeter + datos sembrados | 🔴 sin sembrar |
+| RNF-06 | 90 % de estadísticas < 5 s | JMeter, Duration Assertion 5 000 ms | 🟡 listo, sin ejecutar |
+| RNF-07 | 50 evaluaciones por asignatura | Siembra + repetir la medición | 🔴 sin sembrar |
+| RNF-08 | 95 % de páginas < 3 s | Presupuesto de `angular.json` + panel de red | 🟡 **bundle medido** |
+| RNF-09 | Sostenido 4 meses | — | 🔴 **fuera de alcance** |
 
-### Alcance propuesto, en orden de costo
+### 2.2 Criterio ejecutable · RNF-01, 03, 04 y 06
 
-**1 · Presupuesto de bundle (preventivo, RNF-08)**
+| | |
+| --- | --- |
+| **Criterio** | Con 20 usuarios concurrentes, el percentil 95 de cada operación cumple el umbral de su RNF. |
+| **Comando** | el de abajo (desde `mantenimiento-rnf/`) |
+| **Umbral** | `95th pct` < 4 000 ms en login · < 3 000 ms en catálogo · `90th pct` < 5 000 ms en estadísticas. `Error %` incluye las muestras que incumplieron la Duration Assertion |
+| **Evidencia** | `jmeter/resultados/<nombre>-reporte/index.html`, tabla *Statistics*, y el `.jtl` crudo |
+| **Dónde se ejecuta** | **Contra PostgreSQL local, nunca contra Render ni Supabase.** Ver la advertencia de abajo |
+
+```bash
+jmeter -n -t jmeter/RNF-01-06-rendimiento.jmx \
+  -l jmeter/resultados/rnf01-06-local.jtl \
+  -e -o jmeter/resultados/rnf01-06-local-reporte \
+  -Jhost=127.0.0.1 -Jpuerto=8080 -Jprotocol=http \
+  -Jusuarios=20 -Jrampa=20 -Jiteraciones=5 \
+  -Jcorreo=administrador.prueba@uco.net.co -Jclave='<clave del usuario sembrado>'
+```
+
+
+> ⚠️ **La advertencia que hay que respetar.** El `.env` del backend apunta a
+> `aws-0-us-east-1.pooler.supabase.com`, que es **la misma base de datos que usa el despliegue de
+> Render**. Levantar el backend «en local» con ese `.env` no es local: los 20 usuarios le caen a la
+> base compartida del equipo. Correr esta prueba así es una prueba de carga en producción. El
+> procedimiento correcto —PostgreSQL en Docker con `docs/db/SIGRA_SCHEMA_CURRENT.sql` y un `.env`
+> aparte— está en [`jmeter/README.md` §4.1](jmeter/README.md).
+
+### 2.3 Criterio ejecutable · RNF-08 (bundle) · **ya medido**
 
 | | |
 | --- | --- |
 | **Criterio** | El bundle inicial no supera el presupuesto declarado. |
-| **Comando** | `npx ng build` con `budgets` en `angular.json` |
-| **Umbral** | **Medir primero el valor actual** y fijar el tope apenas por encima, para que detecte crecimiento sin romper el build de entrada. |
-| **Evidencia** | Salida de `ng build` con la tabla de tamaños y el presupuesto evaluado. |
-| **Por qué primero** | Es lo único de esta lista que **previene regresiones** en lugar de solo medir el estado actual. |
+| **Comando** | `npx ng build` — el presupuesto ya está declarado en `angular.json:51-62` y se evalúa en cada corrida del CI |
+| **Valor real 15-nov** | **356,04 kB** sin comprimir · **100,14 kB** transferidos (corrida de CI 43684672703) |
+| **Umbral actual** | aviso 500 kB · error 1 MB → **cumple con 29 % de margen** |
+| **Propuesta** | **Bajar el aviso a 420 kB.** Deja 18 % de crecimiento y detecta una regresión antes de que el margen se agote. El error se deja en 1 MB |
+| **Evidencia** | Registro del paso «Compilar (producción)» del CI del frontend |
+| **Reserva** | El presupuesto mide **tamaño**, no **tiempo**. RNF-08 pide 95 % de páginas en menos de 3 s con ≥ 5 Mbps; eso hay que medirlo con el panel de red y declararlo como muestra pequeña |
 
-**2 · Medición manual de tiempos (RNF-03 a RNF-06)**
+### 2.4 Lo que se declara fuera de alcance, con justificación
 
-| | |
-| --- | --- |
-| **Criterio** | Sobre los flujos tocados por cada mantenimiento, el tiempo observado cumple el umbral del RNF correspondiente. |
-| **Método** | Panel de red del navegador (o `curl -w "%{time_total}"` para la API), 10 repeticiones por operación, con el backend y PostgreSQL locales. |
-| **Umbral** | El del RNF: < 4 s autenticación, < 3 s CRUD y calificaciones, < 5 s estadísticas. |
-| **Evidencia** | Tabla de mediciones con las 10 muestras y captura del panel. |
-| **Reserva obligatoria en el informe** | Una muestra de 10 en local **no demuestra el percentil 95 con 20 usuarios concurrentes**. Lo que demuestra es que el orden de magnitud es correcto y que el mantenimiento no degradó el tiempo. Hay que escribirlo con esas palabras. |
+**RNF-09** pide sostener los tiempos durante **cuatro meses de operación continua**. La ventana del
+proyecto son 15 días. No es una herramienta que falte: es una imposibilidad temporal. Se declara
+fuera de alcance en [A5](A5-informe-calidad.md) con decisión de tratamiento escrita, que es lo que
+el §7 exige para lo que no se corrige. **Un «fuera de alcance» justificado cumple; un silencio, no.**
 
-**3 · Verificación de volumen (RNF-07)**
-
-| | |
-| --- | --- |
-| **Criterio** | Con 50 evaluaciones registradas en una asignatura y semestre, los tiempos de RNF-04 a RNF-06 se mantienen. |
-| **Método** | Sembrar 50 evaluaciones con los seeds de Bruno y repetir la medición del punto 2. |
-| **Evidencia** | Script de siembra y tabla comparativa antes/después. |
-
-**4 · Declarar fuera de alcance, con justificación (RNF-01, 02, 09)**
-
-Veinte usuarios concurrentes, diez simultáneos en lectura y escritura, y cuatro meses de operación
-continua **no se pueden verificar** sin herramienta de carga y sin entorno de producción. Se
-declara así en [A5](A5-informe-calidad.md), con decisión de tratamiento, que es lo que el §7 exige
-para lo que no se corrige. Un «fuera de alcance» justificado cumple; un silencio, no.
+**RNF-02, RNF-05 y RNF-07** sí son alcanzables —necesitan datos sembrados y un POST en el plan de
+JMeter— y por eso van a decisión del equipo (D-1 en [A6 §5](A6-semaforo-rnf.md)), no a fuera de
+alcance.
 
 ---
 
-## 3. Disponibilidad · RNF-18 · titular José · 🟠
+## 3. Disponibilidad · RNF-18 · titular José · 🟡
+
+> **Cambió el 15 de noviembre de 2026.** El uptime ya tiene instrumento y medición. El MTTR sigue
+> sin dato. Ver [H-09](A4-hallazgos-rnf.md), en corrección.
+
+### 3.1 Uptime · criterio ejecutable, **ya ejecutado**
 
 | | |
 | --- | --- |
-| **Criterio pleno** | Uptime ≥ 95 % de las veces que se ingresa a la aplicación; MTTR ≤ 4 h ante caída crítica. |
-| **Estado** | **No verificable en el alcance**: sin entorno en operación y sin monitoreo ([H-09](A4-hallazgos-rnf.md)). |
-| **Criterio sustituto, ejecutable hoy** | **(a)** El backend arranca con el esquema validado y `/actuator/health` responde `UP`. **(b)** Con el backend caído, el frontend muestra el mensaje de usuario definido, no una pantalla en blanco ni una traza. |
-| **Comando** | (a) `curl --fail http://localhost:8080/actuator/health`<br>(b) `npx ng test --no-watch` cubre el status `0` en `login-error.spec.ts`; el smoke SSR del CI valida la contingencia de API |
-| **Umbral** | (a) `{"status":"UP"}`. (b) Mensaje «No fue posible conectar con el servidor. Verifica tu conexión e intenta nuevamente.» |
-| **Evidencia** | Salida del `curl` y de las pruebas. |
-| **Decisión pendiente** | Llevar a la reunión del 8: ¿se declara RNF-18 fuera de alcance, o se acepta el criterio sustituto como verificación parcial? Lo decide el Product Owner. |
+| **Criterio** | El porcentaje de sondeos de `/actuator/health` con código 200 **y** cuerpo `UP` es ≥ 95 %. |
+| **Comando** | el de abajo (desde `mantenimiento-rnf/`) |
+| **Umbral** | ≥ 95 % de muestras exitosas |
+| **Resultado 15-nov** | **90 de 90 → 100,00 %.** Solo códigos 200. p50 289 ms · p90 327 ms · p95 526 ms · p99 1 472 ms |
+| **Evidencia** | `jmeter/resultados/rnf18-render.jtl` y el informe HTML |
+| **Por qué el veredicto es 🟡 y no 🟢** | La ventana fue de **208 segundos**. El requisito habla de un periodo de operación, no de tres minutos. Lo que la medición demuestra es que el servicio responde y que **existe un instrumento repetible**, que antes no existía. Escribir «uptime del 100 %» a partir de esto sería el dato inflado que el §10 prohíbe |
+| **Qué haría falta para 🟢** | Un sondeo de varios días, o un monitor externo. **Excede la ventana del proyecto**: es decisión de tratamiento, no trabajo pendiente |
+
+```bash
+jmeter -n -t jmeter/RNF-18-disponibilidad.jmx \
+  -l jmeter/resultados/rnf18-render.jtl \
+  -e -o jmeter/resultados/rnf18-render-reporte \
+  -Jmuestras=90 -Jpausa=2000
+```
+
+
+### 3.2 MTTR · sin instrumento posible, y no es culpa de la herramienta
+
+| | |
+| --- | --- |
+| **Criterio** | Ante una caída crítica, el tiempo entre el reporte o la detección y el restablecimiento completo no supera las 4 horas. |
+| **Por qué JMeter no sirve** | El MTTR se mide sobre el **registro de un incidente real**, no con una herramienta de carga |
+| **Estado** | **Sin evento que medir.** No se ha registrado ninguna caída crítica en la fase |
+| **Veredicto honesto** | 🔴 «sin dato» — que no es «cumple» ni «no cumple» |
+| **Decisión pendiente** | D-3 en [A6 §5](A6-semaforo-rnf.md): o se acepta «sin evento que medir» como veredicto, o se define un procedimiento de respuesta a caída y se verifica en seco. Lo decide el PO |
+
+### 3.3 Criterio sustituto de resiliencia, que se mantiene
+
+| | |
+| --- | --- |
+| **Criterio** | **(a)** El backend arranca con el esquema validado y `/actuator/health` responde `UP`. **(b)** Con el backend caído, el frontend muestra el mensaje de usuario definido, no una pantalla en blanco ni una traza. |
+| **Comando** | (a) `curl --fail https://software4-sigra-backend.onrender.com/actuator/health`<br>(b) `npx ng test --no-watch` cubre el status `0` en `login-error.spec.ts`; el smoke SSR del CI valida la contingencia de API |
+| **Umbral** | (a) `{"status":"UP"}` — verificado el 15-nov. (b) Mensaje «No fue posible conectar con el servidor. Verifica tu conexión e intenta nuevamente.» |
 
 ---
 
@@ -212,7 +285,7 @@ para lo que no se corrige. Un «fuera de alcance» justificado cumple; un silenc
 
 RNF-20 tiene dos partes y hay que verificarlas por separado.
 
-### RNF-20 (a) · Cobertura ≥ 70 % de los módulos obligatorios · 🟡
+### RNF-20 (a) · Cobertura ≥ 70 % de los módulos obligatorios · 🟢 (era 🟡)
 
 | | |
 | --- | --- |
@@ -220,8 +293,8 @@ RNF-20 tiene dos partes y hay que verificarlas por separado.
 | **Comando** | `./gradlew test jacocoTestCoverageVerification` |
 | **Umbral** | 0.7 global y 0.7 por paquete en los cuatro módulos. |
 | **Evidencia** | Salida del comando; reporte HTML en `build/reports/jacoco/`. |
-| **Estado real** | **El umbral solo vigila dos de los cuatro.** `build.gradle:105-120` incluye los paquetes de `auth` y `config`, pero **no** los de `estadisticas`, donde viven RF-14 y RF-16. Es [H-08](A4-hallazgos-rnf.md), y es el único incumplimiento documentable del SRS en este lote. |
-| **Criterio de cierre de H-08** | Agregar `co.edu.uco.sigra.estadisticas.service*` a la lista `includes` y comprobar que el comando falla si esa cobertura baja del 70 %. |
+| **Estado real 15-nov** | 🟢 **Cumple, tras corregir H-08.** `build.gradle` ya incluye `co.edu.uco.sigra.estadisticas.service*`, así que los cuatro módulos están vigilados. Cobertura global **92,39 %**; `estadisticas.service` 96,48 % y `estadisticas.service.impl` 93,69 %. **Falta el PR.** |
+| **Criterio de cierre de H-08** | ✅ Cumplido: se agregó el paquete **y** se comprobó que la regla falla si la cobertura baja —con umbral temporal de 0,99, JaCoCo nombra los dos paquetes nuevos. Detalle en [A6 §3.3](A6-semaforo-rnf.md). |
 
 ### RNF-20 (b) · Documentación OpenAPI de los endpoints protegidos · 🟢
 
@@ -235,7 +308,7 @@ RNF-20 tiene dos partes y hay que verificarlas por separado.
 
 ---
 
-## 6. Accesibilidad · RNF-21 · titular Andrés · 🟠
+## 6. Accesibilidad · RNF-21 · titular Andrés · 🟡
 
 | | |
 | --- | --- |
@@ -248,15 +321,31 @@ RNF-20 tiene dos partes y hay que verificarlas por separado.
 
 ---
 
-## 7. Seguridad de dependencias · transversal · 🔴 en el backend
+## 7. Seguridad de dependencias y análisis estático · transversal
+
+### 7.1 SCA de dependencias · 🔴 en el backend, 🟢 en el frontend
 
 | | |
 | --- | --- |
 | **Criterio** | Ninguna dependencia nueva o actualizada introduce una vulnerabilidad conocida de severidad moderada o superior. |
 | **Comando** | Frontend: `npm audit --audit-level=high` — **ya corre en CI**<br>Backend: *Dependency Review* y `./gradlew dependencyCheckAnalyze` — **apagados** |
 | **Umbral** | Cero hallazgos de severidad `moderate` o superior. |
-| **Evidencia** | Salida del paso de CI. |
-| **Estado** | Asimétrico: el frontend sí, el backend no ([H-01](A4-hallazgos-rnf.md)). Corrección más barata del registro. |
+| **Estado 15-nov** | Asimétrico y **sin cambio desde el 8 de noviembre**. Reconfirmado por API: `gh api repos/.../actions/variables` devuelve `total_count: 0`, así que los dos trabajos se saltan en cada corrida. Es [H-01](A4-hallazgos-rnf.md) |
+| **Por qué no lo cerramos nosotros** | Crear una variable de repositorio exige permiso `admin`; el nuestro es `push`. **Es un pedido al equipo, no una tarea nuestra** |
+
+### 7.2 Análisis estático · SonarQube · ⏳ plan listo
+
+> Nuevo el 15 de noviembre de 2026. Ver [H-05](A4-hallazgos-rnf.md), en corrección.
+
+| | |
+| --- | --- |
+| **Criterio** | Los dos repositorios obtienen calificación de mantenibilidad **A o B**, sin *bugs* de severidad `blocker` ni `critical`, y sin puntos calientes de seguridad sin revisar. |
+| **Qué aporta sobre JaCoCo** | JaCoCo responde «cuánto código tocan las pruebas». Mantenibilidad es más: complejidad ciclomática, duplicación, reglas incumplidas, deuda técnica estimada. Y Sonar **consume el XML de JaCoCo**, así que la cobertura corregida en H-08 queda visible en el mismo tablero |
+| **Camino 1 · hoy, sin permisos** | SonarQube Community en Docker: `docker run -d --name sonarqube -p 9000:9000 sonarqube:community`, y escanear cada repositorio con el *scanner*. Para el backend basta el plugin de Gradle; para el frontend, `sonar-scanner` con `sonar.sources=src` y `sonar.javascript.lcov.reportPaths` |
+| **Camino 2 · permanente, en el CI** | **SonarCloud**, gratuito en repositorios públicos —y los dos lo son: `gh repo view` devuelve `"visibility":"PUBLIC"`. Requiere que un admin cree el proyecto y agregue `SONAR_TOKEN` a los secretos de Actions |
+| **Bloqueo actual** | Camino 1: **Docker Desktop no está arrancado**. Camino 2: **el mismo bloqueo de permisos de H-01** — conviene pedir las dos cosas juntas, porque es la misma pantalla de Settings |
+| **Evidencia esperada** | Captura del tablero con la calificación de mantenibilidad de cada proyecto, y el enlace |
+| **Reserva** | El SRS **no exige** análisis estático. Es un instrumento que nos damos para sostener el veredicto de mantenibilidad con algo más que cobertura; no es un incumplimiento si no se hace |
 
 ---
 
@@ -280,6 +369,24 @@ npm run e2e                                    # requiere backend arriba; ver e2
 grep -rnE '(createQuery|createNativeQuery).*\+' software4-SIGRA-backend/SIGRA/src/main/java/
 grep -rn 'innerHTML\|bypassSecurityTrust' software4-SIGRA-frontend/src --include=*.ts
 grep -rn 'http://' software4-SIGRA-frontend/src --include=*.ts | grep -v environment.development
+
+# RNF-11 · TLS en producción (nuevo el 15-nov)
+curl -s -o /dev/null -w "%{http_code} %{http_version}\n" https://software4-sigra-backend.onrender.com/actuator/health
+curl -s -o /dev/null --tlsv1.2 --tls-max 1.2 -w "%{http_code}\n" https://software4-sigra-backend.onrender.com/actuator/health
+curl -s -o /dev/null --tlsv1.0 --tls-max 1.0 -w "%{http_code}\n" https://software4-sigra-backend.onrender.com/actuator/health   # debe fallar
+curl -s -o /dev/null -w "%{http_code} %{redirect_url}\n" http://software4-sigra-backend.onrender.com/actuator/health
+
+# RNF-18 · disponibilidad (nuevo el 15-nov)
+jmeter -n -t mantenimiento-rnf/jmeter/RNF-18-disponibilidad.jmx \
+  -l resultados/rnf18-render.jtl -e -o resultados/rnf18-render-reporte -Jmuestras=90
+
+# RNF-01, 03, 04, 06 · rendimiento (nuevo el 15-nov; requiere PostgreSQL LOCAL, no Supabase)
+jmeter -n -t mantenimiento-rnf/jmeter/RNF-01-06-rendimiento.jmx \
+  -l resultados/rnf01-06.jtl -e -o resultados/rnf01-06-reporte \
+  -Jusuarios=20 -Jrampa=20 -Jiteraciones=5 -Jclave='<clave>'
+
+# H-01 · confirmar si el SCA del backend ya está habilitado
+gh api repos/juancabernal/software4-SIGRA-backend/actions/variables
 ```
 
 Guardar la salida de cada comando: **es la evidencia**, y sin ella el veredicto no puede ser verde.
@@ -288,14 +395,24 @@ Guardar la salida de cada comando: **es la evidencia**, y sin ella el veredicto 
 
 ## 9. Pendientes de este artefacto
 
-- [ ] Medir el bundle actual y proponer un umbral concreto para RNF-08.
-- [ ] Llevar a la reunión del 8 la decisión sobre RNF-18 y sobre el alcance de rendimiento.
-- [ ] Obtener el **Apéndice 4.2** para cerrar el criterio de RNF-19.
-- [ ] Obtener el **Apéndice 4.1** y contrastarlo con la matriz RBAC implementada.
-- [ ] Entregar este documento a los analistas de prueba **antes** de que diseñen sus casos.
+- [x] ~~Medir el bundle actual y proponer un umbral concreto para RNF-08~~ — hecho el 15-nov:
+      356,04 kB; propuesta de bajar el aviso a 420 kB.
+- [x] ~~Llevar a la reunión la decisión sobre RNF-18 y el alcance de rendimiento~~ — formuladas
+      como D-1, D-2 y D-3 en [A6 §5](A6-semaforo-rnf.md), para decidir en la reunión 3.
+- [ ] **Entregar este documento a Santiago Torres y Juan José Narváez** — compromiso C-05,
+      **vencido desde el 11 de noviembre**. Es lo que necesitan para F4.
+- [ ] Ejecutar `RNF-01-06-rendimiento.jmx` con 20 usuarios contra PostgreSQL local.
+- [ ] Escanear los dos repositorios con SonarQube y adjuntar la calificación de mantenibilidad.
+- [ ] Obtener el **Apéndice 4.2** para cerrar el criterio de RNF-19 — compromiso C-03, vencido.
+- [ ] Obtener el **Apéndice 4.1** y contrastarlo con la matriz RBAC implementada — C-07, bloqueado
+      por C-03.
+- [ ] Conseguir la **URL de producción del frontend en Vercel** para cerrar RNF-11 en los dos
+      lados (pedido P-08).
+- [ ] Escribir el **patrón de paginación y de buscador** que el equipo nos asignó y que no hemos
+      ejercido ([H-12](A4-hallazgos-rnf.md)).
 - [ ] Por cada mantenimiento aprobado, añadir su criterio específico y enlazarlo desde
       [A2](A2-matriz-impacto-calidad.md).
 
 ---
 
-[Guía del rol](GUIA-TRABAJO-RNF.md) · [A1 Catálogo](A1-catalogo-rnf.md) · [A2 Matriz de impacto](A2-matriz-impacto-calidad.md) · [A4 Hallazgos](A4-hallazgos-rnf.md) · [A5 Informe](A5-informe-calidad.md)
+[Guía del rol](GUIA-TRABAJO-RNF.md) · [A1 Catálogo](A1-catalogo-rnf.md) · [A2 Matriz de impacto](A2-matriz-impacto-calidad.md) · [A4 Hallazgos](A4-hallazgos-rnf.md) · [A5 Informe](A5-informe-calidad.md) · [A6 Semáforo](A6-semaforo-rnf.md)

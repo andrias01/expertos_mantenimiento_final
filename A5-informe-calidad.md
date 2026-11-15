@@ -8,7 +8,8 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 | **Actividad RACI** | «Verificar requisitos no funcionales» — somos **A/R** |
 | **Entrega** | 3 (Día 15) · se presenta en la revisión final |
 | **Criterio de finalización que sustenta** | §13: «Los requisitos no funcionales fueron verificados» |
-| **Estado** | ⬜ Esqueleto — se llena en la fase de validación |
+| **Estado** | 🟡 **Borrador avanzado · 15 de noviembre de 2026.** Las cifras son reales y verificadas; las secciones 5, 8 y 9 esperan las decisiones de la reunión 3 |
+| **Dato vivo** | El semáforo con la evidencia de cada criterio está en **[A6](A6-semaforo-rnf.md)** y se mantiene allí hasta el cierre. Este informe lo resume y lo firma |
 
 > **Qué es este documento.** Es el entregable con el que se mide nuestro rol y la única evidencia
 > de que el criterio de finalización del §13 se cumple. El manual lo nombra como «informe de
@@ -22,31 +23,68 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 
 ## 1. Resumen ejecutivo
 
-> *Para llenar al final. Tres párrafos máximo: qué se verificó, cuál fue el resultado y qué queda
-> abierto. Quien lea solo esto debe quedar bien informado.*
+> **Borrador del 15 de noviembre.** Se cierra el martes 17 con las decisiones de tratamiento que
+> falten.
 
-| | |
-| --- | --- |
-| Mantenimientos ejecutados | ⬜ |
-| RNF comprometidos en total | ⬜ |
-| RNF verificados y cumplidos | ⬜ |
-| RNF con deuda técnica documentada | ⬜ |
-| RNF declarados fuera de alcance | ⬜ |
-| Hallazgos abiertos al cierre | ⬜ |
-| **¿Se cumple el criterio §13?** | ⬜ Sí / No / Con reservas |
+De los **21 requisitos no funcionales** del SRS —**23 criterios**, porque RNF-18 y RNF-20 se
+verifican en dos mitades cada uno— la verificación inicial de esta entrega deja **9 cumplidos con
+evidencia ejecutable, 9 cumplidos con una reserva declarada y 5 sin veredicto**. El 8 de noviembre
+las cifras eran 7, 3 y 13.
+
+Lo que movió la aguja no fue trabajo de documentación: fue descubrir que **el producto ya está en
+operación** —backend en Render, frontend en Vercel— y medirlo. Eso convirtió en verificables dos
+requisitos que habíamos declarado imposibles de comprobar (RNF-11 y el uptime de RNF-18), y obligó
+a retirar un hallazgo que se había levantado sobre una premisa falsa. Además se construyó el
+instrumento que faltaba para el rendimiento (Apache JMeter, dos planes versionados) y **se corrigió
+el único incumplimiento documentable del SRS que habíamos encontrado**: la verificación de
+cobertura vigilaba dos de los cuatro módulos que el SRS nombra uno por uno, y hoy vigila los
+cuatro.
+
+Lo que no se resolvió y condiciona el cierre: el análisis de seguridad de las dependencias del
+backend **sigue apagado ocho días después** y no está en nuestras manos encenderlo; la red de
+pruebas de navegador **no creció con el producto**, que ganó ocho módulos en una semana; y hay una
+incidencia de severidad mayor **sin responsable asignado** cuyo perfil es exactamente el de un
+defecto de concurrencia. Y una parte que nos corresponde reconocer: **las dos únicas incidencias
+que Mantis clasifica como no funcionales son las que el equipo nos asignó, y ninguna pasó por
+nuestra validación.**
+
+| | Valor al 15-nov | Fuente |
+| --- | --- | --- |
+| Incidencias de mantenimiento en el tablero | **31** (18 de esta fase) | `estado de mantis.csv` |
+| Criterios de RNF verificados | **23** | [A6](A6-semaforo-rnf.md) |
+| 🟢 Cumplen con evidencia ejecutable | **9** | A6 §2 |
+| 🟡 Cumplen con reserva declarada | **9** | A6 §2 |
+| 🔴 Sin veredicto o fuera de alcance | **5** | A6 §2 |
+| Hallazgos cerrados con evidencia | **2** (H-08, H-10) | [A4](A4-hallazgos-rnf.md) |
+| Hallazgos en corrección | **4** (H-02, H-04, H-05, H-09) | A4 |
+| Hallazgos abiertos | **7**, de los cuales **3 de severidad alta** (H-01, H-03, H-11) | A4 |
+| Cobertura global del backend | **92,39 %** | `jacocoTestReport` |
+| **¿Se cumple el criterio §13?** | ⏳ **Aún no.** Falta el PR de H-08 integrado, y las decisiones de tratamiento de los 5 rojos y los 9 amarillos | — |
 
 ---
 
 ## 2. Semáforo de RNF
 
-La tabla central del informe. Una fila por cada RNF comprometido por algún mantenimiento.
+El semáforo completo —los 23 criterios con su umbral del SRS, su veredicto y la salida de comando
+que lo sostiene— vive en **[A6 · Semáforo de RNF](A6-semaforo-rnf.md)** y se mantiene actualizado
+ahí hasta el cierre. Esta es la vista de una página.
 
-| RNF | Atributo | Criterio aplicado | Veredicto | Evidencia | Verificó |
-| --- | --- | --- | --- | --- | --- |
-| | | | ⬜ | | |
+| Atributo | 🟢 | 🟡 | 🔴 | Lo que define el resultado |
+| --- | --- | --- | --- | --- |
+| **Seguridad** (RNF-10 a 17) | 7 | 1 | 0 | Fuerte. RNF-11 pasó a verde al medir TLS contra Render. Solo RNF-14 queda por inspección, sin prueba de saneamiento |
+| **Rendimiento** (RNF-01 a 09) | 0 | 5 | 4 | El instrumento existe y falta ejecutarlo. RNF-09 es fuera de alcance; RNF-02, 05 y 07 necesitan datos sembrados |
+| **Disponibilidad** (RNF-18) | 0 | 1 | 1 | Uptime medido con reserva de ventana; MTTR sin ningún evento que medir |
+| **Compatibilidad** (RNF-19) | 0 | 1 | 0 | Chromium y Firefox automatizados, **un solo flujo**. Edge y móvil no se prueban |
+| **Mantenibilidad** (RNF-20) | 2 | 0 | 0 | Cobertura de los cuatro módulos obligatorios y OpenAPI verificada por pruebas |
+| **Accesibilidad** (RNF-21) | 0 | 1 | 0 | Corregido a mano por UI/UX; sin verificación automatizada |
+| **Total** | **9** | **9** | **5** | 23 criterios |
 
-**Leyenda:** 🟢 Cumple · 🟡 Cumple con reservas (explicar cuáles) · 🔴 No verificado o no cumple
-· ⚪ No aplicable a los mantenimientos ejecutados
+**Leyenda:** 🟢 Cumple con evidencia ejecutable · 🟡 Cumple con reserva declarada · 🔴 Sin
+veredicto, sin instrumento o fuera de alcance.
+
+> **La regla que nos aplicamos y que sostiene este informe:** si la casilla de evidencia está
+> vacía, el veredicto no puede ser verde. Los nueve verdes tienen detrás una salida de comando
+> reproducible, pegada en A6 o en A4.
 
 ---
 

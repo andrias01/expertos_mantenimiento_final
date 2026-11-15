@@ -9,7 +9,7 @@ Ingeniería de Software 4 · Universidad Católica de Oriente · 2026
 | **Rol en el manual operativo** | §3.5 Especialista en requisitos no funcionales |
 | **Documento base** | `BITACORAS DE CLASE/Clase#11/Proyecto Mantenimiento.pdf` |
 | **Producto a mantener** | SIGRA (backend Spring Boot 4 + frontend Angular 22) |
-| **Última actualización** | 7 de noviembre de 2026 |
+| **Última actualización** | **15 de noviembre de 2026** (reunión 3 · verificación inicial de RNF) |
 
 > **Cómo usar este documento.** Las secciones 1 a 5 son la base que se lee una vez y se consulta.
 > La sección 6 es la operativa: tiene un bloque por reunión con lo que hay que llevar listo y el
@@ -266,6 +266,9 @@ Estos son los documentos con los que se mide nuestro rol. Viven en esta misma ca
 | **A3** | Criterios de verificación de RNF | `A3-criterios-verificacion.md` | Entrega 1, se refina en 2 | Por titular |
 | **A4** | Registro de hallazgos y riesgos de RNF | `A4-hallazgos-rnf.md` | Vivo, todo el proyecto | Por titular |
 | **A5** | Informe de calidad (verificación final de RNF) | `A5-informe-calidad.md` | Entrega 3 | Ambos |
+| **A6** | Semáforo de RNF con veredicto y evidencia por criterio | `A6-semaforo-rnf.md` | **Entrega 2**, se cierra en la 3 | Ambos |
+| — | Instrumentos de medición (planes de JMeter) | `jmeter/` | Entrega 2 | Andrés |
+| — | Filas para el libro compartido del equipo | `registros-equipo-rnf.md` | Vivo | Ambos |
 
 ### 5.1 A2 · Matriz de impacto — plantilla
 
@@ -693,25 +696,49 @@ a las reuniones 3 y 4:
 ## 9. Bitácora de hallazgos
 
 Resumen vivo. El detalle de cada uno va en `A4-hallazgos-rnf.md` con la plantilla de la
-sección 5.3.
+sección 5.3. **Actualizado el 15 de noviembre de 2026.**
 
 | ID | Severidad | Atributo | Hallazgo | Titular | Estado |
 | --- | --- | --- | --- | --- | --- |
-| H-01 | **Alta** | Seguridad | SCA de dependencias del backend apagado (`SIGRA_ENABLE_*` sin habilitar) | José | Abierto |
-| H-02 | **Alta** | Rendimiento | Nueve requisitos de rendimiento (RNF-01 a 09) sin un solo instrumento de medición | Andrés | Abierto |
-| H-08 | **Alta** | Mantenibilidad | RNF-20 vigila la cobertura de 2 de los 4 módulos obligatorios: RF-14 y RF-16 quedan fuera del umbral | Ambos | Abierto |
-| H-03 | Media | Mantenibilidad | El E2E de navegador cubre un solo flujo (`auth.spec.ts`) | Ambos | Abierto |
-| H-04 | Media | Accesibilidad | RNF-21 sin verificación automatizada; axe no está instalado ni usado | Andrés | Abierto |
-| H-05 | Media | Mantenibilidad | Sin análisis estático en ninguno de los dos repositorios | Ambos | Abierto |
-| H-09 | Media | Disponibilidad | RNF-18 sin medición de uptime ni de MTTR | José | Abierto |
-| H-10 | Media | Seguridad | RNF-11 (TLS 1.2+) no verificable sin entorno de producción | José | Abierto |
-| H-07 | Baja | Mantenibilidad | README del backend dice que JaCoCo está pendiente; `build.gradle` ya lo declara | Ambos | Abierto |
-| ~~H-06~~ | — | — | ~~Ningún RNF cubre disponibilidad~~ · **retirado por falso: RNF-18 existe** | — | Retirado |
+| H-08 | **Alta** | Mantenibilidad | RNF-20 vigilaba la cobertura de 2 de los 4 módulos obligatorios | Ambos | 🟢 **Corregido y verificado** · falta PR |
+| H-10 | Media | Seguridad | RNF-11 (TLS 1.2+) «no verificable sin producción» | José | 🟢 **Cerrado** · la premisa era falsa: sí hay producción |
+| H-01 | **Alta** | Seguridad | SCA de dependencias del backend apagado (`SIGRA_ENABLE_*` sin crear) | José | 🔴 **Abierto · 8 días** · exige permiso `admin` |
+| H-11 | **Alta** | Rendimiento | La incidencia 0000053 (alta/mayor) no tiene dueño y es de perfil no funcional | Andrés | 🔴 **Nuevo** |
+| H-03 | **Alta** ↑ | Mantenibilidad | El E2E de navegador cubre un solo flujo, y el producto creció ocho módulos | Ambos | 🔴 **Abierto** · sube de media a alta |
+| H-02 | **Alta** | Rendimiento | Nueve RNF de rendimiento sin instrumento | Andrés | 🟡 **En corrección** · JMeter creado; 4 rojos quedan |
+| H-09 | Media → baja | Disponibilidad | RNF-18 sin medición de uptime ni de MTTR | José | 🟡 **En corrección** · uptime medido; MTTR sin evento |
+| H-12 | Media | Mantenibilidad | Los dos RNF que el equipo nos asignó se resolvieron sin nuestra validación | Ambos | 🔴 **Nuevo** · es contra nosotros |
+| H-13 | Media | Trazabilidad | Ninguna de las 31 incidencias está en estado `cerrada` en Mantis | Ambos | 🔴 **Nuevo** |
+| H-04 | Media | Accesibilidad | RNF-21 sin verificación automatizada | Andrés | 🟡 **Abierto** · UI/UX lo corrigió a mano (PR #91) |
+| H-05 | Media | Mantenibilidad | Sin análisis estático en ninguno de los dos repositorios | Ambos | 🟡 **En corrección** · plan de SonarQube listo |
+| H-14 | Baja | Mantenibilidad | El entorno local no compila el frontend (Node por debajo del mínimo) | Andrés | 🔴 **Nuevo** |
+| H-07 | Baja | Mantenibilidad | README del backend contradice a `build.gradle` sobre JaCoCo | Ambos | 🔴 **Abierto** · va en el mismo PR que H-08 |
+| ~~H-06~~ | — | — | ~~Ningún RNF cubre disponibilidad~~ · **retirado por falso: RNF-18 existe** | — | Retirado · 7 nov |
 
-> **Por qué H-06 queda en la tabla.** Retirar un hallazgo en silencio es peor que haberlo abierto.
-> Se levantó leyendo las menciones de RNF en el código, donde RNF-18 no aparece citado, y se
-> concluyó de más. Queda como constancia de que verificamos contra el SRS y corregimos. El detalle
-> está en [A4](A4-hallazgos-rnf.md#h-06--retirado-por-falso).
+### 9.1 Movimiento del 8 al 15 de noviembre
+
+| | 8-nov | 15-nov |
+| --- | --- | --- |
+| Abiertos | 9 | **7** |
+| En corrección | 0 | **4** |
+| Cerrados con evidencia | 0 | **2** |
+| De severidad alta | 3 | **4** |
+
+### 9.2 La leccion de metodo que se repite
+
+**Dos de catorce hallazgos se levantaron asumiendo en vez de comprobando**, y los dos se cayeron:
+
+- **H-06**: se afirmó que ningún RNF cubría disponibilidad, leyendo las menciones de RNF en el
+  código. RNF-18 existía en el SRS. **Retirado el 7 de noviembre.**
+- **H-10**: se afirmó que no había entorno de producción para verificar TLS. Sí lo había, y la URL
+  estaba a la vista en `environment.ts`. **Cerrado el 15 de noviembre** — y el requisito **cumple**.
+
+La regla que sale de ahí, y que conviene decir en la retrospectiva: **antes de escribir «no se
+puede verificar», abrir el archivo donde estaría la respuesta.** Un hallazgo falso nos cuesta más
+credibilidad que un hallazgo que no encontramos.
+
+> **Por qué H-06 y H-10 quedan en la tabla.** Retirar un hallazgo en silencio es peor que haberlo
+> abierto. Quedan como constancia de que verificamos y corregimos.
 
 ---
 

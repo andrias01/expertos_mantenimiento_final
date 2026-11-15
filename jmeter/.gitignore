@@ -1,0 +1,11 @@
+# Registro de ejecución de JMeter: ruido, no evidencia.
+jmeter.log
+
+# Informes HTML: 127 archivos y ~3 MB por corrida, casi todo librerías de JMeter.
+# Se regeneran desde el .jtl, que sí se versiona:
+#   jmeter -g resultados/rnf18-render.jtl -o resultados/rnf18-render-reporte
+resultados/*-reporte/
+
+# JMeter no se versiona (pesa ~90 MB). Ver README.md §1 para instalarlo.
+apache-jmeter-*/
+jmeter.tgz

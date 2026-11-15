@@ -106,15 +106,25 @@ El SRS define la **clasificación de incidentes** que RNF-18 referencia (secció
 
 ## 2. Resumen de cobertura
 
-| Estado | Cantidad | RNF |
-| --- | --- | --- |
-| 🟢 **Verificable hoy** | 7 | 10, 12, 13, 15, 16, 17, y RNF-20 (b) |
-| 🟡 **Verificable con reservas** | 3 | 14 (sin prueba de saneamiento), 19 (un solo flujo), 20 (a) (2 de 4 módulos) |
-| 🔴 **Sin instrumento** | 12 | **01–09** (rendimiento), 11 (TLS), 18 (disponibilidad), 21 (accesibilidad) |
+> **Actualizado el 15 de noviembre de 2026.** El semáforo vivo, con la evidencia de cada veredicto,
+> está en [A6](A6-semaforo-rnf.md). Esta tabla guarda la comparación entre las dos fechas.
 
-> **La cifra honesta para la reunión del 8:** de 21 requisitos no funcionales, **7 se pueden
-> verificar hoy sin trabajo adicional** y **12 no tienen instrumento de medición**. Nueve de esos
-> doce son de rendimiento. Ese es el titular de nuestro diagnóstico.
+Base de 23 criterios: RNF-18 cuenta como dos (uptime y MTTR se verifican distinto) y RNF-20
+también (cobertura y OpenAPI).
+
+| Estado | 8-nov | 15-nov | RNF al 15 de noviembre |
+| --- | --- | --- | --- |
+| 🟢 **Verificado con evidencia** | 7 | **9** | 10, **11**, 12, 13, 15, 16, 17, **20 (a)**, 20 (b) |
+| 🟡 **Parcial, con reserva declarada** | 3 | **9** | **01**, **03**, **04**, **06**, **08**, 14, **18 (uptime)**, 19, **21** |
+| 🔴 **Sin instrumento o fuera de alcance** | 13 | **5** | 02, 05, 07, 09, 18 (MTTR) |
+
+**Lo que movió la aguja entre las dos fechas:** el producto **ya está desplegado** (backend en
+Render, frontend en Vercel), lo que volvió medibles RNF-11 y el uptime de RNF-18; se creó el
+instrumento de rendimiento con JMeter; y RNF-20 (a) pasó a cumplir completo al corregir H-08.
+
+**Lo que sigue en rojo, y por qué:** RNF-02, RNF-05 y RNF-07 necesitan datos sembrados (alcanzable
+antes del cierre); RNF-09 pide cuatro meses de operación continua, **fuera de la ventana del
+proyecto**; y el MTTR de RNF-18 no tiene ninguna caída registrada que medir.
 
 ### 2.1 Los cinco atributos que el manual nos exige revisar
 
@@ -187,4 +197,4 @@ defecto** y hay que verificarlos o justificar por qué no aplican.
 
 ---
 
-[Guía del rol](GUIA-TRABAJO-RNF.md) · [A2 Matriz de impacto](A2-matriz-impacto-calidad.md) · [A3 Criterios](A3-criterios-verificacion.md) · [A4 Hallazgos](A4-hallazgos-rnf.md) · [A5 Informe](A5-informe-calidad.md)
+[Guía del rol](GUIA-TRABAJO-RNF.md) · [A2 Matriz de impacto](A2-matriz-impacto-calidad.md) · [A3 Criterios](A3-criterios-verificacion.md) · [A4 Hallazgos](A4-hallazgos-rnf.md) · [A5 Informe](A5-informe-calidad.md) · [A6 Semáforo](A6-semaforo-rnf.md)
