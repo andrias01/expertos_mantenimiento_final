@@ -416,3 +416,16 @@ Guardar la salida de cada comando: **es la evidencia**, y sin ella el veredicto 
 ---
 
 [Guía del rol](GUIA-TRABAJO-RNF.md) · [A1 Catálogo](A1-catalogo-rnf.md) · [A2 Matriz de impacto](A2-matriz-impacto-calidad.md) · [A4 Hallazgos](A4-hallazgos-rnf.md) · [A5 Informe](A5-informe-calidad.md) · [A6 Semáforo](A6-semaforo-rnf.md)
+
+---
+
+## 10. Verificación de navegación por rol · 15-nov-2026
+
+| Criterio | Procedimiento ejecutado | Resultado | Alcance |
+| --- | --- | --- | --- |
+| Sesión y rutas privadas (RNF-13/15) | Login/logout con una cuenta autorizada por rol; abrir después una ruta privada directa | Logout volvió al login; rutas privadas sin sesión redirigieron a login | No se inspeccionaron tokens ni se esperó expiración |
+| Separación de roles (RNF-13) | Abrir `/admin/auditoria` como PROFESOR y `/profesor/asignaturas` como ESTUDIANTE | Ambas rutas mostraron 403 | Guarda UI; no valida los endpoints del servidor |
+| Error visible (RNF-17) | Recorrido de módulos por rol | Mensajes genéricos sin traza visible en cuatro vistas; consola sin error/warn observado | No se capturaron respuestas JSON ni logs backend |
+| Responsive de inicio (RNF-08/21) | Revisar login y pantalla ESTUDIANTE a viewport integrado 608 × 667 | Sin overflow horizontal observado | No es prueba de red 5 Mbps, móvil físico, contraste o teclado completo |
+
+Los recorridos y sus rutas están en [ADMINISTRADOR](evidencias-rnf/jose-validacion-2026-11/navegador-administrador.md), [PROFESOR](evidencias-rnf/jose-validacion-2026-11/navegador-profesor.md) y [ESTUDIANTE](evidencias-rnf/jose-validacion-2026-11/navegador-estudiante.md). La tabla no reemplaza los criterios de integración que requieren un QA aislado.

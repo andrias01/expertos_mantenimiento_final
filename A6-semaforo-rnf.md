@@ -14,6 +14,11 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 > **Regla que nos aplicamos.** Si la casilla de evidencia está vacía, el veredicto **no puede ser
 > verde**. Todo lo verde de esta tabla tiene una salida de comando reproducible detrás.
 
+> **Vigencia.** Este corte inicial se refiere a backend `d6fa7e1` y frontend `a3135ec`. El
+> complemento de auditoría fechado el 15-nov-2026 conserva las cifras históricas, pero corrige el
+> estado vigente de H-08 para el backend `c1b1950` y añade los recorridos de navegador. Véase
+> [complemento de semáforo](evidencias-rnf/jose-validacion-2026-11/resumen-ejecutivo.md).
+
 ---
 
 ## 1. El titular, en tres cifras
@@ -247,7 +252,7 @@ decisión es un criterio de finalización incumplido (§13), y nos lo cobran a n
 
 | Incidencia | Por qué nos toca | Estado en Mantis | Nuestra lectura |
 | --- | --- | --- | --- |
-| **0000053** (alta/mayor, 14-nov) | «Falla intermitente al cargar combos … en múltiples módulos, presente en todos los roles», reproducibilidad *a veces* | **nueva · sin asignar** | Es el perfil exacto de un defecto de concurrencia. `RNF-01-06-rendimiento.jmx` es el instrumento para reproducirlo. Severidad **mayor + prioridad alta ⇒ bloquea la entrega (§7)** y nadie lo tiene |
+| **0000053** (alta/mayor, 14-nov) | «Falla intermitente al cargar combos … en múltiples módulos, presente en todos los roles», reproducibilidad *a veces* | **nueva · sin asignar** | Síntoma e impacto RNF por confirmar; la causa no está demostrada. Reproducir primero en QA aislado y luego decidir si corresponde JMeter. El manual aplica bloqueo a defectos altos confirmados; validar clasificación e impacto con evidencia |
 | **0000038** (alta/mayor) | Mantis la clasifica como **«No Funcionalidad»**; la guía del equipo nos asigna «definir y validar los patrones de paginación y buscadores» | **asignada desde el 8-nov** | 7 días sin movimiento. Es nuestra responsabilidad de validación y no hemos podido ejercerla porque no hay implementación que validar |
 | **0000040** (alta/mayor) | Igual: **«No Funcionalidad»**, patrón de paginación | **resuelta** (resolución *abierta*) | Se resolvió **sin que validáramos el patrón**. Hay que revisarla y dejar el veredicto escrito |
 | **0000029** (alta/fallo, seguridad) | Bloqueo tras 5 intentos fallidos (RF-04, uno de los 4 módulos del RNF-20) | **resuelta** (resolución *abierta*) | Verificado: está implementado (`Usuario.intentosFallidos`, `fechaBloqueo`, `estaBloqueado`, 423 documentado) y probado. Solo falta cerrar la resolución en Mantis |
@@ -260,3 +265,20 @@ decisión es un criterio de finalización incumplido (§13), y nos lo cobran a n
 ---
 
 [Guía del rol](GUIA-TRABAJO-RNF.md) · [A1 Catálogo](A1-catalogo-rnf.md) · [A2 Matriz de impacto](A2-matriz-impacto-calidad.md) · [A3 Criterios](A3-criterios-verificacion.md) · [A4 Hallazgos](A4-hallazgos-rnf.md) · [A5 Informe](A5-informe-calidad.md) · [JMeter](jmeter/README.md)
+
+---
+
+## Complemento de semáforo · verificación del 15-nov-2026
+
+El conteo previo **9 verdes / 9 amarillos / 5 rojos** y su base de **23 criterios** se conservan como línea histórica; no se ajustan con la cifra distinta del acta preparada de reunión 3.
+
+La evidencia nueva no permite marcar como verde ningún requisito de forma global. En particular:
+
+- RNF-11: el frontend respondió con HTTPS/TLS 1.2 y 1.3 y HSTS, pero la sonda TLS 1.0 fue inconclusa y no cubrió cada ruta/dato del backend.
+- RNF-13: las dos rutas cruzadas por rol mostraron 403 y las rutas privadas sin sesión redirigieron; Apéndice 4.1 y endpoints backend siguen pendientes.
+- RNF-15: logout y bloqueo posterior de rutas se observaron; expiración y eliminación directa del token no se inspeccionaron en vivo.
+- RNF-20(a): la rama backend actual aún no aplica regla por paquete a RF-14/RF-16; H-08 queda abierto para `c1b1950`.
+- RNF-20(b): las clases OpenAPI no están ejecutadas en la CI #199 y el GET productivo de documentación no respondió en 20 s.
+- RNF-18: la sonda corta sigue siendo insuficiente para uptime/MTTR; además, algunas vistas productivas mostraron error genérico sin que ello mida una caída total.
+
+La tabla completa por criterio y su evidencia está en [resumen ejecutivo](evidencias-rnf/jose-validacion-2026-11/resumen-ejecutivo.md); limitaciones y trabajos restantes están en [pruebas pendientes](evidencias-rnf/jose-validacion-2026-11/pruebas-pendientes.md).
