@@ -1,0 +1,96 @@
+# Herramientas de verificacion de RNF · SIGRA
+# Especialistas en requisitos no funcionales: Andres Felipe Velez Alcaraz · Jose Alejandro Valencia
+#
+# Levanta tres contenedores, ninguno toca Supabase ni el despliegue de Render:
+#
+#   sigra-pg-rnf   PostgreSQL 16 AISLADO, para poder correr JMeter con 20 usuarios
+#                  sin cargar la base compartida del equipo.           -> 5433
+#   sonarqube      Analisis estatico y nota de mantenibilidad (H-05).  -> 9000
+#   uptime-kuma    Uptime real del backend en Render durante dias,
+#                  que es lo que RNF-18 exige y una sonda de 3 minutos no demuestra. -> 3001
+#
+# Puertos elegidos para no chocar con los contenedores que ya corren:
+# sigra-backend (8080) y sigra-frontend (4200).
+#
+# Uso:  pwsh -File levantar.ps1          (ver README.md)
+
+name: sigra-rnf
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # PostgreSQL aislado. La configuracion replica exactamente la del CI del
+  # frontend (job "E2E integrada"), para que el backend arranque con
+  # JPA_DDL_AUTO=validate sin sorpresas: la base es "postgres" y "sigra" es un
+  # SCHEMA dentro de ella, no una base aparte.
+  # ---------------------------------------------------------------------------
+  sigra-pg-rnf:
+    image: postgres:16
+    container_name: sigra-pg-rnf
+    networks: [sigra-rnf]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: rnf_local_solo_pruebas
+      POSTGRES_DB: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - sigra-pg-rnf-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # SonarQube Community. Cierra H-05 (sin analisis estatico) y sostiene el
+  # veredicto de RNF-20 con algo mas que cobertura: complejidad, duplicacion y
+  # reglas incumplidas. Tambien ingiere el XML de JaCoCo que ya generamos.
+  #
+  # Nota: la primera arrancada tarda 1-2 minutos (levanta Elasticsearch dentro).
+  # Si el contenedor se reinicia en bucle, casi siempre es memoria: necesita
+  # ~2 GB. Hay 8 GB disponibles en esta maquina, asi que deberia bastar.
+  # ---------------------------------------------------------------------------
+  sonarqube:
+    image: sonarqube:community
+    container_name: sonarqube
+    networks: [sigra-rnf]
+    environment:
+      # En Docker Desktop no hay un Elasticsearch productivo que tunear y el
+      # bootstrap check falla sin esto.
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube-data:/opt/sonarqube/data
+      - sonarqube-logs:/opt/sonarqube/logs
+      - sonarqube-extensions:/opt/sonarqube/extensions
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Uptime Kuma. Es el unico contenedor de los tres que MEJORA SOLO con el paso
+  # de las horas: cada hora encendido es una hora de ventana real para RNF-18.
+  # Levantarlo primero y dejarlo corriendo.
+  # ---------------------------------------------------------------------------
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    networks: [sigra-rnf]
+    ports:
+      - "3001:3001"
+    volumes:
+      - uptime-kuma-data:/app/data
+    restart: always
+
+networks:
+  sigra-rnf:
+    name: sigra-rnf
+    external: true
+
+volumes:
+  sigra-pg-rnf-data:
+  sonarqube-data:
+  sonarqube-logs:
+  sonarqube-extensions:
+  uptime-kuma-data:

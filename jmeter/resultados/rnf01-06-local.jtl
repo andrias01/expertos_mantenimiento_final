@@ -1,0 +1,401 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1794838504704,1380,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,865,322,3,3,http://127.0.0.1:8081/api/v1/auth/login,1371,0,29
+1794838505507,873,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,865,322,3,3,http://127.0.0.1:8081/api/v1/auth/login,871,0,2
+1794838506504,515,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,865,322,4,4,http://127.0.0.1:8081/api/v1/auth/login,513,0,3
+1794838507136,292,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,1299,473,4,4,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,290,0,4
+1794838507383,45,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,1299,473,4,4,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,43,0,2
+1794838508020,62,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,1299,473,5,5,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,60,0,3
+1794838507506,619,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,865,322,5,5,http://127.0.0.1:8081/api/v1/auth/login,618,0,2
+1794838508429,153,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,3571,474,6,6,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,152,0,2
+1794838508429,154,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,3571,474,6,6,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,152,0,2
+1794838508512,491,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,865,322,6,6,http://127.0.0.1:8081/api/v1/auth/login,490,0,2
+1794838509084,59,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,3571,474,6,6,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,55,0,3
+1794838509128,50,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,1299,473,6,6,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,50,0,1
+1794838509589,35,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,762,461,7,7,http://127.0.0.1:8081/api/v1/niveles-logro,31,0,2
+1794838509589,37,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,762,461,7,7,http://127.0.0.1:8081/api/v1/niveles-logro,31,0,2
+1794838509512,507,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,865,322,7,7,http://127.0.0.1:8081/api/v1/auth/login,506,0,2
+1794838510019,32,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,1299,473,7,7,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,31,0,1
+1794838510155,42,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,762,461,7,7,http://127.0.0.1:8081/api/v1/niveles-logro,36,0,2
+1794838510187,82,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,3571,474,7,7,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,80,0,2
+1794838510505,491,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,865,322,8,8,http://127.0.0.1:8081/api/v1/auth/login,489,0,2
+1794838511023,47,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,1299,473,8,8,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,46,0,2
+1794838511053,54,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,3571,474,8,8,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,53,0,3
+1794838511271,22,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,762,461,8,8,http://127.0.0.1:8081/api/v1/niveles-logro,20,0,1
+1794838510626,835,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,865,561,8,8,http://127.0.0.1:8081/api/v1/auth/login,834,0,2
+1794838511998,61,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,1299,473,9,9,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,58,0,2
+1794838510628,1484,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,865,561,9,9,http://127.0.0.1:8081/api/v1/auth/login,1480,0,2
+1794838512073,57,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,3571,474,9,9,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,56,0,2
+1794838512110,29,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,762,461,9,9,http://127.0.0.1:8081/api/v1/niveles-logro,27,0,2
+1794838512463,49,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,1299,473,10,10,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,46,0,2
+1794838511198,1560,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,865,561,10,10,http://127.0.0.1:8081/api/v1/auth/login,1559,0,2
+1794838513061,25,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,3571,474,10,10,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,25,0,1
+1794838513114,30,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,1299,473,10,10,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,29,0,1
+1794838513132,28,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,762,461,10,10,http://127.0.0.1:8081/api/v1/niveles-logro,25,0,1
+1794838511509,1711,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,865,322,10,10,http://127.0.0.1:8081/api/v1/auth/login,1710,0,2
+1794838513520,29,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,3571,474,11,11,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,28,0,1
+1794838512294,1356,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,865,561,11,11,http://127.0.0.1:8081/api/v1/auth/login,1355,0,2
+1794838513760,31,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,1299,473,11,11,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,30,0,1
+1794838514088,28,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,762,461,11,11,http://127.0.0.1:8081/api/v1/niveles-logro,27,0,3
+1794838512502,1634,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,865,322,11,11,http://127.0.0.1:8081/api/v1/auth/login,1633,0,2
+1794838514147,34,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,3571,474,11,11,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,33,0,2
+1794838514222,20,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,1299,473,11,11,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,19,0,1
+1794838514553,21,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,762,461,12,12,http://127.0.0.1:8081/api/v1/niveles-logro,20,0,2
+1794838513141,1549,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,865,561,12,12,http://127.0.0.1:8081/api/v1/auth/login,1547,0,4
+1794838514660,35,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,1299,473,12,12,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,33,0,2
+1794838514796,32,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,3571,474,12,12,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,31,0,2
+1794838513505,1641,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,865,322,12,12,http://127.0.0.1:8081/api/v1/auth/login,1640,0,1
+1794838515142,35,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,1299,473,12,12,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,35,0,2
+1794838515187,16,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,762,461,12,12,http://127.0.0.1:8081/api/v1/niveles-logro,14,0,1
+1794838515248,29,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,3571,474,12,12,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,28,0,1
+1794838514163,1468,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,865,561,13,13,http://127.0.0.1:8081/api/v1/auth/login,1467,0,2
+1794838515693,39,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,1299,473,13,13,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,38,0,2
+1794838515697,48,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,3571,474,13,13,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,47,0,1
+1794838515830,13,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,762,461,13,13,http://127.0.0.1:8081/api/v1/niveles-logro,12,0,1
+1794838514509,1588,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,865,322,13,13,http://127.0.0.1:8081/api/v1/auth/login,1586,0,1
+1794838516147,27,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,1299,473,13,13,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,25,0,2
+1794838516178,26,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,3571,474,13,13,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,25,0,2
+1794838516279,20,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,762,461,13,13,http://127.0.0.1:8081/api/v1/niveles-logro,19,0,1
+1794838515128,1438,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,865,561,14,14,http://127.0.0.1:8081/api/v1/auth/login,1437,0,2
+1794838516633,41,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,1299,473,14,14,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,40,0,2
+1794838516733,30,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,3571,474,14,14,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,28,0,2
+1794838516747,16,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,762,461,14,14,http://127.0.0.1:8081/api/v1/niveles-logro,15,0,1
+1794838515522,1527,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,865,322,14,14,http://127.0.0.1:8081/api/v1/auth/login,1526,0,1
+1794838517100,33,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,1299,473,14,14,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,28,0,2
+1794838517175,21,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,3571,474,14,14,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,19,0,1
+1794838517205,15,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,762,461,14,14,http://127.0.0.1:8081/api/v1/niveles-logro,14,0,2
+1794838515576,1973,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,865,561,15,15,http://127.0.0.1:8081/api/v1/auth/login,1973,0,1
+1794838517567,35,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,1299,473,15,15,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,34,0,2
+1794838517675,30,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,3571,474,15,15,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,29,0,1
+1794838517765,24,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,762,461,15,15,http://127.0.0.1:8081/api/v1/niveles-logro,23,0,3
+1794838516205,1828,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,865,561,15,15,http://127.0.0.1:8081/api/v1/auth/login,1828,0,1
+1794838518051,44,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,1299,473,15,15,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,44,0,2
+1794838518135,37,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,3571,474,15,15,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,37,0,1
+1794838518198,13,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,762,461,15,15,http://127.0.0.1:8081/api/v1/niveles-logro,12,0,1
+1794838516506,1981,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,865,322,15,15,http://127.0.0.1:8081/api/v1/auth/login,1980,0,2
+1794838518555,38,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,1299,473,16,16,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,37,0,3
+1794838518605,25,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,3571,474,16,16,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,24,0,1
+1794838518706,17,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,762,461,16,16,http://127.0.0.1:8081/api/v1/niveles-logro,14,0,1
+1794838516844,2122,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,865,561,16,16,http://127.0.0.1:8081/api/v1/auth/login,2117,0,2
+1794838519035,26,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,1299,473,16,16,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,24,0,1
+1794838519096,23,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,3571,474,16,16,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,22,0,2
+1794838519174,19,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,762,461,16,16,http://127.0.0.1:8081/api/v1/niveles-logro,18,0,1
+1794838517301,2111,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,865,561,16,16,http://127.0.0.1:8081/api/v1/auth/login,2111,0,3
+1794838519489,22,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,1299,473,17,17,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,21,0,1
+1794838519594,34,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,3571,474,17,17,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,33,0,1
+1794838519630,14,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,762,461,17,17,http://127.0.0.1:8081/api/v1/niveles-logro,13,0,2
+1794838517501,2339,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,865,322,17,17,http://127.0.0.1:8081/api/v1/auth/login,2338,0,2
+1794838519967,30,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,1299,473,17,17,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,28,0,1
+1794838520062,36,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,3571,474,17,17,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,34,0,2
+1794838520119,39,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,762,461,17,17,http://127.0.0.1:8081/api/v1/niveles-logro,38,0,2
+1794838517765,2605,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,865,561,17,17,http://127.0.0.1:8081/api/v1/auth/login,2604,0,3
+1794838520413,31,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,1299,473,17,17,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,30,0,1
+1794838520517,52,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,3571,474,18,18,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,52,0,1
+1794838520628,19,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,762,461,18,18,http://127.0.0.1:8081/api/v1/niveles-logro,17,0,1
+1794838518221,2576,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,865,561,18,18,http://127.0.0.1:8081/api/v1/auth/login,2574,0,2
+1794838520842,31,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,1299,473,18,18,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,30,0,2
+1794838520999,22,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,3571,474,18,18,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,21,0,1
+1794838521099,18,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,762,461,18,18,http://127.0.0.1:8081/api/v1/niveles-logro,15,0,2
+1794838518510,2705,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,865,322,18,18,http://127.0.0.1:8081/api/v1/auth/login,2704,0,3
+1794838521370,47,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,1299,473,18,18,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,47,0,4
+1794838521448,38,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,3571,474,18,18,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,37,0,2
+1794838521571,24,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,762,461,19,19,http://127.0.0.1:8081/api/v1/niveles-logro,22,0,3
+1794838518791,2955,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,865,561,19,19,http://127.0.0.1:8081/api/v1/auth/login,2954,0,1
+1794838521798,59,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,1299,473,19,19,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,56,0,2
+1794838521875,33,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,3571,474,19,19,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,32,0,2
+1794838522023,19,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,762,461,19,19,http://127.0.0.1:8081/api/v1/niveles-logro,17,0,1
+1794838519212,3032,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,865,561,19,19,http://127.0.0.1:8081/api/v1/auth/login,3032,0,2
+1794838522216,37,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,1299,473,19,19,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,36,0,1
+1794838522419,28,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,3571,474,19,19,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,26,0,1
+1794838522487,42,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,41,0,2
+1794838519512,3723,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,865,322,20,20,http://127.0.0.1:8081/api/v1/auth/login,3722,0,1
+1794838522909,338,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,337,0,2
+1794838519723,3947,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,3946,0,1
+1794838522748,929,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,929,0,2
+1794838522860,823,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,823,0,1
+1794838523448,245,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,244,0,1
+1794838520193,4584,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-11,text,false,"The operation lasted too long: It took 4,584 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4583,0,2
+1794838523245,1546,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,1544,0,2
+1794838523254,1544,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,1543,0,1
+1794838520502,4301,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-17,text,false,"The operation lasted too long: It took 4,301 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,322,20,20,http://127.0.0.1:8081/api/v1/auth/login,4300,0,2
+1794838524690,562,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,561,0,2
+1794838520645,5080,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-7,text,false,"The operation lasted too long: It took 5,080 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,5079,0,2
+1794838524243,1492,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,1491,0,2
+1794838521159,4580,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-12,text,false,"The operation lasted too long: It took 4,580 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4579,0,2
+1794838524675,1072,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,1071,0,1
+1794838524690,1063,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,1062,0,2
+1794838521501,4256,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-18,text,false,"The operation lasted too long: It took 4,256 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,322,20,20,http://127.0.0.1:8081/api/v1/auth/login,4255,0,2
+1794838525793,31,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,30,0,1
+1794838525793,39,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,39,0,1
+1794838525808,31,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,30,0,2
+1794838525808,45,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,45,0,2
+1794838521649,4527,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-1,text,false,"The operation lasted too long: It took 4,527 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4526,0,2
+1794838522120,4536,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-2,text,false,"The operation lasted too long: It took 4,536 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4535,0,2
+1794838526728,30,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,30,0,1
+1794838526743,30,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,29,0,2
+1794838526743,45,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,45,0,2
+1794838526759,36,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,34,0,2
+1794838526759,37,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,36,0,2
+1794838526759,49,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,48,0,2
+1794838526834,19,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,16,0,2
+1794838526834,33,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,32,0,2
+1794838526865,29,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,29,0,2
+1794838522502,4674,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-19,text,false,"The operation lasted too long: It took 4,674 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,322,20,20,http://127.0.0.1:8081/api/v1/auth/login,4673,0,3
+1794838527191,32,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,32,0,1
+1794838527666,26,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,25,0,2
+1794838527788,13,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,12,0,1
+1794838527773,35,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,34,0,2
+1794838522597,5224,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-13,text,false,"The operation lasted too long: It took 5,224 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,5223,0,2
+1794838527804,27,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,24,0,1
+1794838527804,37,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,36,0,1
+1794838527818,26,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,25,0,2
+1794838527880,25,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,24,0,1
+1794838527896,19,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,18,0,1
+1794838528186,26,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,25,0,2
+1794838528232,25,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,24,0,1
+1794838523044,5230,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-3,text,false,"The operation lasted too long: It took 5,230 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,5228,0,2
+1794838523513,5198,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-20,text,false,"The operation lasted too long: It took 5,198 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,322,20,20,http://127.0.0.1:8081/api/v1/auth/login,5197,0,1
+1794838528694,18,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,17,0,1
+1794838528816,14,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,13,0,1
+1794838528831,26,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,25,0,2
+1794838528846,20,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,20,0,2
+1794838528847,19,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,19,0,1
+1794838523544,6042,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-8,text,false,"The operation lasted too long: It took 6,042 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,6042,0,2
+1794838529271,326,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,325,0,2
+1794838524259,5345,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-14,text,false,"The operation lasted too long: It took 5,345 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,5345,0,2
+1794838529227,386,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,385,0,1
+1794838529287,338,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,336,0,2
+1794838529714,21,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,19,0,1
+1794838529713,29,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,29,0,1
+1794838524706,6263,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-4,text,false,"The operation lasted too long: It took 6,263 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,6263,0,1
+1794838529866,1108,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,1108,0,1
+1794838526265,4713,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-9,text,false,"The operation lasted too long: It took 4,713 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4713,0,2
+1794838530626,842,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,840,0,2
+1794838526850,5174,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-15,text,false,"The operation lasted too long: It took 5,174 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,5173,0,2
+1794838530595,1440,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,1440,0,2
+1794838527804,4236,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-5,text,false,"The operation lasted too long: It took 4,236 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4235,0,1
+1794838530611,1440,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,1438,0,1
+1794838530626,1430,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,1429,0,2
+1794838530748,1316,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,1315,0,2
+1794838531980,95,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,94,0,1
+1794838527865,4225,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-10,text,false,"The operation lasted too long: It took 4,225 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4224,0,1
+1794838531980,119,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,118,0,1
+1794838531980,127,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,127,0,1
+1794838528816,3658,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,3657,0,1
+1794838528846,4171,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-6,text,false,"The operation lasted too long: It took 4,171 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4171,0,2
+1794838533027,27,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,26,0,1
+1794838533042,24,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,23,0,1
+1794838533042,26,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,25,0,1
+1794838533058,14,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,13,0,1
+1794838533057,22,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,22,0,2
+1794838533073,13,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,13,0,1
+1794838533103,26,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,26,0,1
+1794838533103,34,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,33,0,1
+1794838533118,30,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,29,0,1
+1794838533481,32,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,31,0,1
+1794838528907,4622,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-11,text,false,"The operation lasted too long: It took 4,622 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4621,0,1
+1794838528922,5062,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-17,text,false,"The operation lasted too long: It took 5,062 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,5061,0,1
+1794838534026,34,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,33,0,2
+1794838534060,22,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,22,0,2
+1794838534073,17,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,16,0,2
+1794838534073,31,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,30,0,2
+1794838534088,24,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,23,0,3
+1794838534133,23,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,22,0,1
+1794838534148,17,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,16,0,1
+1794838534163,27,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,26,0,2
+1794838529836,4630,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-7,text,false,"The operation lasted too long: It took 4,630 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4629,0,1
+1794838534515,24,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,23,0,1
+1794838534545,26,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,25,0,1
+1794838529881,5036,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-12,text,false,"The operation lasted too long: It took 5,036 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,5036,0,1
+1794838534988,27,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,27,0,1
+1794838535063,21,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,20,0,1
+1794838535093,17,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,13,0,3
+1794838535109,17,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,16,0,2
+1794838535168,17,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,15,0,2
+1794838529881,6014,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-18,text,false,"The operation lasted too long: It took 6,014 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,6014,0,1
+1794838535549,354,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,353,0,1
+1794838530611,5298,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-1,text,false,"The operation lasted too long: It took 5,298 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,5297,0,1
+1794838535472,448,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,448,0,2
+1794838535579,349,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,347,0,1
+1794838535921,27,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,26,0,2
+1794838536031,20,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,20,0,2
+1794838536092,16,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,15,0,2
+1794838530748,6591,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-2,text,false,"The operation lasted too long: It took 6,591 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,6589,0,2
+1794838532480,4863,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-19,text,false,"The operation lasted too long: It took 4,863 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4861,0,1
+1794838536930,919,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,918,0,1
+1794838537053,805,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,803,0,2
+1794838533087,5200,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-13,text,false,"The operation lasted too long: It took 5,200 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,5199,0,2
+1794838536900,1395,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,1393,0,2
+1794838534073,4226,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-3,text,false,"The operation lasted too long: It took 4,226 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4225,0,2
+1794838536915,1394,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,1394,0,2
+1794838536930,1385,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,1384,0,1
+1794838536961,1360,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,1359,0,2
+1794838534088,4236,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-20,text,false,"The operation lasted too long: It took 4,236 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4236,0,3
+1794838538345,26,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,25,0,2
+1794838538345,39,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,36,0,2
+1794838535093,3657,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,3657,0,3
+1794838535123,4094,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-14,text,false,"The operation lasted too long: It took 4,094 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4094,0,2
+1794838539289,25,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,24,0,2
+1794838539305,24,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,23,0,1
+1794838539305,29,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,28,0,1
+1794838539320,21,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,19,0,2
+1794838539320,27,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,26,0,2
+1794838539335,17,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,16,0,2
+1794838539335,24,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,24,0,2
+1794838539381,17,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,16,0,2
+1794838539396,17,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,16,0,2
+1794838535168,4518,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-9,text,false,"The operation lasted too long: It took 4,518 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4517,0,2
+1794838539761,26,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,25,0,2
+1794838535199,4986,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-4,text,false,"The operation lasted too long: It took 4,986 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,20,20,http://127.0.0.1:8081/api/v1/auth/login,4985,0,1
+1794838540232,38,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,1299,473,20,20,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,37,0,1
+1794838540323,20,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,19,0,1
+1794838540338,23,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,22,0,2
+1794838540338,28,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,3571,474,20,20,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,27,0,1
+1794838540353,18,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-1,text,true,,762,461,20,20,http://127.0.0.1:8081/api/v1/niveles-logro,17,0,2
+1794838540369,20,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,3571,474,19,19,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,19,0,2
+1794838540413,12,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,762,461,19,19,http://127.0.0.1:8081/api/v1/niveles-logro,11,0,2
+1794838540428,11,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-2,text,true,,762,461,19,19,http://127.0.0.1:8081/api/v1/niveles-logro,11,0,1
+1794838536122,4570,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-15,text,false,"The operation lasted too long: It took 4,570 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,18,18,http://127.0.0.1:8081/api/v1/auth/login,4569,0,1
+1794838540688,22,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,1299,473,18,18,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,21,0,2
+1794838540795,22,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,3571,474,18,18,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,21,0,2
+1794838536137,5057,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-5,text,false,"The operation lasted too long: It took 5,057 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,18,18,http://127.0.0.1:8081/api/v1/auth/login,5056,0,2
+1794838541193,25,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,1299,473,18,18,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,24,0,2
+1794838541284,21,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,3571,474,18,18,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,21,0,2
+1794838541346,11,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,762,461,18,18,http://127.0.0.1:8081/api/v1/niveles-logro,11,0,1
+1794838541376,18,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-3,text,true,,762,461,18,18,http://127.0.0.1:8081/api/v1/niveles-logro,16,0,1
+1794838541391,14,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,762,461,17,17,http://127.0.0.1:8081/api/v1/niveles-logro,14,0,2
+1794838536197,5493,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-10,text,false,"The operation lasted too long: It took 5,493 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,17,17,http://127.0.0.1:8081/api/v1/auth/login,5491,0,2
+1794838541696,50,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,1299,473,17,17,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,49,0,2
+1794838541712,42,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,3571,474,17,17,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,41,0,1
+1794838541819,33,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,762,461,17,17,http://127.0.0.1:8081/api/v1/niveles-logro,32,0,2
+1794838536915,5306,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-16,text,false,"The operation lasted too long: It took 5,306 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,17,17,http://127.0.0.1:8081/api/v1/auth/login,5306,0,2
+1794838542210,23,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,1299,473,17,17,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,22,0,1
+1794838542225,24,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,3571,474,17,17,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,23,0,1
+1794838542316,14,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,762,461,17,17,http://127.0.0.1:8081/api/v1/niveles-logro,13,0,1
+1794838542696,28,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,1299,473,17,17,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,28,0,3
+1794838542757,16,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,762,461,17,17,http://127.0.0.1:8081/api/v1/niveles-logro,15,0,2
+1794838542757,33,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,3571,474,17,17,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,27,0,2
+1794838537113,5690,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-6,text,false,"The operation lasted too long: It took 5,690 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,17,17,http://127.0.0.1:8081/api/v1/auth/login,5689,0,2
+1794838538863,4381,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-11,text,false,"The operation lasted too long: It took 4,381 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,17,17,http://127.0.0.1:8081/api/v1/auth/login,4381,0,2
+1794838543230,23,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,1299,473,17,17,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,22,0,2
+1794838543245,22,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,3571,474,17,17,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,21,0,2
+1794838543260,14,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-4,text,true,,762,461,17,17,http://127.0.0.1:8081/api/v1/niveles-logro,13,0,2
+1794838538863,4863,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-17,text,false,"The operation lasted too long: It took 4,863 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,16,16,http://127.0.0.1:8081/api/v1/auth/login,4862,0,2
+1794838543733,17,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,3571,474,16,16,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,16,0,1
+1794838543794,13,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,762,461,16,16,http://127.0.0.1:8081/api/v1/niveles-logro,11,0,1
+1794838543809,24,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,1299,473,16,16,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,24,0,2
+1794838540353,3878,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,865,561,16,16,http://127.0.0.1:8081/api/v1/auth/login,3877,0,2
+1794838544263,22,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,3571,474,16,16,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,22,0,2
+1794838544248,38,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,1299,473,16,16,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,38,0,2
+1794838544279,22,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-5,text,true,,762,461,16,16,http://127.0.0.1:8081/api/v1/niveles-logro,22,0,1
+1794838544734,48,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,1299,473,15,15,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,47,0,2
+1794838540355,4433,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-12,text,false,"The operation lasted too long: It took 4,433 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,15,15,http://127.0.0.1:8081/api/v1/auth/login,4433,0,1
+1794838544764,41,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,762,461,15,15,http://127.0.0.1:8081/api/v1/niveles-logro,41,0,1
+1794838544840,17,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,3571,474,15,15,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,16,0,2
+1794838545238,23,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,1299,473,15,15,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,21,0,1
+1794838541376,3889,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,865,561,15,15,http://127.0.0.1:8081/api/v1/auth/login,3888,0,1
+1794838545299,12,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,762,461,15,15,http://127.0.0.1:8081/api/v1/niveles-logro,12,0,2
+1794838545299,23,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,3571,474,15,15,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,22,0,2
+1794838541437,4296,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-19,text,false,"The operation lasted too long: It took 4,296 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,15,15,http://127.0.0.1:8081/api/v1/auth/login,4295,0,2
+1794838545789,21,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,3571,474,15,15,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,20,0,2
+1794838545804,23,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,1299,473,15,15,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,22,0,2
+1794838545864,13,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-6,text,true,,762,461,15,15,http://127.0.0.1:8081/api/v1/niveles-logro,12,0,2
+1794838542361,3887,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,865,561,14,14,http://127.0.0.1:8081/api/v1/auth/login,3886,0,1
+1794838546276,18,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,3571,474,14,14,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,18,0,1
+1794838546276,25,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,1299,473,14,14,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,24,0,1
+1794838546336,14,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,762,461,14,14,http://127.0.0.1:8081/api/v1/niveles-logro,14,0,2
+1794838542407,4318,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-20,text,false,"The operation lasted too long: It took 4,318 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,14,14,http://127.0.0.1:8081/api/v1/auth/login,4318,0,2
+1794838546745,21,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,1299,473,14,14,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,20,0,2
+1794838546821,10,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,762,461,14,14,http://127.0.0.1:8081/api/v1/niveles-logro,10,0,1
+1794838546836,20,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,3571,474,14,14,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,20,0,3
+1794838542863,4342,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-8,text,false,"The operation lasted too long: It took 4,342 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,14,14,http://127.0.0.1:8081/api/v1/auth/login,4342,0,2
+1794838547259,19,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,1299,473,14,14,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,18,0,1
+1794838547305,15,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-7,text,true,,762,461,14,14,http://127.0.0.1:8081/api/v1/niveles-logro,15,0,2
+1794838547305,20,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,3571,474,13,13,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,19,0,2
+1794838543336,4380,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-14,text,false,"The operation lasted too long: It took 4,380 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,13,13,http://127.0.0.1:8081/api/v1/auth/login,4379,0,1
+1794838547732,20,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,1299,473,13,13,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,20,0,2
+1794838547778,20,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,3571,474,13,13,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,19,0,1
+1794838547868,11,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,762,461,13,13,http://127.0.0.1:8081/api/v1/niveles-logro,11,0,2
+1794838543778,4366,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-9,text,false,"The operation lasted too long: It took 4,366 milliseconds, but should not have lasted longer than 4,000 milliseconds.",865,561,13,13,http://127.0.0.1:8081/api/v1/auth/login,4365,0,2
+1794838548220,24,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,1299,473,13,13,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,23,0,2
+1794838548280,17,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,3571,474,13,13,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,16,0,1
+1794838548326,18,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,762,461,13,13,http://127.0.0.1:8081/api/v1/niveles-logro,17,0,1
+1794838544809,3774,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,865,561,13,13,http://127.0.0.1:8081/api/v1/auth/login,3773,0,2
+1794838548720,16,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,1299,473,13,13,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,16,0,1
+1794838548767,17,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,3571,474,13,13,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,16,0,1
+1794838548812,12,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,762,461,13,13,http://127.0.0.1:8081/api/v1/niveles-logro,11,0,1
+1794838545819,3237,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,865,561,13,13,http://127.0.0.1:8081/api/v1/auth/login,3236,0,1
+1794838549149,20,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,1299,473,13,13,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,20,0,2
+1794838549254,18,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,3571,474,13,13,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,17,0,2
+1794838549301,11,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,762,461,13,13,http://127.0.0.1:8081/api/v1/niveles-logro,10,0,2
+1794838546321,3199,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,865,561,13,13,http://127.0.0.1:8081/api/v1/auth/login,3199,0,1
+1794838549593,23,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,1299,473,13,13,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,22,0,1
+1794838549747,17,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,3571,474,13,13,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,16,0,1
+1794838549793,23,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,762,461,13,13,http://127.0.0.1:8081/api/v1/niveles-logro,22,0,1
+1794838547366,2573,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,865,561,13,13,http://127.0.0.1:8081/api/v1/auth/login,2573,0,2
+1794838550273,30,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-8,text,true,,762,461,13,13,http://127.0.0.1:8081/api/v1/niveles-logro,29,0,2
+1794838550181,136,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,3571,474,12,12,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,134,0,1
+1794838550057,272,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,1299,473,12,12,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,258,0,2
+1794838547838,2636,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,865,561,12,12,http://127.0.0.1:8081/api/v1/auth/login,2635,0,1
+1794838550535,25,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,1299,473,12,12,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,24,0,1
+1794838550627,16,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,3571,474,12,12,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,15,0,2
+1794838550768,13,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,762,461,12,12,http://127.0.0.1:8081/api/v1/niveles-logro,12,0,1
+1794838548889,2053,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,865,561,12,12,http://127.0.0.1:8081/api/v1/auth/login,2053,0,2
+1794838550954,21,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,1299,473,12,12,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,20,0,1
+1794838551327,19,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-9,text,true,,762,461,12,12,http://127.0.0.1:8081/api/v1/niveles-logro,19,0,1
+1794838551342,24,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,3571,474,11,11,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,23,0,1
+1794838549347,2035,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,865,561,11,11,http://127.0.0.1:8081/api/v1/auth/login,2034,0,2
+1794838551481,25,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,1299,473,11,11,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,24,0,2
+1794838551574,22,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,3571,474,11,11,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,22,0,2
+1794838551650,17,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,762,461,11,11,http://127.0.0.1:8081/api/v1/niveles-logro,16,0,1
+1794838549824,2031,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,865,561,11,11,http://127.0.0.1:8081/api/v1/auth/login,2030,0,2
+1794838551956,30,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,1299,473,11,11,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,30,0,2
+1794838551988,23,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,3571,474,11,11,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,22,0,2
+1794838550320,2010,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,865,561,11,11,http://127.0.0.1:8081/api/v1/auth/login,2010,0,1
+1794838552373,22,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-10,text,true,,762,461,11,11,http://127.0.0.1:8081/api/v1/niveles-logro,22,0,2
+1794838552389,25,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,1299,473,10,10,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,24,0,2
+1794838552512,51,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,3571,474,10,10,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,51,0,1
+1794838552604,24,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,762,461,10,10,http://127.0.0.1:8081/api/v1/niveles-logro,24,0,3
+1794838552864,21,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,1299,473,10,10,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,20,0,1
+1794838550830,2094,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,865,561,10,10,http://127.0.0.1:8081/api/v1/auth/login,2094,0,1
+1794838552987,19,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,3571,474,10,10,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,18,0,1
+1794838553018,13,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-11,text,true,,762,461,10,10,http://127.0.0.1:8081/api/v1/niveles-logro,12,0,2
+1794838551788,1556,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,865,561,9,9,http://127.0.0.1:8081/api/v1/auth/login,1556,0,2
+1794838553342,20,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,1299,473,9,9,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,19,0,1
+1794838553418,16,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,3571,474,9,9,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,16,0,1
+1794838553572,12,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,762,461,9,9,http://127.0.0.1:8081/api/v1/niveles-logro,12,0,1
+1794838552680,1080,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,865,561,9,9,http://127.0.0.1:8081/api/v1/auth/login,1079,0,1
+1794838553898,16,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,3571,474,9,9,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,15,0,1
+1794838553929,19,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,1299,473,9,9,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,17,0,1
+1794838554008,13,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-12,text,true,,762,461,9,9,http://127.0.0.1:8081/api/v1/niveles-logro,13,0,1
+1794838553634,648,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,865,561,8,8,http://127.0.0.1:8081/api/v1/auth/login,646,0,2
+1794838554348,28,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,1299,473,8,8,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,27,0,2
+1794838554364,24,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,3571,474,8,8,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,24,0,2
+1794838554441,15,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,762,461,8,8,http://127.0.0.1:8081/api/v1/niveles-logro,14,0,1
+1794838554764,21,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,1299,473,8,8,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,20,0,2
+1794838554919,11,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,762,461,8,8,http://127.0.0.1:8081/api/v1/niveles-logro,11,0,1
+1794838554950,15,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,3571,474,8,8,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,15,0,1
+1794838554594,571,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,865,561,8,8,http://127.0.0.1:8081/api/v1/auth/login,571,0,2
+1794838555292,21,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,1299,473,8,8,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,20,0,2
+1794838555386,16,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,3571,474,8,8,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,15,0,1
+1794838555401,12,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-13,text,true,,762,461,8,8,http://127.0.0.1:8081/api/v1/niveles-logro,11,0,1
+1794838555791,19,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,3571,474,7,7,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,18,0,2
+1794838555975,18,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,762,461,7,7,http://127.0.0.1:8081/api/v1/niveles-logro,17,0,2
+1794838555465,547,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,865,561,7,7,http://127.0.0.1:8081/api/v1/auth/login,546,0,1
+1794838556174,26,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,1299,473,7,7,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,25,0,2
+1794838556329,19,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,3571,474,7,7,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,19,0,1
+1794838556406,13,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-14,text,true,,762,461,7,7,http://127.0.0.1:8081/api/v1/niveles-logro,12,0,1
+1794838555945,575,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,865,561,6,6,http://127.0.0.1:8081/api/v1/auth/login,575,0,2
+1794838556811,12,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-15,text,true,,762,461,6,6,http://127.0.0.1:8081/api/v1/niveles-logro,11,0,2
+1794838557015,22,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,1299,473,5,5,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,21,0,2
+1794838557201,16,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,3571,474,5,5,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,15,0,2
+1794838557354,11,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-16,text,true,,762,461,5,5,http://127.0.0.1:8081/api/v1/niveles-logro,11,0,1
+1794838557526,17,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,1299,473,4,4,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,16,0,1
+1794838557000,583,RNF-03 POST /api/v1/auth/login,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,865,561,4,4,http://127.0.0.1:8081/api/v1/auth/login,582,0,1
+1794838558043,26,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,3571,474,4,4,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,24,0,2
+1794838558231,14,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-17,text,true,,762,461,4,4,http://127.0.0.1:8081/api/v1/niveles-logro,14,0,4
+1794838558545,19,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,3571,474,3,3,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,18,0,2
+1794838558589,20,RNF-04 GET /api/v1/profesores,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,1299,473,3,3,http://127.0.0.1:8081/api/v1/profesores?page=0&size=20,19,0,2
+1794838559081,13,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-18,text,true,,762,461,3,3,http://127.0.0.1:8081/api/v1/niveles-logro,13,0,1
+1794838559564,13,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-19,text,true,,762,461,2,2,http://127.0.0.1:8081/api/v1/niveles-logro,12,0,2
+1794838559611,17,RNF-04 GET /api/v1/asignaturas,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,3571,474,1,1,http://127.0.0.1:8081/api/v1/asignaturas?page=0&size=20,16,0,1
+1794838560632,18,RNF-06 GET /api/v1/niveles-logro,200,,RNF-01 20 usuarios concurrentes 1-20,text,true,,762,461,1,1,http://127.0.0.1:8081/api/v1/niveles-logro,18,0,2

@@ -1,0 +1,6 @@
+# JMeter escribe su log en el directorio desde el que se lo invoca.
+jmeter.log
+
+# JMeter descomprimido (~90 MB). Ver jmeter/README.md para instalarlo.
+apache-jmeter-*/
+jmeter.tgz

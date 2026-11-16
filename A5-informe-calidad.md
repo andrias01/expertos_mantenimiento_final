@@ -8,7 +8,7 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 | **Actividad RACI** | «Verificar requisitos no funcionales» — somos **A/R** |
 | **Entrega** | 3 (Día 15) · se presenta en la revisión final |
 | **Criterio de finalización que sustenta** | §13: «Los requisitos no funcionales fueron verificados» |
-| **Estado** | 🟡 **Borrador avanzado · 15 de noviembre de 2026.** Las cifras son reales y verificadas; las secciones 5, 8 y 9 esperan las decisiones de la reunión 3 |
+| **Estado** | 🟡 **Borrador avanzado · actualizado el 16 de noviembre de 2026.** Las cifras son reales y verificadas; las secciones 5, 8 y 9 esperan las decisiones de la reunión 3 |
 | **Dato vivo** | El semáforo con la evidencia de cada criterio está en **[A6](A6-semaforo-rnf.md)** y se mantiene allí hasta el cierre. Este informe lo resume y lo firma |
 
 > **Qué es este documento.** Es el entregable con el que se mide nuestro rol y la única evidencia
@@ -40,6 +40,20 @@ el único incumplimiento documentable del SRS que habíamos encontrado**: la ver
 cobertura vigilaba dos de los cuatro módulos que el SRS nombra uno por uno, y hoy vigila los
 cuatro.
 
+**Actualización del 16 de noviembre.** El fix de RNF-20 (a) **quedó integrado** en `develop`
+(`bb72c07`, PR #117), así que el requisito cumple en la rama de trabajo y no solo en una copia
+local. Y la verificación de **RNF-11 se completó en los dos lados** —backend en Render y frontend en
+Vercel— con lo que pasa a ser el único requisito del SRS verificado de punta a punta en el entorno
+real que el propio requisito nombra, sin criterio sustituto.
+
+En la dirección contraria, la auditoría de navegador de José encontró que **cuatro vistas del
+despliegue responden con un error genérico** en dos roles distintos (OBS-01), una de ellas
+Estadísticas. **No es un incumplimiento de RNF** —ningún requisito del SRS prohíbe un mensaje de
+error genérico— pero **bloquea una medición nuestra**: RNF-06 se queda sin cronometrar porque la
+vista no carga. Y Mantis **no registra un solo cambio** desde el 15 de
+noviembre, mientras el código sumó dos módulos de reportes más (R7 y R4): el tablero va por
+detrás del repositorio.
+
 Lo que no se resolvió y condiciona el cierre: el análisis de seguridad de las dependencias del
 backend **sigue apagado ocho días después** y no está en nuestras manos encenderlo; la red de
 pruebas de navegador **no creció con el producto**, que ganó ocho módulos en una semana; y hay una
@@ -55,11 +69,12 @@ nuestra validación.**
 | 🟢 Cumplen con evidencia ejecutable | **9** | A6 §2 |
 | 🟡 Cumplen con reserva declarada | **9** | A6 §2 |
 | 🔴 Sin veredicto o fuera de alcance | **5** | A6 §2 |
-| Hallazgos cerrados con evidencia | **2** (H-08, H-10) | [A4](A4-hallazgos-rnf.md) |
+| Hallazgos cerrados con evidencia | **2** (H-08 **integrado en `bb72c07`**, H-10 **completo en los dos lados**) | [A4](A4-hallazgos-rnf.md) |
 | Hallazgos en corrección | **4** (H-02, H-04, H-05, H-09) | A4 |
 | Hallazgos abiertos | **7**, de los cuales **3 de severidad alta** (H-01, H-03, H-11) | A4 |
-| Cobertura global del backend | **92,39 %** | `jacocoTestReport` |
-| **¿Se cumple el criterio §13?** | ⏳ **Aún no.** Falta el PR de H-08 integrado, y las decisiones de tratamiento de los 5 rojos y los 9 amarillos | — |
+| Observaciones sin anclaje en el SRS | **2** (OBS-01 media provisional, OBS-02 baja) | A4, sección de observaciones |
+| Cobertura global del backend | **92,39 %** sobre `d6fa7e1` | `jacocoTestReport` |
+| **¿Se cumple el criterio §13?** | ⏳ **Aún no.** Faltan las decisiones de tratamiento (D-1 a D-5) y 4 de los 23 criterios no tienen medición ejecutada | — |
 
 ---
 
@@ -72,7 +87,7 @@ ahí hasta el cierre. Esta es la vista de una página.
 | Atributo | 🟢 | 🟡 | 🔴 | Lo que define el resultado |
 | --- | --- | --- | --- | --- |
 | **Seguridad** (RNF-10 a 17) | 7 | 1 | 0 | Fuerte. RNF-11 pasó a verde al medir TLS contra Render. Solo RNF-14 queda por inspección, sin prueba de saneamiento |
-| **Rendimiento** (RNF-01 a 09) | 0 | 5 | 4 | El instrumento existe y falta ejecutarlo. RNF-09 es fuera de alcance; RNF-02, 05 y 07 necesitan datos sembrados |
+| **Rendimiento** (RNF-01 a 09) | 0 | 5 | 4 | El instrumento existe y falta ejecutarlo. RNF-09 es fuera de alcance; RNF-02, 05 y 07 necesitan datos sembrados; RNF-06 está bloqueado por OBS-01 |
 | **Disponibilidad** (RNF-18) | 0 | 1 | 1 | Uptime medido con reserva de ventana; MTTR sin ningún evento que medir |
 | **Compatibilidad** (RNF-19) | 0 | 1 | 0 | Chromium y Firefox automatizados, **un solo flujo**. Edge y móvil no se prueban |
 | **Mantenibilidad** (RNF-20) | 2 | 0 | 0 | Cobertura de los cuatro módulos obligatorios y OpenAPI verificada por pruebas |

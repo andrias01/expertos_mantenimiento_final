@@ -7,6 +7,8 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 | --- | --- |
 | **Apertura del registro** | 7 de noviembre de 2026 |
 | **Revisión contra el SRS** | 7 de noviembre de 2026 — un hallazgo retirado, uno reformulado, tres nuevos |
+| **Cuarta revisión** | **16 de noviembre de 2026, tarde** — primera medición de carga: entra **H-17**, el primer incumplimiento de un umbral numérico del SRS que se logra medir |
+| **Tercera revisión** | **16 de noviembre de 2026** — H-08 confirmado integrado en `develop`; H-10 completado en los dos lados; las dos observaciones de la auditoría de José quedan como **OBS-01 y OBS-02**, fuera del registro de RNF por no tener anclaje en el SRS |
 | **Segunda revisión** | **15 de noviembre de 2026** — dos hallazgos cerrados con evidencia, dos en corrección, uno sube de severidad, cuatro nuevos |
 | **Alcance de este lote** | Diagnóstico de la capacidad de verificación de los 21 RNF del SRS (Entrega 1) y **verificación inicial** (Entrega 2) |
 | **Commit verificado** | backend `d6fa7e1` · frontend `a3135ec` (ambos = `origin/develop`, 14-nov-2026) |
@@ -33,29 +35,39 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 
 | ID | Severidad | Atributo | Hallazgo | Titular | Estado |
 | --- | --- | --- | --- | --- | --- |
-| [H-08](#h-08-alta--rnf-20-vigila-la-cobertura-de-dos-de-los-cuatro-módulos-obligatorios) | **Alta** | Mantenibilidad | RNF-20 vigila la cobertura de dos de los cuatro módulos obligatorios | Ambos | 🟢 **Corregido y verificado** · 15-nov · falta PR |
+| [H-08](#h-08-alta--rnf-20-vigila-la-cobertura-de-dos-de-los-cuatro-módulos-obligatorios) | **Alta** | Mantenibilidad | RNF-20 vigila la cobertura de dos de los cuatro módulos obligatorios | Ambos | 🟢 **CERRADO** · integrado en `develop` (`bb72c07`, PR #117) |
 | [H-10](#h-10-media--rnf-11-tls-12-no-es-verificable-sin-entorno-de-producción) | Media | Seguridad | RNF-11 (TLS 1.2+) no es verificable sin entorno de producción | José | 🟢 **Cerrado** · 15-nov · la premisa cambió: hay producción |
-| [H-01](#h-01-alta--el-análisis-de-dependencias-del-backend-está-apagado) | **Alta** | Seguridad | El análisis de dependencias del backend está apagado | José | 🔴 **Abierto · 8 días** · reconfirmado por API |
-| [H-11](#h-11-alta--0000053-sin-dueño-y-con-impacto-rnf-por-confirmar) | **Alta** | Rendimiento / fiabilidad | 0000053 sin dueño; impacto RNF y causa por confirmar | Andrés | 🔴 **Nuevo** · 15-nov |
+| [H-01](#h-01-alta--el-análisis-de-dependencias-del-backend-está-apagado) | **Alta** | Seguridad | El análisis de dependencias del backend está apagado | José | 🔴 **Abierto · 9 días** · **ya con el dato: 4 CRITICAL y 10 HIGH** |
+| [H-11](#h-11-alta--0000053-sin-dueño-y-con-impacto-rnf-por-confirmar) | **Alta** | Rendimiento / fiabilidad | 0000053 sin dueño; impacto RNF y causa por confirmar | Andrés | 🔴 **Abierto** · sin cambio en Mantis al 16-nov |
+| [H-17](#h-17-alta--rnf-03-no-se-cumple-con-20-usuarios-concurrentes-y-la-causa-es-rnf-10) | **Alta** | Rendimiento | RNF-03 no se cumple con 20 usuarios concurrentes; la causa es el factor de BCrypt que exige RNF-10 | Andrés | 🔴 **Nuevo** · 16-nov · **medido** |
 | [H-03](#h-03-media--alta-el-15-nov--el-e2e-de-navegador-cubre-un-solo-flujo) | **Alta** ⬆ | Mantenibilidad | El E2E de navegador cubre un solo flujo, y el producto creció ocho módulos | Ambos | 🔴 **Abierto · sube de media a alta** |
 | [H-02](#h-02-alta--nueve-requisitos-de-rendimiento-sin-un-solo-instrumento-de-medición) | **Alta** | Rendimiento | Nueve requisitos de rendimiento sin un solo instrumento de medición | Andrés | 🟡 **En corrección** · instrumento creado, sin ejecutar |
 | [H-09](#h-09-media--rnf-18-no-tiene-medición-de-uptime-ni-de-mttr) | Media | Disponibilidad | RNF-18 no tiene medición de uptime ni de MTTR | José | 🟡 **En corrección** · uptime medido; MTTR sin evento |
 | [H-12](#h-12-media--los-dos-rnf-que-el-equipo-nos-asignó-se-resolvieron-sin-nuestra-validación) | Media | Mantenibilidad | Los dos RNF que el equipo nos asignó se resolvieron sin nuestra validación | Ambos | 🔴 **Nuevo** · 15-nov |
 | [H-13](#h-13-media--ninguna-incidencia-está-cerrada-en-mantis) | Media | Trazabilidad | Ninguna de las 31 incidencias está en estado `cerrada` en Mantis | Ambos | 🔴 **Nuevo** · 15-nov |
 | [H-04](#h-04-media--rnf-21-no-tiene-verificación-automatizada) | Media | Accesibilidad | RNF-21 no tiene verificación automatizada | Andrés | 🟡 **Abierto** · corregido a mano por UI/UX, sin automatizar |
-| [H-05](#h-05-media--no-hay-análisis-estático-de-código) | Media | Mantenibilidad | No hay análisis estático de código | Ambos | 🟡 **En corrección** · plan de SonarQube listo |
-| [H-14](#h-14-baja--el-entorno-local-no-puede-compilar-el-frontend) | Baja | Mantenibilidad | El entorno local no puede compilar el frontend (Node por debajo del mínimo) | Andrés | 🔴 **Nuevo** · 15-nov |
+| [H-05](#h-05-media--no-hay-análisis-estático-de-código) | Media | Mantenibilidad | No hay análisis estático de código | Ambos | 🟢 **CERRADO** · Sonar escaneado: mantenibilidad **A**, deuda 15 min |
+| [H-14](#h-14-baja--el-entorno-local-no-puede-compilar-el-frontend) | Baja | Mantenibilidad | El entorno local no puede compilar el frontend (Node por debajo del mínimo) | Andrés | 🔴 **Abierto** · 15-nov |
 | [H-07](#h-07-baja--el-readme-del-backend-contradice-a-buildgradle-sobre-jacoco) | Baja | Mantenibilidad | El README del backend contradice a `build.gradle` sobre JaCoCo | Ambos | 🔴 **Abierto** · ahora también desactualizado por el fix de H-08 |
 | [H-06](#h-06--retirado-por-falso) | — | — | ~~Ningún RNF numerado cubre disponibilidad~~ | — | **Retirado por falso** · 7-nov |
 
-### Movimiento entre el 8 y el 15 de noviembre
+### Movimiento del 8 al 16 de noviembre
 
-| | 8-nov | 15-nov |
-| --- | --- | --- |
-| Abiertos | 9 | **7** |
-| En corrección | 0 | **4** |
-| Cerrados con evidencia | 0 | **2** |
-| De severidad alta | 3 | **4** (H-08 se cierra, H-03 sube, H-11 entra) |
+| | 8-nov | 15-nov | **16-nov** |
+| --- | --- | --- | --- |
+| Abiertos | 9 | 7 | **8** |
+| En corrección | 0 | 4 | **3** |
+| Cerrados con evidencia | 0 | 2 | **3** |
+| De severidad alta | 3 | 4 | **4** (H-01, H-03, H-11, **H-17**) |
+| Total del registro | 10 | 14 | **15** |
+
+**H-17 es distinto de todos los anteriores y conviene notarlo:** es el primero que sale de una
+**medición** y no de inspeccionar configuración. Durante nueve días el registro habló de
+«instrumentos que faltan»; este es el primer umbral numérico del SRS que podemos demostrar que no
+se cumple.
+
+Además, **dos observaciones que no son hallazgos de RNF** (OBS-01 y OBS-02): reales, reportables y
+útiles, pero sin anclaje en el SRS. Ver la sección de observaciones al final.
 
 **Lo que hay que decir de entrada.** Dos hallazgos se cierran con evidencia reproducible, y uno de
 los dos —H-08— era **el único incumplimiento documentable del SRS** que teníamos: se corrigió con
@@ -140,8 +152,74 @@ $ gh api repos/juancabernal/software4-SIGRA-backend --jq '.permissions'
 ```
 
 Crear una variable de repositorio exige `admin`. **No es desgana nuestra: es falta de permiso.**
-Esto convierte H-01 en un pedido al equipo, no en una tarea nuestra, y lleva **ocho días** pedido
-(P-05, reunión 1). Hay que escalarlo con nombre y fecha esta noche.
+Esto convierte H-01 en un pedido al equipo, no en una tarea nuestra (P-05, reunión 1).
+
+**Seguimiento · 16 de noviembre de 2026 · noveno día.** Reconsultado hoy, sin cambio:
+
+```
+$ gh api repos/juancabernal/software4-SIGRA-backend/actions/variables
+{"variables":[],"total_count":0}
+```
+
+Entre tanto el backend siguió integrando: PR #117, #118 y el R4 de Salomé González pasaron por CI
+el 16 de noviembre, **todos con el SCA saltado**. Cada PR que entra sin ese análisis amplía la
+superficie no auditada.
+
+**Corrección a lo que dijimos antes.** El 15 de noviembre escribimos «no es desgana nuestra: es
+falta de permiso». Eso es cierto **solo para la compuerta de CI**, y conviene separar las dos
+cosas, porque mezclarlas nos sirvió de excusa durante nueve días:
+
+| | ¿Podemos nosotros? |
+| --- | --- |
+| **Auditar** las dependencias del backend hoy | ✅ **Sí.** El plugin `org.owasp.dependencycheck` **ya está aplicado** (`build.gradle:5`) y configurado con `failBuildOnCVSS = 4.0` (línea 53). `./gradlew dependencyCheckAnalyze` corre en local **sin ningún permiso especial** |
+| Que el análisis **bloquee** un PR que introduzca una CVE | ❌ No. Eso exige crear las variables de repositorio, y eso exige `admin` |
+
+Es decir: **el hallazgo sigue abierto, pero la mitad que importa para verificar RNF ya no está
+bloqueada.** Podemos producir el informe de vulnerabilidades nosotros mismos y llevarlo a la
+reunión; lo que seguimos necesitando del admin es que quede como compuerta permanente.
+
+Nota operativa: sin `NVD_API_KEY` la primera descarga de la base de datos de vulnerabilidades es
+lenta (puede tardar bastante). Hay dos salidas: pedir una clave gratuita del NVD, o usar **Trivy**
+en Docker, que trae su propia base y no necesita clave.
+
+### El dato que faltaba · 16 de noviembre de 2026
+
+Se ejecutó el análisis por la vía que **no** necesita permisos: Trivy sobre la imagen
+`sigra-backend:local`, que contiene el jar con las dependencias que realmente se ejecutan.
+
+| Origen | CRITICAL | HIGH | MEDIUM | LOW |
+| --- | --- | --- | --- | --- |
+| **Librerías Java (`jar`)** | **4** | **10** | 4 | — |
+| Sistema operativo base (ubuntu) | — | — | 56 | 4 |
+
+**Las librerías afectadas, todas con versión de arreglo disponible:**
+
+| Librería | Instalada | Arreglo | CVE |
+| --- | --- | --- | --- |
+| `org.apache.tomcat.embed:tomcat-embed-core` | 11.0.24 | 11.0.25 | CVE-2026-65182, CVE-2026-65905, CVE-2026-68525, CVE-2026-65637 |
+| `com.fasterxml.jackson.core:jackson-databind` | 2.21.5 | 2.21.7 | CVE-2026-68497, CVE-2026-91776, CVE-2026-91777 |
+| `com.fasterxml.jackson.core:jackson-core` | 2.21.5 | 2.21.7 | CVE-2026-89407, CVE-2026-89425 |
+| `tools.jackson.core:jackson-databind` | 3.1.5 | 3.1.7 | CVE-2026-68497, CVE-2026-91776, CVE-2026-91777 |
+| `tools.jackson.core:jackson-core` | 3.1.5 | 3.1.7 | CVE-2026-89407, CVE-2026-89425 |
+
+**Evidencia.** `herramientas-rnf/evidencias/trivy-backend-16nov.json`.
+
+**Qué nos interesa y qué no.** Los 56 MEDIUM del sistema operativo base **no son nuestro asunto**:
+se corrigen cambiando la imagen base y eso es una decisión de despliegue. Los **14 de severidad alta
+o crítica en librerías Java sí**, y son exactamente lo que la compuerta apagada de H-01 habría
+detectado en su momento: el `dependencyCheck` del proyecto está configurado con
+`failBuildOnCVSS = 4.0`, así que **habría hecho fallar el build**.
+
+**Cómo esto cambia la conversación en la reunión.** Durante nueve días el hallazgo fue «falta
+habilitar la compuerta», que es fácil de postergar. Ahora es **«hay 4 vulnerabilidades críticas y
+10 altas en dependencias, todas con arreglo publicado, y el proyecto lleva nueve días sin
+detectarlas»**. Lo que se pide sigue siendo lo mismo —dos variables de repositorio— pero ya no es
+una formalidad de proceso.
+
+**Importante sobre el alcance de la corrección.** Actualizar esas librerías **no es trabajo
+nuestro** ni debería hacerse a ciegas el día antes del cierre: `tomcat-embed-core` viene con Spring
+Boot y subirlo a mano puede romper la compatibilidad. Lo que corresponde es **reportar el dato** y
+que el equipo decida con el revisor técnico.
 
 ---
 
@@ -307,8 +385,41 @@ del SRS**, no una ausencia de herramienta. Y su corrección es de dos líneas.
 `co.edu.uco.sigra.estadisticas.service*` baja del 70 %, igual que ya pasa con `auth`. Evidencia:
 el diff de `build.gradle` y una corrida del comando.
 
-**Estado.** 🟢 **Corregido y verificado · 15 de noviembre de 2026.** Falta abrirlo como Pull
-Request: nuestro rol no integra código.
+**Estado.** 🟢 **CERRADO · integrado en `develop` el 16 de noviembre de 2026.**
+
+**Seguimiento · 16 de noviembre.** El fix se integró vía **PR #117** y hoy está en
+`origin/develop` (`bb72c07`), con el comentario de RF-14/RF-16 incluido:
+
+```
+$ git show origin/develop:SIGRA/build.gradle | sed -n '111,119p'
+            includes = [
+                    'co.edu.uco.sigra.auth.service*',
+                    'co.edu.uco.sigra.auth.controller',
+                    'co.edu.uco.sigra.auth.security',
+                    'co.edu.uco.sigra.config',
+                    // RF-14 (calculo de nivel de logro) y RF-16 (generacion de conclusiones):
+                    // el SRS los nombra como modulos obligatorios del RNF-20 (a). Hallazgo H-08.
+                    'co.edu.uco.sigra.estadisticas.service*'
+            ]
+
+$ git diff SIGRA/build.gradle          # vacío: no queda nada pendiente de subir
+```
+
+**RNF-20 (a) cumple en la rama integrada, no solo en una copia de trabajo.** Era el único
+incumplimiento documentable del SRS de todo el registro, y queda cerrado.
+
+> ⚠️ **Corrección a una nota que circula en el repositorio.** El
+> [registro de la auditoría de José](evidencias-rnf/jose-validacion-2026-11/hallazgos.md) dice
+> «En la rama backend inspeccionada (`c1b1950`) falta todavía la regla por paquete de
+> `estadisticas`; no cerrar H-08 para esta versión». **Era exacto para `c1b1950`**, donde solo
+> estaba el comentario viejo —y por eso el método de José fue el correcto: verificó el SHA que
+> tenía delante en vez de creerle a A4. Pero `c1b1950` es anterior al PR #117 y ya es ancestro de
+> `develop`, así que la observación quedó superada por los hechos. La nota de vigencia de
+> [A6](A6-semaforo-rnf.md) también se corrigió.
+>
+> **La lección operativa:** citar siempre el SHA junto a la cifra. «92,39 % de cobertura» sin SHA
+> no es verificable por nadie más, y fue lo que hizo que dos personas del mismo rol llegaran a
+> conclusiones distintas sobre el mismo hallazgo.
 
 **Corrección aplicada.** Cuatro líneas en `SIGRA/build.gradle`:
 
@@ -434,13 +545,19 @@ cambió. Entre el 8 y el 15 de noviembre el producto creció, en los dos reposit
 **Y la suite E2E de navegador sigue siendo exactamente un archivo:** `e2e/auth.spec.ts`. Lo
 verificamos: `ls software4-SIGRA-frontend/e2e/` devuelve `auth.spec.ts` y `README.md`, nada más.
 
+**Seguimiento · 16 de noviembre de 2026: el hueco se ensanchó otra vez.** En un día más entraron
+dos módulos de reportes nuevos —**R7 «Trazabilidad de uso por rol»** (Tomás Marín, ACT-102, PR
+backend y frontend) y **R4 «Acciones de mejora»** (Salomé González, CI del 16-nov)— además de la
+paginación extendida a cuatro pantallas del Estudiante y a los reportes del Profesor. La suite E2E
+sigue en un archivo. **Diez módulos nuevos, un flujo de navegador probado.**
+
 Ocho módulos nuevos, varios de ellos con reglas de alcance por rol (el estudiante solo ve lo suyo,
 el profesor solo sus semestres, R2 solo administrador) y una migración de datos, **sin una sola
 prueba de navegador que los recorra**. RNF-19 pide que los flujos tocados funcionen en los
 navegadores exigidos; hoy el único flujo que se comprueba en navegador es el login.
 
 **Lo que lo vuelve urgente y no teórico.** La incidencia **0000053** (ver
-[H-11](#h-11-alta--la-incidencia-0000053-no-tiene-dueño-y-es-de-perfil-no-funcional)) es
+[H-11](#h-11-alta--0000053-sin-dueño-y-con-impacto-rnf-por-confirmar)) es
 precisamente un fallo intermitente en varios módulos y en todos los roles. Es el tipo de defecto
 que una suite E2E amplia habría atrapado y que la actual, por construcción, no puede ver.
 
@@ -484,8 +601,11 @@ DevTools si se hace manual.
 **Seguimiento · 15 de noviembre de 2026.** Hay que reconocer trabajo ajeno que nos toca el tema:
 Andrea Avendaño (UI/UX) revisó la documentación para extraer los requisitos de accesibilidad
 (ACT-095) y corrigió hallazgos de frontend —**contraste 4,5:1**, paginador común en Evaluaciones,
-desborde en móvil— en ACT-096, PR frontend **#91**, que al momento de esta revisión figura en
-estado *Pendiente* en el registro del equipo.
+desborde en móvil— en ACT-096, PR frontend **#91**.
+
+**Seguimiento · 16 de noviembre de 2026.** ACT-096 pasó de *Pendiente* a **Cerrada** en el libro del
+equipo, así que la corrección de contraste y de desborde en móvil está integrada. Sigue siendo
+corrección manual sin red de seguridad.
 
 Eso es bueno y mejora el cumplimiento real de RNF-21. **No cambia el hallazgo**, que no es «el
 contraste está mal» sino «no hay forma automática de saber si se rompe». Sigue sin instalarse
@@ -534,28 +654,49 @@ instalado).
 **Criterio de cierre.** El CI ejecuta el linter y falla si hay hallazgos. Evidencia: paso del
 workflow en una corrida.
 
-**Estado.** 🟡 **En corrección.**
+**Estado.** 🟢 **CERRADO · 16 de noviembre de 2026.**
 
-**Seguimiento · 15 de noviembre de 2026.** Se decidió el instrumento: **SonarQube**, por dos
-caminos en paralelo.
+**Instrumento montado y ejecutado.** SonarQube Community 26.11 en Docker
+([herramientas-rnf §4](herramientas-rnf/README.md)), con una puerta de calidad cuya primera
+condición es el umbral textual de RNF-20 (a): `coverage < 70` hace fallar la puerta.
 
-**Camino 1 — medición hoy, sin depender de nadie.** SonarQube Community en Docker, escaneando los
-dos repositorios desde la copia local. Da la nota de mantenibilidad, la deuda técnica, los *code
-smells* y los puntos calientes de seguridad, con evidencia esta misma noche. **Bloqueado por el
-mismo detalle operativo que H-02: Docker Desktop no está arrancado.**
+**Resultado del primer escaneo** (backend `bb72c07`, 14 422 líneas):
 
-**Camino 2 — permanente, en el CI.** SonarCloud, que es **gratuito en repositorios públicos** y
-los dos lo son (verificado: `gh repo view` devuelve `"visibility":"PUBLIC"` en ambos). Requiere que
-el dueño del repositorio cree el proyecto y agregue `SONAR_TOKEN` a los secretos de Actions.
-**Es el mismo bloqueo de permisos de H-01**, y conviene pedir las dos cosas juntas en la misma
-petición al admin, porque es el mismo clic en la misma pantalla de Settings.
+| Métrica | Valor |
+| --- | --- |
+| **Puerta de calidad** | **OK** |
+| **Mantenibilidad** | **A** |
+| **Deuda técnica** | **15 minutos** |
+| Cobertura según Sonar | 90,5 % (concuerda con el 92,39 % de JaCoCo) |
+| Fiabilidad · Seguridad | A · A |
+| Bugs · Vulnerabilidades de código | 0 · 0 |
+| Code smells | 3 |
+| Security hotspots | 0 |
+| Duplicación | 0,5 % |
 
-**Lo que aporta a RNF-20 que JaCoCo no aporta.** JaCoCo responde «cuánto código tocan las
-pruebas». Mantenibilidad es más que eso: complejidad, duplicación, reglas incumplidas. Sonar
-también **consume el XML de JaCoCo**, así que la cobertura corregida en H-08 queda visible en el
-mismo tablero y deja de vivir en un reporte local que nadie abre.
+**Qué aporta esto que la cobertura no aportaba.** Hasta hoy el veredicto de mantenibilidad de
+RNF-20 descansaba solo en «cuánto código tocan las pruebas». Ahora hay complejidad, duplicación y
+reglas incumplidas medidas: **mantenibilidad A con 15 minutos de deuda sobre 14 422 líneas.** Es un
+resultado bueno y conviene decirlo tal cual, sin rebajarlo.
 
-**Severidad.** Se mantiene **media**: el SRS no lo exige, y el proyecto puede cerrar sin esto.
+> ⚠️ **La trampa de interpretación, y hay que blindarla en el informe.** Sonar reporta **0
+> vulnerabilidades** y en su propio registro dice `Dependency analysis skipped`: **no miró las
+> dependencias.** Trivy, sobre la misma imagen, encontró **4 CRITICAL y 10 HIGH**. Son dos
+> preguntas distintas:
+>
+> | Pregunta | Herramienta | Resultado |
+> | --- | --- | --- |
+> | ¿El código que escribimos tiene fallos? | SonarQube | 0 bugs, 0 vulnerabilidades |
+> | ¿Las librerías que usamos tienen CVE? | Trivy | **4 CRITICAL, 10 HIGH** |
+>
+> Presentar el tablero de Sonar y decir «cero vulnerabilidades» sería un informe falso.
+
+**Lo que queda, y no es parte de este hallazgo.** SonarCloud en el CI sigue necesitando que un
+admin agregue `SONAR_TOKEN` — eso vive en [H-01](#h-01-alta--el-análisis-de-dependencias-del-backend-está-apagado).
+El hallazgo era «no hay análisis estático», y ahora lo hay, con resultado.
+
+**Severidad al cierre.** Era media. Se cierra sin haber subido nunca: era un instrumento que
+faltaba, no un incumplimiento.
 
 ---
 
@@ -715,11 +856,21 @@ status=301 redirect=https://software4-sigra-backend.onrender.com/actuator/health
 
 **RNF-11 pasa de 🔴 a 🟢 en el semáforo.**
 
-**La reserva que queda, y que abre un pedido nuevo.** Esto verifica el **backend**. El frontend
-está en Vercel y hay que medirle lo mismo, pero **su URL de producción no está escrita en ningún
-archivo de los dos repositorios** (lo buscamos: no hay ninguna referencia a `vercel.app` fuera de
-`vercel.json`, que solo configura el despliegue). Queda como pedido **P-08**: que quien hizo el
-despliegue comparta la URL, para cerrar RNF-11 en los dos lados.
+**Cerrado también por el lado del frontend · 16 de noviembre de 2026.** El 15 de noviembre esto
+quedó con una reserva: solo se había medido el **backend**, porque la URL de producción del
+frontend no estaba escrita en ningún archivo de los dos repositorios. La auditoría de José la
+aportó —`https://sigra.vercel.app`— y se repitió la misma batería contra ella:
+
+```
+status=200 http_ver=2          # HTTPS sobre HTTP/2
+TLS 1.2 -> 200                 # aceptado
+TLS 1.3 -> 200                 # aceptado
+TLS 1.0 -> 000, exit 35        # RECHAZADO en el handshake
+http://sigra.vercel.app/login  -> 308 redirect=https://sigra.vercel.app/login
+```
+
+**RNF-11 cumple de punta a punta** y el pedido **P-08 queda resuelto**. Es el único requisito del
+SRS que se verifica en el entorno real que el propio requisito nombra, sin criterio sustituto.
 
 El criterio sustituto que teníamos —que ningún archivo del frontend construya una URL `http://`
 hacia el backend— sigue siendo válido como verificación de código y se mantiene en
@@ -973,6 +1124,181 @@ el presupuesto de `angular.json` sin error de versión.
 `engines`, para que el requisito sea explícito en el repositorio y no se descubra al compilar.
 
 **Estado.** 🔴 **Abierto** · nuevo el 15 de noviembre de 2026.
+
+---
+
+## H-17 (alta) — RNF-03 no se cumple con 20 usuarios concurrentes, y la causa es RNF-10
+
+**Atributo de calidad afectado.** Rendimiento.
+**RNF comprometidos.** **RNF-01** (20 usuarios concurrentes cumpliendo los tiempos de RNF-03 a
+RNF-08) y **RNF-03** (95 % de las autenticaciones en menos de 4 s). La causa está en **RNF-10**
+(BCrypt con factor de trabajo mínimo 12).
+**Medido por.** Andrés Felipe Vélez, 16 de noviembre de 2026.
+
+**Qué se encontró.** Primera medición de carga de la historia del proyecto, sobre el entorno
+aislado (`sigra-backend-rnf` en 8081 contra `sigra-pg-rnf`), backend `bb72c07`. Dos corridas de
+JMeter con **20 hilos** y rampa de 20 s, que solo se diferencian en el número de iteraciones:
+
+| Petición | Umbral del SRS | **Control** (1 iteración: logins escalonados ~1/s) | **Carga** (5 iteraciones: logins solapados) |
+| --- | --- | --- | --- |
+| `POST /api/v1/auth/login` | 95 % < **4 000 ms** | p50 503 · p95 **546** · max 649 | p50 3 774 · p95 **5 493** · max 6 591 |
+| `GET /api/v1/profesores` | 95 % < 3 000 ms | p95 **29** | p95 **1 394** |
+| `GET /api/v1/asignaturas` | 95 % < 3 000 ms | p95 **23** | p95 **1 108** |
+| `GET /api/v1/niveles-logro` | 90 % < 5 000 ms | p90 **17** | p90 **42** |
+
+**El login se degrada diez veces** y arrastra al resto: `GET /profesores` pasa de 29 ms a 1 394 ms
+sin que ese endpoint haya cambiado. De las 100 autenticaciones de la corrida de carga, **46
+superaron los 4 s** del umbral. Todas respondieron `200`: no es un fallo funcional, es tiempo.
+
+**Cómo se reproduce.** Procedimiento completo en
+[PROCEDIMIENTO-AUDITORIA-RNF.md §1](PROCEDIMIENTO-AUDITORIA-RNF.md). Las dos corridas difieren solo
+en `-Jiteraciones=1` contra `-Jiteraciones=5`.
+
+**Evidencia.** `jmeter/resultados/rnf01-control.jtl` (80 muestras) y
+`jmeter/resultados/rnf01-06-local.jtl` (400 muestras), con el informe HTML de la segunda.
+
+**Causa raíz, identificada.** `SecurityConfig.java:39` declara `new BCryptPasswordEncoder(12)`.
+Factor 12 son 4 096 rondas de hash, del orden de 300-500 ms de CPU **por autenticación**. Con 20
+logins simultáneos la CPU se satura y el resto de las peticiones espera detrás. El patrón encaja
+exactamente con lo medido: escalonados no compiten y cumplen de sobra; solapados compiten y
+multiplican la latencia por diez.
+
+**Y aquí está lo importante: el factor 12 no es un error, lo exige el SRS.** RNF-10 pide
+textualmente «contraseñas con BCrypt, factor de trabajo mínimo 12». Esto no es un defecto de
+implementación: es una **tensión entre dos requisitos del propio SRS**, medida y reproducible.
+
+| Requisito | Qué exige | Efecto |
+| --- | --- | --- |
+| **RNF-10** | BCrypt factor ≥ 12 | Hace que cada login cueste cientos de ms de CPU |
+| **RNF-01 + RNF-03** | 20 concurrentes, 95 % de logins < 4 s | Inalcanzable si los 20 autentican a la vez |
+
+**Lo que NO proponemos.** Bajar el factor de BCrypt. Sería incumplir RNF-10 —un requisito de
+seguridad— para cumplir uno de rendimiento, y esa no es una decisión que nos corresponda tomar ni
+sugerir a la ligera.
+
+**Opciones que sí corresponde poner sobre la mesa**, para que el equipo y el PO decidan:
+
+1. **Declarar el alcance real de RNF-01.** Que los 20 usuarios concurrentes se entiendan como
+   usuarios *en sesión*, no autenticando simultáneamente. Un usuario real entra una vez por
+   sesión; el perfil de 5 iteraciones reautentica cada pocos segundos. Es la lectura más realista
+   y **solo requiere dejarlo escrito** en el SRS o en el informe.
+2. **Aceptar la tensión como deuda técnica documentada**, con la medición adjunta.
+3. **Medir en hardware representativo** antes de concluir sobre producción.
+
+**Severidad y por qué.** **Alta.** Es el primer incumplimiento de un umbral numérico del SRS que
+logramos **medir**, y afecta al flujo de entrada de todos los roles. Por el §7, alta bloquea la
+entrega — pero la salida aquí no es código, es la **decisión de alcance** del punto 1, que cuesta
+un párrafo.
+
+**Reservas que acompañan al hallazgo, y van siempre con él:**
+
+1. Medido en un portátil de **12 CPU** con seis contenedores encima (SonarQube incluido, 2,2 GB).
+   En un servidor dedicado el número sería mejor. **No afirmamos que producción se comporte así.**
+2. El perfil de carga es **más agresivo que el uso real** para el login, por lo dicho arriba.
+3. Lo que la medición demuestra, y es suficiente para abrir el hallazgo: **con llegada simultánea
+   sostenida el umbral de RNF-03 no se cumple, y la causa está identificada.**
+
+**Dueño.** La decisión de alcance: **Product Owner**. La medición en hardware representativo:
+nosotros, si hay dónde.
+
+**Criterio de verificación del cierre.** O queda escrita la decisión de alcance de RNF-01, o una
+corrida en hardware representativo muestra `95th pct` del login por debajo de 4 000 ms con 20
+logins solapados.
+
+**Estado.** 🔴 **Abierto** · nuevo el 16 de noviembre de 2026.
+
+---
+
+## Observaciones sin anclaje en el SRS
+
+> **Por qué esta sección existe, y por qué estas dos cosas **no** son hallazgos de RNF.**
+>
+> El 16 de noviembre estas dos observaciones se registraron como «H-15» y «H-16», con un RNF
+> comprometido al lado y, en el primer caso, severidad **alta** que «bloquea la entrega por el §7».
+> **Estaba mal, y es la tercera vez que cometemos el mismo error de método.** Ningún requisito del
+> SRS dice que una vista no deba devolver un mensaje de error genérico, ni exige cabeceras de
+> endurecimiento HTTP. Al ponerles un RNF al lado estábamos **deduciendo una exigencia desde lo
+> observado**, que es exactamente lo que nos hizo abrir H-06 y H-10 en falso.
+>
+> Las observaciones **siguen siendo válidas y útiles**: las encontró José verificando, son
+> reproducibles y el equipo tiene que atenderlas. Lo que cambia es **de qué son evidencia**: son
+> defectos de funcionamiento y de configuración, que pertenecen al registro de errores del equipo
+> y al tablero, no al registro de incumplimientos del SRS. Conservan la numeración **OBS** que les
+> dio José, que era la correcta desde el principio.
+
+### OBS-01 (media, provisional) — Cuatro vistas del despliegue responden con un error genérico
+
+**Qué es.** Un **defecto funcional** observado en el despliegue, no un incumplimiento de RNF.
+**Observado por.** José Alejandro Valencia, 15 de noviembre de 2026, despliegue de Vercel.
+**Registro original.** [hallazgos.md](evidencias-rnf/jose-validacion-2026-11/hallazgos.md).
+
+Con el rol autorizado y sin enviar formularios, cuatro vistas mostraron **«Ocurrió un error
+inesperado. Intenta de nuevo en unos minutos.»**:
+
+| Rol | Ruta |
+| --- | --- |
+| ADMINISTRADOR | `/admin/ra` |
+| ADMINISTRADOR | `/admin/estudiantes` |
+| ADMINISTRADOR | `/admin/reportes` (Rendimiento por RA) |
+| PROFESOR | `/profesor/estadisticas` |
+
+En Catálogo apareció además «El servicio no está disponible»: la lista cargó en una visita y
+falló tras F5. Detalle por pantalla en
+[navegador-administrador.md](evidencias-rnf/jose-validacion-2026-11/navegador-administrador.md) y
+[navegador-profesor.md](evidencias-rnf/jose-validacion-2026-11/navegador-profesor.md).
+
+**Severidad: media, provisional** — la que puso José, y se mantiene. Una sola sesión de revisión,
+sin tasa de repetición medida y sin SHA del despliegue confirmado. **Sube solo si el equipo
+reproduce que bloquea una operación esencial de forma sostenida.**
+
+**Causa: no determinada.** No hubo respuesta de red exportable ni logs del servidor. Puede ser
+datos, servicio, red o despliegue. **No atribuirla a concurrencia.**
+
+**Qué nos toca a nosotros.** Dos cosas, ninguna es «corregirlo»:
+
+1. **Bloquea una medición nuestra.** No se puede verificar el umbral de RNF-06 (estadísticas
+   < 5 s) sobre una vista que no carga. Eso no convierte a OBS-01 en incumplimiento de RNF-06: lo
+   que hace es dejar RNF-06 **sin medir**, que es distinto.
+2. **Reportarla donde el equipo la vea**, siguiendo el procedimiento del equipo: no se crean
+   incidencias nuevas. Se comenta sobre las existentes que tocan esas pantallas —**0000041**
+   (Reportes) y **0000048** (Estadísticas), ambas abiertas— y entra al registro de errores del
+   libro como **ERR**.
+
+**Relación con lo que ya existe en Mantis.** 0000041 y 0000048 tocan las mismas pantallas pero
+describen otra cosa (alcance del módulo y organización de la información). Ninguna cubre este
+síntoma, y por eso hay que dejarlo escrito **en ellas**, no en un ticket nuevo.
+
+**Capturas.** No se publicaron a propósito: las vistas mostraban cuentas, registros académicos y
+eventos de auditoría, y no se pudo producir copia redactada con trazabilidad. Decisión correcta.
+
+**Estado.** 🔴 Abierta · fuera del registro de hallazgos de RNF, dentro del registro de errores.
+
+---
+
+### OBS-02 (baja) — Cabeceras de endurecimiento no observadas en login
+
+**Qué es.** Una **revisión de configuración de despliegue**. El SRS no exige estas cabeceras.
+**Observado por.** José Alejandro Valencia, 15 de noviembre de 2026.
+**Registro original.** [seguridad.md](evidencias-rnf/jose-validacion-2026-11/seguridad.md).
+
+En la respuesta HTTPS muestreada de `https://sigra.vercel.app/login`, **HSTS sí estaba presente**,
+pero no aparecieron `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`,
+`Referrer-Policy` ni `Permissions-Policy`.
+
+**No se declara vulnerabilidad.** No se probó la ausencia en otras capas o rutas ni se demostró
+impacto explotable. Es defensa en profundidad, no un requisito incumplido: **RNF-11 pide TLS y el
+TLS cumple**; RNF-14 pide validar y sanear la entrada, que es del backend; RNF-17 pide que los
+errores no filtren datos, y no los filtran.
+
+**Severidad: baja.** Puede cerrarse con una **decisión escrita** de quien administre Vercel, sin
+cambiar nada.
+
+**El subproducto que sí valió oro.** Esta observación nos dio la URL de producción del frontend
+—`https://sigra.vercel.app`— que no estaba escrita en ningún archivo de los dos repositorios. Con
+ella se completó la verificación de **RNF-11 de punta a punta** (ver [H-10](#h-10-media--rnf-11-tls-12-no-es-verificable-sin-entorno-de-producción))
+y quedó resuelto el pedido P-08.
+
+**Estado.** 🔴 Abierta · revisión de configuración, no hallazgo de RNF.
 
 ---
 

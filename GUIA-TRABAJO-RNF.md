@@ -9,7 +9,7 @@ Ingeniería de Software 4 · Universidad Católica de Oriente · 2026
 | **Rol en el manual operativo** | §3.5 Especialista en requisitos no funcionales |
 | **Documento base** | `BITACORAS DE CLASE/Clase#11/Proyecto Mantenimiento.pdf` |
 | **Producto a mantener** | SIGRA (backend Spring Boot 4 + frontend Angular 22) |
-| **Última actualización** | **15 de noviembre de 2026** (reunión 3 · verificación inicial de RNF) |
+| **Última actualización** | **16 de noviembre de 2026** (tras la auditoría de navegador de José) |
 
 > **Cómo usar este documento.** Las secciones 1 a 5 son la base que se lee una vez y se consulta.
 > La sección 6 es la operativa: tiene un bloque por reunión con lo que hay que llevar listo y el
@@ -700,10 +700,10 @@ sección 5.3. **Actualizado el 15 de noviembre de 2026.**
 
 | ID | Severidad | Atributo | Hallazgo | Titular | Estado |
 | --- | --- | --- | --- | --- | --- |
-| H-08 | **Alta** | Mantenibilidad | RNF-20 vigilaba la cobertura de 2 de los 4 módulos obligatorios | Ambos | 🟢 **Corregido y verificado** · falta PR |
+| H-08 | **Alta** | Mantenibilidad | RNF-20 vigilaba la cobertura de 2 de los 4 módulos obligatorios | Ambos | 🟢 **CERRADO** · integrado en `develop` (`bb72c07`, PR #117) |
 | H-10 | Media | Seguridad | RNF-11 (TLS 1.2+) «no verificable sin producción» | José | 🟢 **Cerrado** · la premisa era falsa: sí hay producción |
 | H-01 | **Alta** | Seguridad | SCA de dependencias del backend apagado (`SIGRA_ENABLE_*` sin crear) | José | 🔴 **Abierto · 8 días** · exige permiso `admin` |
-| H-11 | **Alta** | Rendimiento | La incidencia 0000053 (alta/mayor) no tiene dueño y es de perfil no funcional | Andrés | 🔴 **Nuevo** |
+| H-11 | **Alta** | Rendimiento | 0000053 (alta/mayor) sin dueño; impacto RNF y causa por confirmar | Andrés | 🔴 **Abierto** · sin cambio en Mantis al 16-nov |
 | H-03 | **Alta** ↑ | Mantenibilidad | El E2E de navegador cubre un solo flujo, y el producto creció ocho módulos | Ambos | 🔴 **Abierto** · sube de media a alta |
 | H-02 | **Alta** | Rendimiento | Nueve RNF de rendimiento sin instrumento | Andrés | 🟡 **En corrección** · JMeter creado; 4 rojos quedan |
 | H-09 | Media → baja | Disponibilidad | RNF-18 sin medición de uptime ni de MTTR | José | 🟡 **En corrección** · uptime medido; MTTR sin evento |
@@ -711,34 +711,56 @@ sección 5.3. **Actualizado el 15 de noviembre de 2026.**
 | H-13 | Media | Trazabilidad | Ninguna de las 31 incidencias está en estado `cerrada` en Mantis | Ambos | 🔴 **Nuevo** |
 | H-04 | Media | Accesibilidad | RNF-21 sin verificación automatizada | Andrés | 🟡 **Abierto** · UI/UX lo corrigió a mano (PR #91) |
 | H-05 | Media | Mantenibilidad | Sin análisis estático en ninguno de los dos repositorios | Ambos | 🟡 **En corrección** · plan de SonarQube listo |
-| H-14 | Baja | Mantenibilidad | El entorno local no compila el frontend (Node por debajo del mínimo) | Andrés | 🔴 **Nuevo** |
+| H-14 | Baja | Mantenibilidad | El entorno local no compila el frontend (Node por debajo del mínimo) | Andrés | 🔴 **Abierto** |
 | H-07 | Baja | Mantenibilidad | README del backend contradice a `build.gradle` sobre JaCoCo | Ambos | 🔴 **Abierto** · va en el mismo PR que H-08 |
 | ~~H-06~~ | — | — | ~~Ningún RNF cubre disponibilidad~~ · **retirado por falso: RNF-18 existe** | — | Retirado · 7 nov |
 
 ### 9.1 Movimiento del 8 al 15 de noviembre
 
-| | 8-nov | 15-nov |
-| --- | --- | --- |
-| Abiertos | 9 | **7** |
-| En corrección | 0 | **4** |
-| Cerrados con evidencia | 0 | **2** |
-| De severidad alta | 3 | **4** |
+| | 8-nov | 15-nov | **16-nov** |
+| --- | --- | --- | --- |
+| Abiertos | 9 | 7 | **7** |
+| En corrección | 0 | 4 | **4** |
+| Cerrados con evidencia | 0 | 2 | **2** |
+| De severidad alta | 3 | 4 | **3** |
+| Total del registro | 10 | 14 | **14** |
 
-### 9.2 La leccion de metodo que se repite
+Más **dos observaciones sin anclaje en el SRS** (OBS-01 media provisional, OBS-02 baja): van al
+registro de errores del equipo, no a este registro. Detalle en
+[A4](A4-hallazgos-rnf.md).
 
-**Dos de catorce hallazgos se levantaron asumiendo en vez de comprobando**, y los dos se cayeron:
+### 9.2 La lección de método que se repite
 
-- **H-06**: se afirmó que ningún RNF cubría disponibilidad, leyendo las menciones de RNF en el
-  código. RNF-18 existía en el SRS. **Retirado el 7 de noviembre.**
-- **H-10**: se afirmó que no había entorno de producción para verificar TLS. Sí lo había, y la URL
-  estaba a la vista en `environment.ts`. **Cerrado el 15 de noviembre** — y el requisito **cumple**.
+**Tres veces hemos deducido una exigencia en vez de leerla en el SRS, y las tres se cayeron.** No
+son tres descuidos distintos: es el mismo error con tres caras.
 
-La regla que sale de ahí, y que conviene decir en la retrospectiva: **antes de escribir «no se
-puede verificar», abrir el archivo donde estaría la respuesta.** Un hallazgo falso nos cuesta más
-credibilidad que un hallazgo que no encontramos.
+| # | Qué afirmamos | Qué resultó | Desenlace |
+| --- | --- | --- | --- |
+| 1 | «Ningún RNF cubre disponibilidad» — leído de las menciones de RNF en el código | RNF-18 existía en el SRS | **H-06 retirado** · 7-nov |
+| 2 | «RNF-11 no es verificable: no hay entorno de producción» | Sí lo había, y la URL estaba en `environment.ts` | **H-10 cerrado** · 15-nov, y el requisito **cumple** |
+| 3 | «Cuatro vistas con error genérico» y «faltan cabeceras HTTP» registrados como hallazgos de RNF, el primero con severidad alta que «bloquea la entrega» | **Ningún RNF del SRS prohíbe un mensaje de error genérico ni exige cabeceras de endurecimiento** | Reclasificados como **OBS-01 y OBS-02** · 16-nov |
 
-> **Por qué H-06 y H-10 quedan en la tabla.** Retirar un hallazgo en silencio es peor que haberlo
-> abierto. Quedan como constancia de que verificamos y corregimos.
+**Las dos primeras fueron por omisión** (no abrimos el archivo donde estaba la respuesta). **La
+tercera fue por exceso**: encontramos algo real y le colgamos un RNF encima para darle peso, más
+una severidad que nadie había sustentado —José la había puesto en «media provisional» y se
+subió a alta sin evidencia nueva.
+
+Las dos reglas que salen de esto, y que van a la retrospectiva:
+
+1. **Antes de escribir «no se puede verificar», abrir el archivo donde estaría la respuesta.**
+2. **Antes de escribir «RNF-XX comprometido», abrir el SRS y leer el enunciado.** Si el enunciado
+   no dice lo que estamos afirmando, el hallazgo es real pero **no es nuestro**: va al registro de
+   errores del equipo, no al registro de incumplimientos del SRS. Un defecto sin RNF **sigue siendo
+   un defecto**; no necesita nuestro sello para que el equipo lo atienda.
+
+> **Lo que está en juego cuando inflamos.** Nuestro único poder real es que nos crean el
+> veredicto. El §7 dice que una severidad alta bloquea la entrega: si usamos «alta» para algo que
+> no lo sustenta, la próxima vez que digamos «alta» con razón nadie se va a detener. Un hallazgo
+> falso cuesta más credibilidad que un hallazgo que no encontramos.
+
+> **Por qué H-06, H-10, OBS-01 y OBS-02 quedan escritos.** Retirar o reclasificar en silencio es
+> peor que haberse equivocado. Quedan como constancia de que verificamos y corregimos — y de que
+> aplicamos el mismo criterio para adentro que para afuera.
 
 ---
 

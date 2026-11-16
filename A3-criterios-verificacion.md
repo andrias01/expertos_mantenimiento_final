@@ -40,7 +40,10 @@ Base de 23 criterios: RNF-18 cuenta como dos y RNF-20 también.
 | --- | --- | --- | --- |
 | **`curl` contra el despliegue de Render** | ✅ Ejecutado | RNF-11 (TLS 1.2+) | §1 · RNF-11 |
 | **Apache JMeter 5.6.3** | ✅ Un plan ejecutado, uno listo | RNF-18 uptime (ejecutado) · RNF-01, 03, 04, 06 (listos) | §2 y §3 |
-| **SonarQube / SonarCloud** | ⏳ Plan listo, sin ejecutar | RNF-20 (mantenibilidad, más allá de cobertura) | [§7](#7-seguridad-de-dependencias-y-análisis-estático--transversal) |
+| **SonarQube / SonarCloud** | ✅ **Levantado** (local, Docker) | RNF-20 (mantenibilidad, más allá de cobertura) | [§7](#7-seguridad-de-dependencias-y-análisis-estático--transversal) |
+| **PostgreSQL aislado** (Docker) | ✅ **Levantado**, con esquema y seeds | Desbloquea RNF-01, 03, 04 y 06 sin cargar la base compartida | [herramientas-rnf](herramientas-rnf/README.md) |
+| **Uptime Kuma** (Docker) | ✅ **Levantado** | RNF-18 con ventana de días, no de 208 s | [herramientas-rnf §5](herramientas-rnf/README.md) |
+| **OWASP Dependency-Check** | ✅ **Disponible sin permisos** | H-01: el plugin ya está aplicado en `build.gradle:5` | §7.1 |
 
 **De 23 criterios, 9 están verificados con evidencia y 5 no tienen cómo verificarse.** El 8 de
 noviembre eran 7 y 13.

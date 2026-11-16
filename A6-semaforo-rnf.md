@@ -14,10 +14,20 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 > **Regla que nos aplicamos.** Si la casilla de evidencia está vacía, el veredicto **no puede ser
 > verde**. Todo lo verde de esta tabla tiene una salida de comando reproducible detrás.
 
-> **Vigencia.** Este corte inicial se refiere a backend `d6fa7e1` y frontend `a3135ec`. El
-> complemento de auditoría fechado el 15-nov-2026 conserva las cifras históricas, pero corrige el
-> estado vigente de H-08 para el backend `c1b1950` y añade los recorridos de navegador. Véase
-> [complemento de semáforo](evidencias-rnf/jose-validacion-2026-11/resumen-ejecutivo.md).
+> **Vigencia · actualizada el 16 de noviembre de 2026.** Las mediciones de este corte se tomaron
+> sobre backend `d6fa7e1` y frontend `a3135ec`. Dos cosas cambiaron desde entonces:
+>
+> 1. **H-08 quedó integrado.** El [complemento de auditoría](evidencias-rnf/jose-validacion-2026-11/resumen-ejecutivo.md)
+>    de José anotó que en `c1b1950` faltaba la regla por paquete de `estadisticas` y que no se
+>    cerrara H-08 para esa versión. **Era exacto para ese SHA**, pero el fix entró vía **PR #117** y
+>    hoy está en `origin/develop` (`bb72c07`). **RNF-20 (a) cumple en la rama integrada.**
+> 2. **Se incorporaron los recorridos de navegador** de los tres roles, que aportaron dos
+>    observaciones, registradas como **OBS-01 y OBS-02** en la sección de observaciones de
+>    [A4](A4-hallazgos-rnf.md). **No mueven el semáforo**: ningún RNF del SRS las cubre.
+>
+> **Regla que adoptamos a partir de esto:** toda cifra va con su SHA al lado. «92,39 % de
+> cobertura» sin SHA no lo puede verificar nadie más, y fue lo que hizo que dos personas del mismo
+> rol llegaran a conclusiones distintas sobre el mismo hallazgo.
 
 ---
 
@@ -27,12 +37,39 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 forma distinta) y RNF-20 también (cobertura y OpenAPI). Es la misma base para las dos columnas,
 así que la comparación es válida.
 
-| | 8 de noviembre | **15 de noviembre** |
+| | 8 de noviembre | 15 de noviembre | **16 de noviembre** |
+| --- | --- | --- | --- |
+| 🟢 Verificados con evidencia | 7 | 9 | **11** |
+| 🟡 Parciales, con la reserva declarada | 3 | 9 | **6** |
+| 🔴 Sin instrumento, fuera de alcance o **incumplido** | 13 | 5 | **6** |
+| | 23 | 23 | 23 |
+
+**La tarde del 16 de noviembre cambió el panorama de verdad**, porque por primera vez hubo
+**medición de carga** y no solo inspección:
+
+| Criterio | De | A |
 | --- | --- | --- |
-| 🟢 Verificados con evidencia | 7 | **9** |
-| 🟡 Parciales, con la reserva declarada | 3 | **9** |
-| 🔴 Sin instrumento o fuera de alcance | 13 | **5** |
-| | 23 | 23 |
+| **RNF-04** | 🟡 instrumento sin ejecutar | 🟢 **p95 1 394 / 1 108 ms** contra 3 000 |
+| **RNF-06** | 🟡 bloqueado | 🟢 **p90 42 ms** contra 5 000 (en la API) |
+| **RNF-01** | 🟡 sin ejecutar | 🟡 aguanta 20 concurrentes sin errores, pero no los tiempos |
+| **RNF-03** | 🟡 sin ejecutar | 🔴 **NO CUMPLE: p95 5 493 ms** contra 4 000 |
+
+Es el primer rojo del proyecto que no es «falta instrumento» sino **«medimos y no cumple»**. Y su
+causa es otro requisito del SRS: el factor 12 de BCrypt que pide RNF-10. Ver
+[H-17](A4-hallazgos-rnf.md).
+
+**El conteo no se movió el 16 de noviembre, y conviene explicar por qué no.** Ese día pasó lo
+siguiente: se confirmó que **RNF-20 (a) quedó integrado** en `develop`, se completó **RNF-11 en
+los dos lados** (backend y frontend), y la auditoría de navegador de José aportó dos
+observaciones. Ninguna de las dos mueve el semáforo, porque **ninguna tiene anclaje en el SRS**:
+OBS-01 es un defecto funcional del despliegue y OBS-02 una revisión de configuración. Lo que sí
+hacen es **bloquear una medición nuestra** (RNF-06 sigue amarillo, pero ahora por un motivo
+distinto: la vista no carga).
+
+> En una versión anterior de este documento esas dos observaciones figuraron como hallazgos de RNF
+> con severidad alta y RNF-06 se bajó a rojo. **Se corrigió**: era deducir una exigencia desde lo
+> observado, el mismo error de H-06 y H-10. Detalle en la sección de observaciones de
+> [A4](A4-hallazgos-rnf.md).
 
 | Qué se movió | De | A |
 | --- | --- | --- |
@@ -60,12 +97,12 @@ RNF-18 (sin ninguna caída registrada que medir). Cinco de 23.
 
 | RNF | Criterio y umbral del SRS | Veredicto | Evidencia |
 | --- | --- | --- | --- |
-| **RNF-01** | 20 usuarios concurrentes | 🟡 **Instrumento listo, sin ejecutar** | `jmeter/RNF-01-06-rendimiento.jmx`, `-Jusuarios=20`. Falta PostgreSQL local (ver §4) |
+| **RNF-01** | 20 usuarios concurrentes | 🟡 **Ejecutado · aguanta la concurrencia, no los tiempos** | 400 muestras con 20 hilos, **cero errores de conexión**, todos `200`. Pero el SRS pide 20 concurrentes *cumpliendo los tiempos de RNF-03 a RNF-08*, y RNF-03 no se cumple: ver [H-17](A4-hallazgos-rnf.md) |
 | **RNF-02** | 10 en lectura y escritura simultánea | 🔴 **Sin instrumento** | El plan solo lee; el POST de calificación necesita datos sembrados |
-| **RNF-03** | 95 % de autenticaciones < 4 s | 🟡 **Instrumento listo, sin ejecutar** | `POST /api/v1/auth/login` con Duration Assertion de 4 000 ms |
-| **RNF-04** | 95 % de CRUD de catálogo < 3 s | 🟡 **Instrumento listo, sin ejecutar** | `GET /profesores` y `GET /asignaturas` con Duration Assertion de 3 000 ms |
+| **RNF-03** | 95 % de autenticaciones < 4 s | 🔴 **NO CUMPLE · medido** | **p95 = 5 493 ms** con logins solapados (46 de 100 por encima de 4 s). Con logins escalonados, p95 = 546 ms. Causa: BCrypt factor 12, que exige RNF-10. [H-17](A4-hallazgos-rnf.md) |
+| **RNF-04** | 95 % de CRUD de catálogo < 3 s | 🟢 **Verificado · medido** | p95 **1 394 ms** (`/profesores`) y **1 108 ms** (`/asignaturas`) con 20 concurrentes, contra 3 000 ms. Cumple con margen |
 | **RNF-05** | 95 % de calificaciones < 3 s | 🔴 **Sin instrumento** | Requiere evaluación y matrícula sembradas |
-| **RNF-06** | 90 % de estadísticas < 5 s | 🟡 **Instrumento listo, sin ejecutar** | `GET /niveles-logro` con Duration Assertion de 5 000 ms |
+| **RNF-06** | 90 % de estadísticas < 5 s | 🟢 **Verificado en la API · medido** | p90 **42 ms** en `GET /niveles-logro` con 20 concurrentes, contra 5 000 ms. **Reserva:** mide el endpoint, no la pantalla; `/profesor/estadisticas` sigue devolviendo error genérico en el despliegue (OBS-01), así que el tiempo *de la vista* no está medido |
 | **RNF-07** | 50 evaluaciones por asignatura/semestre | 🔴 **Sin instrumento** | Verificación de volumen; se siembra y se repite la medición |
 | **RNF-08** | 95 % de páginas < 3 s con ≥ 5 Mbps | 🟡 **Presupuesto activo; falta la medición de tiempo** | `angular.json:51-62` — presupuesto `initial` 500 kB aviso / 1 MB error, evaluado en cada `ng build` del CI |
 | **RNF-09** | Tiempos sostenidos 4 meses | 🔴 **Fuera de alcance** | La ventana del proyecto son 15 días. Requiere decisión escrita de tratamiento |
@@ -74,14 +111,14 @@ RNF-18 (sin ninguna caída registrada que medir). Cinco de 23.
 
 | RNF | Criterio y umbral del SRS | Veredicto | Evidencia |
 | --- | --- | --- | --- |
-| **RNF-10** | BCrypt factor ≥ 12, salt única, nunca en claro | 🟢 **Verificado** | `AuthServiceImplTest`, `AuthControllerTest` en verde (suite completa en el CI de `d6fa7e1`) |
-| **RNF-11** | HTTPS con **TLS 1.2+** en producción | 🟢 **Verificado hoy** | Ver §3.1 — medición en vivo contra Render |
+| **RNF-10** | BCrypt factor ≥ 12, salt única, nunca en claro | 🟢 **Verificado · ahora también en ejecución** | `AuthServiceImplTest`, `AuthControllerTest` en verde. **16-nov:** la respuesta real del login solo trae `token`, `tipo`, `expiraEn` y `usuario`; ningún campo de contraseña ni hash |
+| **RNF-11** | HTTPS con **TLS 1.2+** en producción | 🟢 **Verificado en los dos lados** | Ver §3.1 — backend (Render) y frontend (Vercel): TLS 1.2 y 1.3 aceptados, **TLS 1.0 rechazado**, HTTP redirige a HTTPS en ambos. Cierra el pedido P-08 |
 | **RNF-12** | JWT HS256+, con `iat`/`exp`, sin datos sensibles | 🟢 **Verificado** | `JwtServiceTest` |
 | **RNF-13** | Valida firma y vigencia + RBAC del Apéndice 4.1 | 🟢 **Verificado** | `PrivateEndpointAuthorizationArchitectureTest` (recorre el registro real de Spring MVC), `SecurityRf05IntegrationIT`, Bruno `seguridad-rf05/` |
 | **RNF-14** | Validar y sanear la entrada; consultas parametrizadas | 🟡 **Parcial, por inspección** | Jakarta Validation + JPA; **sin prueba dedicada de saneamiento**. Reserva que hay que declarar |
-| **RNF-15** | Token expira ≤ 60 min; el cliente lo borra al salir | 🟢 **Verificado** | `JwtServiceTest`, `JwtAuthenticationFilterTest`, `session.service.spec.ts`; `application.yaml:38` → `JWT_EXPIRATION_MS` por defecto 3 600 000 ms = 60 min |
-| **RNF-16** | Auditoría append-only, 5 años, autenticaciones exitosas **y fallidas** | 🟢 **Verificado** | `AuditoriaIntegracionIT`, `AuditoriaAspectTest` |
-| **RNF-17** | Errores sin contraseñas, tokens, SQL, rutas ni trazas | 🟢 **Verificado** | `HallazgosContratoErrorTest`, `ContratoError*Test`, `GlobalExceptionHandlerTest` |
+| **RNF-15** | Token expira ≤ 60 min; el cliente lo borra al salir | 🟢 **Verificado · ahora también en ejecución** | `JwtServiceTest`, `JwtAuthenticationFilterTest`, `session.service.spec.ts`; `application.yaml:38`. **16-nov:** la respuesta real del login devuelve `expiraEn: 3600` segundos = 60 min exactos |
+| **RNF-16** | Auditoría append-only, 5 años, autenticaciones exitosas **y fallidas** | 🟢 **Verificado · ahora también en ejecución** | `AuditoriaIntegracionIT`, `AuditoriaAspectTest`, **y evidencia de ejecución del 16-nov**: sobre el entorno aislado, `sigra.historial_auditoria` registró `LOGIN_FALLIDO` y `LOGIN_EXITOSO` con fecha y hora, rol, acción y detalle. Ver [herramientas-rnf §2.4](herramientas-rnf/README.md) |
+| **RNF-17** | Errores sin contraseñas, tokens, SQL, rutas ni trazas | 🟢 **Verificado** | `HallazgosContratoErrorTest`, `ContratoError*Test`, `GlobalExceptionHandlerTest`. Los mensajes genéricos que OBS-01 observa en el despliegue **cumplen** este requisito: no filtran nada. Que dejen al usuario sin salida es un problema de producto, no de RNF-17 |
 
 ### 2.3 Disponibilidad · RNF-18 · titular José
 
@@ -100,7 +137,7 @@ RNF-18 (sin ninguna caída registrada que medir). Cinco de 23.
 
 | RNF | Criterio y umbral del SRS | Veredicto | Evidencia |
 | --- | --- | --- | --- |
-| **RNF-20 (a)** | Cobertura ≥ 70 % en RF-04, RF-05, **RF-14** y **RF-16** | 🟢 **Verificado hoy, tras corregir H-08** | Ver §3.3 — global **92,39 %**; los cuatro módulos por encima del umbral y **vigilados** |
+| **RNF-20 (a)** | Cobertura ≥ 70 % en RF-04, RF-05, **RF-14** y **RF-16** | 🟢 **Verificado · integrado en `bb72c07`** | Ver §3.3 — global **92,39 %** sobre `d6fa7e1`; la regla de los cuatro módulos está en `develop` desde el PR #117 |
 | **RNF-20 (b)** | OpenAPI de todo endpoint protegido con 200/400/401/403/404 | 🟢 **Verificado** | 10 clases `*ApiDocumentacionIT` en verde en el CI; contrato en `/v3/api-docs` |
 
 ### 2.6 Accesibilidad · RNF-21 · titular Andrés
@@ -139,9 +176,27 @@ status=301 redirect=https://software4-sigra-backend.onrender.com/actuator/health
 | Que no se admita menos | ✅ TLS 1.0 rechazado en el handshake |
 | Que no haya tráfico en claro | ✅ HTTP responde 301 a HTTPS |
 
-**Consecuencia:** [H-10](A4-hallazgos-rnf.md) se cierra. La única reserva es que esto verifica el
-**backend**; el frontend en Vercel hay que medirlo igual, y la URL de producción del frontend no
-está escrita en ningún archivo del repositorio (pendiente P-08).
+### 3.1.1 Y el frontend, medido el 16 de noviembre
+
+La auditoría de José aportó la URL que faltaba: `https://sigra.vercel.app`. Con ella se repitió la
+misma batería:
+
+| Lo que exige el SRS | Backend (Render) | **Frontend (Vercel)** |
+| --- | --- | --- |
+| HTTPS en producción | ✅ 200, HTTP/2 | ✅ **200, HTTP/2** |
+| TLS 1.2 | ✅ 200 | ✅ **200** |
+| TLS 1.3 | ✅ 200 | ✅ **200** |
+| TLS 1.0 rechazado | ✅ exit 35 | ✅ **exit 35** |
+| Sin tráfico en claro | ✅ 301 → HTTPS | ✅ **308 → HTTPS** |
+
+**Consecuencia: [H-10](A4-hallazgos-rnf.md) se cierra sin reservas y el pedido P-08 queda
+resuelto.** RNF-11 es el único requisito del SRS que hoy se verifica **de punta a punta en el
+entorno real que el requisito nombra**, y no por sustitución.
+
+La única nota que queda es de otra naturaleza y vive en **OBS-02** ([A4](A4-hallazgos-rnf.md)): en la
+respuesta de login se observó HSTS pero no CSP ni las otras cabeceras de endurecimiento. Eso no es
+parte de RNF-11 —el requisito pide TLS, no cabeceras— pero conviene que el equipo decida la
+política.
 
 ### 3.2 RNF-18 · Uptime — 🟡 **medido, con reserva de ventana**
 
@@ -225,12 +280,15 @@ integraciones.
 
 | # | Qué falta | Quién puede | Bloqueo real |
 | --- | --- | --- | --- |
-| 1 | Abrir el PR del fix de H-08 y que el revisor técnico lo apruebe | Andrés abre · **Jean Paul aprueba** | Ninguno. Está listo y probado |
-| 2 | **PostgreSQL local** para correr los 20 usuarios sin tocar Supabase | Andrés | **Docker Desktop no está arrancado.** Es un clic |
-| 3 | Activar `SIGRA_ENABLE_DEPENDENCY_REVIEW` y `SIGRA_ENABLE_OWASP_SCA` | **Solo un admin del repo** (Juan Camilo / Jean Paul) | Andrés tiene `push`, **no `admin`**: no puede. Lleva 8 días pedido |
-| 4 | SonarQube para la nota de mantenibilidad | Andrés, en local con Docker | Mismo bloqueo que el 2 |
+| 1 | ~~Abrir el PR del fix de H-08~~ | — | ✅ **Hecho.** Integrado en `develop` (`bb72c07`) vía PR #117 el 16-nov |
+| 2 | ~~PostgreSQL local para correr los 20 usuarios~~ | — | ✅ **Resuelto el 16-nov.** [`herramientas-rnf/`](herramientas-rnf/README.md) levanta PostgreSQL aislado + backend en 8081, verificado: un login fallido mueve el contador **en la base local**, no en Supabase |
+| 3 | Activar `SIGRA_ENABLE_DEPENDENCY_REVIEW` y `SIGRA_ENABLE_OWASP_SCA` | **Solo un admin del repo** (Juan Camilo / Jean Paul) | Andrés tiene `push`, **no `admin`**: no puede. **Lleva 9 días pedido** y entre tanto entraron los PR #117, #118 y el R4, todos con el SCA saltado |
+| 4 | SonarQube para la nota de mantenibilidad | Andrés | 🟡 **Contenedor levantado** (`localhost:9000`, versión 26.11, `status: UP`). Falta generar el token y escanear |
 | 5 | `@axe-core/playwright` para automatizar RNF-21 | Equipo de frontend | Decisión del equipo: es una dependencia nueva |
-| 6 | URL de producción del frontend en Vercel, para medirle TLS | Quien hizo el despliegue | No está escrita en ningún archivo del repositorio |
+| 6 | ~~URL de producción del frontend~~ | — | ✅ **Resuelto:** `https://sigra.vercel.app`, de la auditoría de José. Falta comprobarle el rechazo de TLS 1.0 |
+| 7 | **Dejar OBS-01 escrita en 0000041 y 0000048**, que son las incidencias abiertas que tocan esas pantallas | Andrés / José | Ninguno. **No se crea ticket nuevo**: el procedimiento del equipo es revisar las existentes |
+| 8 | Reproducir OBS-01 en QA correlacionando `X-Request-Id` | Backend + frontend + operaciones | Requiere observabilidad del despliegue |
+| 9 | Correr `./gradlew dependencyCheckAnalyze` y llevar el informe de CVE | Andrés / José | **Ninguno** — el plugin ya está aplicado; no hace falta `admin` |
 
 ---
 
@@ -245,6 +303,9 @@ decisión es un criterio de finalización incumplido (§13), y nos lo cobran a n
 | **D-1** | **RNF-02, RNF-05, RNF-07** (los tres rojos de rendimiento que sí serían alcanzables) | (a) se siembran los datos y se miden antes del día 15 · (b) deuda técnica documentada | Equipo |
 | **D-2** | **RNF-09** (4 meses de operación continua) | Fuera de alcance con justificación — **es la única opción honesta** | PO |
 | **D-3** | **RNF-18 MTTR** | (a) se acepta «sin evento que medir» como veredicto · (b) se define un procedimiento de respuesta a caída y se verifica en seco | PO |
+| **D-4** | **OBS-01**: cuatro vistas con error genérico en el despliegue | (a) se reproduce y corrige antes del cierre · (b) se declara defecto conocido. **No es un RNF**, así que no condiciona el §13; sí condiciona la calidad del producto que se entrega | Equipo + PO |
+| **D-6** | **[H-17](A4-hallazgos-rnf.md)**: RNF-03 incumplido con logins solapados, por el BCrypt que exige RNF-10 | (a) **declarar por escrito que los 20 usuarios de RNF-01 son usuarios en sesión, no autenticando a la vez** — la lectura más realista, y cuesta un párrafo · (b) deuda técnica documentada con la medición adjunta · (c) medir en hardware representativo antes de concluir. **No se propone bajar el factor de BCrypt**: sería incumplir RNF-10 para cumplir RNF-03 | **PO** |
+| **D-5** | **[H-03](A4-hallazgos-rnf.md)**: diez módulos nuevos, un flujo E2E | (a) un spec por rol antes del cierre · (b) deuda técnica con justificación escrita | Equipo |
 
 ---
 
@@ -256,6 +317,20 @@ decisión es un criterio de finalización incumplido (§13), y nos lo cobran a n
 | **0000038** (alta/mayor) | Mantis la clasifica como **«No Funcionalidad»**; la guía del equipo nos asigna «definir y validar los patrones de paginación y buscadores» | **asignada desde el 8-nov** | 7 días sin movimiento. Es nuestra responsabilidad de validación y no hemos podido ejercerla porque no hay implementación que validar |
 | **0000040** (alta/mayor) | Igual: **«No Funcionalidad»**, patrón de paginación | **resuelta** (resolución *abierta*) | Se resolvió **sin que validáramos el patrón**. Hay que revisarla y dejar el veredicto escrito |
 | **0000029** (alta/fallo, seguridad) | Bloqueo tras 5 intentos fallidos (RF-04, uno de los 4 módulos del RNF-20) | **resuelta** (resolución *abierta*) | Verificado: está implementado (`Usuario.intentosFallidos`, `fechaBloqueo`, `estaBloqueado`, 423 documentado) y probado. Solo falta cerrar la resolución en Mantis |
+
+> **Cómo trabaja este equipo el tablero, y por qué importa para nuestro rol.** El equipo **no
+> crea incidencias nuevas** en esta fase: revisa las que ya están, y si una figura como
+> `cerrada` pero no cumple su criterio de aceptación, **la reabre dejando escrito por qué**.
+> Eso define nuestra tarea de F4 con precisión: no abrir tickets, sino **verificar las 22 que
+> están en `resuelta`** contra su criterio y dejar el veredicto en cada una. Y tiene un efecto
+> incómodo: como **ninguna está en `cerrada`**, la compuerta de reapertura todavía no se ha
+> podido ejercer ni una vez.
+
+> **Al 16 de noviembre, Mantis no registra un solo cambio respecto al 15.** Se reexportó el
+> tablero y se comparó fila por fila: mismas 31 incidencias, mismos estados, mismas
+> resoluciones, y la fecha de actualización más reciente sigue siendo 2026-11-15. **0000053
+> sigue sin dueño** y ninguna incidencia pasó a `cerrada`. Lo que sí se movió fue el código:
+> entraron R7, R4 y más paginación. El tablero va por detrás del repositorio.
 
 > **Dato de higiene de Mantis:** de las 31 incidencias del tablero, **ninguna está en estado
 > `cerrada`** (22 resueltas, 6 nuevas, 3 asignadas). Según las reglas del propio equipo, `cerrada`
