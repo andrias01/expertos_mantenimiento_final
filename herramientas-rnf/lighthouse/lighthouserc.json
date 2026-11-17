@@ -1,0 +1,25 @@
+{
+  "ci": {
+    "collect": {
+      "numberOfRuns": 3,
+      "settings": {
+        "preset": "desktop",
+        "chromeFlags": "--headless=new --no-sandbox --disable-gpu",
+        "onlyCategories": ["performance", "accessibility", "best-practices", "seo"]
+      }
+    },
+    "assert": {
+      "assertions": {
+        "interactive":              ["error", { "maxNumericValue": 3000 }],
+        "first-contentful-paint":   ["warn",  { "maxNumericValue": 1800 }],
+        "largest-contentful-paint": ["warn",  { "maxNumericValue": 2500 }],
+        "total-byte-weight":        ["warn",  { "maxNumericValue": 512000 }],
+        "categories:accessibility": ["error", { "minScore": 0.9 }],
+        "color-contrast":           ["error", { "minScore": 1 }],
+        "label":                    ["error", { "minScore": 1 }],
+        "tabindex":                 ["error", { "minScore": 1 }]
+      }
+    },
+    "upload": { "target": "filesystem" }
+  }
+}

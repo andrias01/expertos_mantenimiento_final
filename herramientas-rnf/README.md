@@ -729,18 +729,261 @@ Dentro de `psql`: `\dt sigra.*` lista las tablas, `\d sigra.usuario` describe un
 
 ---
 
-## 6. Lo que NO está aquí, y por qué
+## 6. OWASP ZAP — RNF-13, RNF-14, RNF-17 y las cabeceras de OBS-02
 
-| Herramienta | Para qué sería | Por qué no está |
+> **Qué numera qué**, porque es fácil cruzarlos: **RNF-13** es validar firma y vigencia del JWT
+> y aplicar la Matriz RBAC; **RNF-14** es **validar y sanear** la entrada. ZAP toca los dos, pero
+> por caminos distintos: el primero con la corrida sin token, el segundo con la autenticada.
+
+> ⚠️ **Dónde se puede lanzar, y dónde no.** ZAP hace un escaneo **activo**: inyecta, borra y
+> escribe. Solo se lanza contra **`http://localhost:8081` (el backend contra `sigra-pg-rnf`)**.
+> **Nunca** contra `software4-sigra-backend.onrender.com` ni contra `sigra.vercel.app` sin
+> autorización escrita del equipo. Y **nunca contra el backend de 8080**: ese apunta a Supabase,
+> que es la base de producción (ver §7.2).
+
+Imagen: `zaproxy/zap-stable` (ZAP 2.17.0). Guion de API: `zap-api-scan.py`, que lee el OpenAPI del
+backend —61 rutas, 81 operaciones— en vez de adivinar la superficie con el *spider*.
+
+### 6.1 El falso verde: un informe de 0 hallazgos que no evaluó nada
+
+La primera corrida salió **limpia**: `FAIL-NEW: 0  WARN-NEW: 0  PASS: 120`. No era una buena
+noticia. Las 265 peticiones que ZAP mandó murieron en **401**, porque toda la API exige JWT. Las
+120 reglas activas «pasaron» sin tocar un solo controlador.
+
+Es el mismo patrón que la puerta por defecto de SonarQube (§4.8): **un verde que no evalúa nada**.
+La forma de detectarlo está en el informe: si la única alerta es *A Client Error response code was
+returned by the server* y todas sus instancias traen `evid: 401`, el escaneo no entró.
+
+Eso sí deja una evidencia que vale: **ninguna de las 81 operaciones respondió nada sin token**.
+Es verificación de ejecución del *deny by default* de **RNF-13**, que hasta ahora solo estaba
+comprobado con pruebas unitarias.
+
+### 6.2 El procedimiento, que ya está en un guion
+
+```bash
+# 1. RESPALDAR. El escaneo autenticado ESCRIBE en la base local.
+docker exec -e PGPASSWORD=rnf_local_solo_pruebas sigra-pg-rnf \
+  pg_dump -U postgres -d postgres -n sigra -f /tmp/antes-de-zap.sql
+
+# 2. Escanear (obtiene el OpenAPI, pide el JWT y corre ZAP).
+bash zap/escanear-api-autenticado.sh admin.bruno@uco.net.co 2026-11-16 admin
+
+# 3. Restaurar: ZAP deja basura (en la corrida del 16-nov, 112 facultades).
+docker exec -e PGPASSWORD=rnf_local_solo_pruebas sigra-pg-rnf \
+  psql -U postgres -d postgres -c "DROP SCHEMA sigra CASCADE"
+docker exec -e PGPASSWORD=rnf_local_solo_pruebas sigra-pg-rnf \
+  psql -U postgres -d postgres -q -f /tmp/antes-de-zap.sql
+```
+
+El rol se cambia con el primer argumento (`profesor.bruno@uco.net.co`,
+`estudiante.bruno@uco.net.co`): **comparar el informe de dos roles es la vía para verificar RBAC
+por rol**, y es el siguiente paso pendiente de RNF-13.
+
+### 6.3 Resultado del 16 de noviembre, autenticado como ADMINISTRADOR
+
+`PASS: 119 · WARN-NEW: 2`, y los dos avisos son hallazgos reales:
+
+| Aviso de ZAP | Instancias | Qué es |
 | --- | --- | --- |
-| **OWASP ZAP** | RNF-14, RNF-17 y las cabeceras de OBS-02 | Es un escaneo activo. **No se lanza contra el despliegue del equipo sin autorización escrita**: contra `sigra-pg-rnf` + el backend de 8081 sí se puede |
-| **Lighthouse CI** | RNF-08 con tiempo real y RNF-21 automatizado | Se corre con `npx`, no necesita contenedor: `npx -y @lhci/cli autorun --collect.url=https://sigra.vercel.app/login` |
-| **Trivy / Dependency-Check** | H-01 sin permiso de admin | `.\gradlew dependencyCheckAnalyze` ya funciona: el plugin está aplicado en `build.gradle:5` |
-| **DefectDojo** | Consolidar los hallazgos de todas las anteriores en un tablero | Propuesta para la retrospectiva. Montarlo ahora sería una herramienta más que nadie alcanza a usar |
+| *A Server Error response code was returned by the server* | **24** | **HTTP 500 en nueve endpoints de listado** → hallazgo [H-18](../A4-hallazgos-rnf.md), RNF-14 |
+| *Cross-Origin-Resource-Policy Header Missing or Invalid* | 5 consolidadas (la consola cuenta 12 avisos) | Cabecera de aislamiento ausente → **OBS-03**, sin anclaje en el SRS |
+
+La evidencia de las tres corridas está en `evidencias/zap/`, y los nombres dicen qué es cada una:
+
+| Fichero | Qué contiene |
+| --- | --- |
+| `zap-api-admin-2026-11-16.{json,html}` | **La corrida válida**: activa y autenticada como ADMINISTRADOR |
+| `zap-api-sin-token-2026-11-16.{json,html}` | Sin token a propósito. Es la evidencia del *deny by default* de RNF-13 |
+| `zap-api-jwt-no-inyectado-2026-11-16.{json,html}` | El falso verde de §6.1, conservado para poder reconocerlo |
+| `zap-api-piloto-autenticado-2026-11-16.json` | Piloto de dos rutas para comprobar la inyección del JWT; trae el aviso del actuator |
+| `openapi-8081.json` | La superficie escaneada, tal como la publicó el backend |
+
+**Los 24 quinientos son un solo defecto.** Todos se disparan con lo mismo: un **nombre de
+parámetro vacío** en la cadena de consulta (`?=` o `&=&`). Afecta a `acciones-mejora` (4),
+`auditoria` (5), `conclusiones` (4), `programas` (4), `facultades` (2), `semestres` (2),
+`estudiantes` (1), `profesores` (1) y `resultados-aprendizaje` (1). Se reproduce en una línea:
+
+```bash
+curl -s -D - -H "Authorization: Bearer $TOK" \
+  "http://localhost:8081/api/v1/programas?=&codigo=ing&estado=ACTIVO"
+# HTTP/1.1 500 ... {"status":500,"error":"INTERNAL_SERVER_ERROR",
+#                   "mensaje":"Ocurrió un error inesperado en el servidor"}
+```
+
+La causa está en el registro del backend: `causa=InvalidParameterException` con
+`error=UNEXPECTED`. La excepción **no tiene `@ExceptionHandler`** en
+`GlobalExceptionHandler.java`, que sí mapea a 400 los casos de entrada inválida que conoce
+(`MethodArgumentNotValid`, `MethodArgumentTypeMismatch`, `HttpMessageNotReadable`…), y cae en el
+ramo genérico. El SRS pide validar y sanear la entrada (**RNF-14**): la entrada se detecta como
+inválida y aun así se responde 500 en vez de 400.
+
+**Y a la vez confirma RNF-17.** El cuerpo de ese 500 trae `timestamp`, `status`, `error` y un
+mensaje genérico: **ni traza, ni clase, ni SQL**. Con 120 reglas activas, ZAP no levantó una sola
+alerta de filtración de información más allá del actuator de §6.4.
+
+### 6.4 Lo que salió de paso
+
+- **Byte nulo hasta PostgreSQL.** `?filtro=gomez%00` en `/api/v1/estudiantes` responde **409
+  CONFLICT** con «La operación entra en conflicto con información ya registrada», y en el registro
+  está la verdad: `ERROR: invalid byte sequence for encoding "UTF8": 0x00 — Where: unnamed portal
+  parameter $1`. El byte llegó al motor como parámetro ligado. No es inyección —la consulta va
+  parametrizada, que es justo por lo que falla—, pero **es entrada sin sanear y una respuesta
+  engañosa**: hallazgo [H-19](../A4-hallazgos-rnf.md).
+- **`/actuator/health` responde 200 sin token**, con `{"groups":["liveness","readiness"],...}`.
+  ZAP lo marcó *Spring Actuator Information Leak* (Medium) en la corrida piloto. Sin anclaje en el
+  SRS → **OBS-03**, junto a la cabecera.
+- **Desfase de reloj en la auditoría.** `sigra.historial_auditoria.fecha_hora` es
+  `timestamp without time zone` y guarda **hora local** (21:51), mientras el reloj del motor va en
+  **UTC** (02:53). Cinco horas de diferencia: cualquier cruce con los registros de Render —que van
+  en UTC— sale desalineado, y es el dato del que depende el MTTR de RNF-18. → **OBS-04**.
+
+### 6.5 Las trampas de ZAP, para no repetirlas
+
+1. **El JWT no se puede pasar con `-config`.** ZAP parte la línea de órdenes por espacios, así que
+   `-config replacer.full_list(0).replacement=Bearer <token>` deja el token como argumento suelto y
+   **la cabecera nunca se inyecta**, en silencio. El síntoma es el falso verde de §6.1. Va en un
+   **fichero de propiedades** y se pasa con `-z "-configfile /zap/wrk/jwt.prop"`.
+2. **El token queda en claro** en ese fichero: el guion lo borra al terminar. No se versiona.
+3. **`MSYS_NO_PATHCONV=1` no se exporta global en Git Bash.** Hace falta para que Docker reciba
+   `/zap/wrk` sin que MSYS lo convierta, pero si está global, `curl -o` y `python` reciben rutas
+   `/e/...` que los binarios de Windows no saben abrir y el guion muere con **exit 23**. Se aplica
+   **solo al `docker run`**.
+4. **La primera petición a `/v3/api-docs` tarda ~7 s** (springdoc genera el documento) y con
+   `--max-time 6` devuelve `000`. La segunda tarda 0,2 s.
+5. **El contenedor necesita `--add-host=host.docker.internal:host-gateway`**: `localhost` dentro de
+   ZAP es ZAP.
 
 ---
 
-## 7. Apagar
+## 7. Lighthouse CI — RNF-08 con tiempo real y RNF-21 automatizado
+
+No necesita contenedor ni instalación: `npx`, el Chrome del sistema y un fichero de aserciones.
+**Los umbrales del SRS están escritos como aserciones** en `lighthouse/lighthouserc.json`, así que
+el instrumento falla solo: `interactive ≤ 3000 ms` (RNF-08) y `categories:accessibility ≥ 0,9` más
+`color-contrast`, `label` y `tabindex` en 1 (RNF-21).
+
+```powershell
+$env:CHROME_PATH = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+npx -y @lhci/cli@0.15.x autorun --config=lighthouse/lighthouserc.json `
+  --collect.url=https://sigra.vercel.app/login `
+  --upload.outputDir=evidencias/lhci-vercel-login-2026-11-16
+```
+
+Lighthouse **solo carga la página**: contra Vercel es tráfico de lectura, no un escaneo activo, y
+por eso sí se puede medir producción.
+
+### 7.1 Resultado del 16 de noviembre — tres corridas por URL, preset *desktop*
+
+| | Vercel `/login` | Local `/login` (4200) |
+| --- | --- | --- |
+| Rendimiento | 0,96 · 0,60 · 0,85 | 0,93 · 0,95 · 0,95 |
+| **Accesibilidad** | **1,00 · 1,00 · 1,00** | **1,00 · 1,00 · 1,00** |
+| FCP | 454 / 481 / 458 ms | 650–833 ms |
+| **TTI — el umbral de RNF-08** | mediana **1 267 ms**, peor **3 439 ms** | mediana **1 459 ms**, peor 1 690 ms |
+| Bloqueo total (TBT) | 100 / **2 786** / 274 ms | **0 ms** en las tres |
+| Bytes transferidos | 1 087 715 | 1 416 020 |
+
+**RNF-08 cumple en la mediana y se pasa en el peor caso.** `lhci` asserta contra la mediana, así
+que la corrida de 3 439 ms **no hizo fallar la puerta**: hay que mirar las tres. La variación viene
+del TBT (100 → 2 786 ms con el mismo bundle), no del servidor; en local, con red cero, el TBT es 0
+y la medida es estable. Esa es la reserva a declarar junto al número, igual que con Kuma (§5.4).
+
+**RNF-21 da su primer dato automatizado: 1,00 en `/login`, con contraste, `label` y `tabindex`
+en verde.** Y hay que decir qué **no** mide: Lighthouse corre un subconjunto de axe sobre **la
+página que carga**, y `/login` es la única ruta pública. Las pantallas donde Sonar encontró los
+cuatro *code smells* de accesibilidad (§4.8) —`profesor/notas`, observaciones— están **detrás del
+login y siguen sin medir**. Por eso [H-04](../A4-hallazgos-rnf.md) pasa a 🟡, no a cerrado.
+
+### 7.2 Por qué no se midieron las pantallas autenticadas, y qué falta para medirlas
+
+El bundle del contenedor `sigra-frontend` está compilado contra **`http://localhost:8080/api`**, y
+el backend de 8080 tiene `DB_URL=jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com...`: **la
+base de producción**. Iniciar sesión en el 4200 para medir accesibilidad habría escrito en
+producción. Se paró ahí: hallazgo [H-20](../A4-hallazgos-rnf.md).
+
+Lo que falta es una imagen del frontend compilada contra el 8081 y un guion de Puppeteer
+(`collect.puppeteerScript`) que haga el login antes de medir. Con eso, RNF-21 queda automatizado
+sobre las pantallas que importan y H-04 se puede cerrar.
+
+### 7.3 `total-byte-weight`: 1,08 MB contra el presupuesto de 500 kB
+
+Es el único aviso que salta en las dos URL, y **no contradice** los 356,04 kB raw / 100,14 kB
+transferidos del presupuesto de `angular.json:51-62`: ese presupuesto mide **el bundle inicial**,
+y `total-byte-weight` mide **todo lo que la página descarga** (fuentes, imágenes, *chunks*). Son
+dos cosas distintas y conviene no mezclarlas en el informe.
+
+---
+
+## 8. Trivy y Dependency-Check — el SCA que H-01 no puede hacer en el CI
+
+### 8.1 Corregido: `dependencyCheckAnalyze` **no** corre sin clave de NVD
+
+En el registro del 16-nov (ACT-122) quedó escrito que `./gradlew dependencyCheckAnalyze` «corre en
+local». **Se comprobó y es falso.** Falla a los 40 s:
+
+```
+Caused by: io.github.jeremylong.openvulnerability.client.nvd.NvdApiException:
+  Invalid API Key, length of 0 too short to provided a masked partial key
+> Task :dependencyCheckAnalyze FAILED   (BUILD FAILED in 40s)
+```
+
+El plugin 13.0.0 descarga el catálogo por la API de NVD y **exige clave**; `build.gradle:57-62`
+solo la pone si existe `NVD_API_KEY`, y no existe ni en el entorno ni en `~/.gradle`. Sin catálogo
+previo en caché, el análisis no arranca.
+
+**Lo bueno: no es un permiso de administrador.** La clave de NVD es gratuita y autogestionada
+(`nvd.nist.gov/developers/request-an-api-key`, llega por correo), así que **no depende de H-01**.
+Hasta tenerla, el SCA se hace con Trivy, que no pide clave.
+
+### 8.2 Trivy, que sí corre
+
+```powershell
+# imagen (sistema operativo + el jar gordo)
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v trivy-cache:/root/.cache `
+  -v "${PWD}\evidencias:/out" aquasec/trivy image --scanners vuln `
+  --format json -o /out/trivy-backend-2026-11-16.json sigra-backend:local
+
+# dependencias declaradas del frontend (package-lock.json)
+docker run --rm -v trivy-cache:/root/.cache -v "<repo>\software4-SIGRA-frontend:/src:ro" `
+  -v "${PWD}\evidencias:/out" aquasec/trivy fs --scanners vuln --skip-dirs node_modules `
+  --format json -o /out/trivy-frontend-deps-2026-11-16.json /src
+```
+
+| Objetivo | Resultado | Lectura |
+| --- | --- | --- |
+| Imagen del backend (16-nov) | **4 CRITICAL + 10 HIGH** en Java | `tomcat-embed-core` 11.0.24 → 11.0.25 y la familia `jackson` 2.21.5 / 3.1.5. Es el dato de [H-01](../A4-hallazgos-rnf.md) |
+| Imagen del frontend | 19 en Node, **6 HIGH** | **Ninguna es de SIGRA** (§8.3) |
+| `package-lock.json` del frontend | **0 vulnerabilidades** | Dependencias de producción limpias. Trivy **suprime las de desarrollo**: con `--include-dev-deps` el número cambia |
+
+### 8.3 ⚠️ El `HIGH` que no es tuyo: mirar siempre `PkgPath`
+
+Las 19 del frontend —`undici` ×4 HIGH, `brace-expansion`, `glob`, `minimatch`, `ip-address`—
+cuelgan todas de la misma ruta:
+
+```
+usr/local/lib/node_modules/npm/node_modules/undici/package.json
+```
+
+Son **dependencias del propio `npm` que viene en la imagen base de Node**, no del
+`package-lock.json` de SIGRA. Presentar esos 6 HIGH como vulnerabilidades del frontend sería un
+error de lectura: se arreglan actualizando la imagen base, no el proyecto. El dato honesto del
+frontend es el de §8.2: **cero en las dependencias declaradas**. (El `zlib` MEDIUM
+—CVE-2026-4738— también es de la base Alpine 3.24.4.)
+
+---
+
+## 9. Lo que sigue sin estar, y por qué
+
+| Herramienta | Para qué sería | Por qué no está |
+| --- | --- | --- |
+| **DefectDojo** | Consolidar en un tablero los hallazgos de ZAP, Trivy, Sonar y Lighthouse | Propuesta para la retrospectiva. Montarlo ahora sería una herramienta más que nadie alcanza a usar; los informes ya están en `evidencias/` y el semáforo de A6 cumple la función |
+| **ZAP por rol** (profesor, estudiante) | RNF-13 verificado rol por rol, no solo *deny by default* | El guion ya acepta el rol como argumento (§6.2). Falta correrlo y diferenciar los tres informes |
+| **Lighthouse autenticado** | RNF-21 sobre `profesor/notas` y observaciones | Bloqueado por H-20: el frontend local habla con producción (§7.2) |
+| **Dependency-Check** | Segunda opinión de SCA con la puerta `failBuildOnCVSS = 4.0` | Falta la clave gratuita de NVD (§8.1) |
+
+---
+
+## 10. Apagar
 
 ```powershell
 docker compose -f "mantenimiento-rnf\herramientas-rnf\docker-compose.yml" stop

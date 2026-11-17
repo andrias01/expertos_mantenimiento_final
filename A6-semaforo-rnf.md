@@ -37,12 +37,19 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 forma distinta) y RNF-20 también (cobertura y OpenAPI). Es la misma base para las dos columnas,
 así que la comparación es válida.
 
-| | 8 de noviembre | 15 de noviembre | **16 de noviembre** |
-| --- | --- | --- | --- |
-| 🟢 Verificados con evidencia | 7 | 9 | **11** |
-| 🟡 Parciales, con la reserva declarada | 3 | 9 | **7** |
-| 🔴 Sin instrumento, fuera de alcance o **incumplido** | 13 | 5 | **5** |
-| | 23 | 23 | 23 |
+| | 8 de noviembre | 15 de noviembre | 16 de noviembre | **16-nov, noche** |
+| --- | --- | --- | --- | --- |
+| 🟢 Verificados con evidencia | 7 | 9 | 11 | **11** |
+| 🟡 Parciales, con la reserva declarada | 3 | 9 | 7 | **6** |
+| 🔴 Sin instrumento, fuera de alcance o **incumplido** | 13 | 5 | 5 | **6** |
+| | 23 | 23 | 23 | 23 |
+
+> **El movimiento de la noche del 16 es uno solo, y es hacia atrás: RNF-14 pasa de 🟡 a 🔴.**
+> No porque el producto empeorara, sino porque **se le puso el instrumento que le faltaba**. RNF-14
+> estaba en amarillo con la reserva escrita *«sin prueba dedicada de saneamiento»*; el escaneo
+> activo de ZAP es esa prueba, y encontró dos defectos ([H-18](A4-hallazgos-rnf.md) y
+> [H-19](A4-hallazgos-rnf.md)). Los otros tres criterios que la noche tocó —RNF-08, RNF-13 y
+> RNF-17— **mejoraron su respaldo sin cambiar de color**.
 
 > **Corregido al cierre del 16 de noviembre.** Durante unas horas esta tabla dijo 11 / 6 / 6, con
 > **RNF-03 en rojo**. Una tercera corrida de carga, con **parámetros idénticos** a la que motivó el
@@ -112,7 +119,7 @@ RNF-18 (sin ninguna caída registrada que medir). Cinco de 23.
 | **RNF-05** | 95 % de calificaciones < 3 s | 🔴 **Sin instrumento** | Requiere evaluación y matrícula sembradas |
 | **RNF-06** | 90 % de estadísticas < 5 s | 🟢 **Verificado en la API · medido 3 veces** | p90 entre **13 ms** y **42 ms** en `GET /niveles-logro` con 20 concurrentes, contra 5 000 ms. Dos órdenes de magnitud de margen en el peor caso. **Reserva:** mide el endpoint, no la pantalla; `/profesor/estadisticas` sigue devolviendo error genérico en el despliegue (OBS-01), así que el tiempo *de la vista* no está medido |
 | **RNF-07** | 50 evaluaciones por asignatura/semestre | 🔴 **Sin instrumento** | Verificación de volumen; se siembra y se repite la medición |
-| **RNF-08** | 95 % de páginas < 3 s con ≥ 5 Mbps | 🟡 **Presupuesto activo; falta la medición de tiempo** | `angular.json:51-62` — presupuesto `initial` 500 kB aviso / 1 MB error, evaluado en cada `ng build` del CI |
+| **RNF-08** | 95 % de páginas < 3 s con ≥ 5 Mbps | 🟡 **Ahora medido · cumple en la mediana, se pasa en el peor caso** | Lighthouse CI, 3 corridas por URL (§3.5): `/login` de Vercel **mediana TTI 1 267 ms**, peor caso **3 439 ms**; en local, mediana 1 459 ms y peor 1 690 ms. El presupuesto de `angular.json:51-62` sigue activo en cada `ng build` del CI. **Reserva:** una de tres corridas de producción pasó de 3 s por bloqueo de CPU (TBT 2 786 ms), y solo se midió la ruta pública |
 | **RNF-09** | Tiempos sostenidos 4 meses | 🔴 **Fuera de alcance** | La ventana del proyecto son 15 días. Requiere decisión escrita de tratamiento |
 
 ### 2.2 Seguridad · RNF-10 a RNF-17 · titular José
@@ -122,11 +129,11 @@ RNF-18 (sin ninguna caída registrada que medir). Cinco de 23.
 | **RNF-10** | BCrypt factor ≥ 12, salt única, nunca en claro | 🟢 **Verificado · ahora también en ejecución** | `AuthServiceImplTest`, `AuthControllerTest` en verde. **16-nov:** la respuesta real del login solo trae `token`, `tipo`, `expiraEn` y `usuario`; ningún campo de contraseña ni hash |
 | **RNF-11** | HTTPS con **TLS 1.2+** en producción | 🟢 **Verificado en los dos lados** | Ver §3.1 — backend (Render) y frontend (Vercel): TLS 1.2 y 1.3 aceptados, **TLS 1.0 rechazado**, HTTP redirige a HTTPS en ambos. Cierra el pedido P-08 |
 | **RNF-12** | JWT HS256+, con `iat`/`exp`, sin datos sensibles | 🟢 **Verificado** | `JwtServiceTest` |
-| **RNF-13** | Valida firma y vigencia + RBAC del Apéndice 4.1 | 🟢 **Verificado** | `PrivateEndpointAuthorizationArchitectureTest` (recorre el registro real de Spring MVC), `SecurityRf05IntegrationIT`, Bruno `seguridad-rf05/` |
-| **RNF-14** | Validar y sanear la entrada; consultas parametrizadas | 🟡 **Parcial, por inspección** | Jakarta Validation + JPA; **sin prueba dedicada de saneamiento**. Reserva que hay que declarar |
+| **RNF-13** | Valida firma y vigencia + RBAC del Apéndice 4.1 | 🟢 **Verificado · ahora también en ejecución** | `PrivateEndpointAuthorizationArchitectureTest` (recorre el registro real de Spring MVC), `SecurityRf05IntegrationIT`, Bruno `seguridad-rf05/`. **16-nov noche:** ZAP recorrió las **81 operaciones** del OpenAPI sin token y **ninguna devolvió datos** —265 peticiones, todas 401—, con 120 reglas activas. *Deny by default* verificado en ejecución. **Reserva:** falta el contraste **entre roles**, que es la Matriz RBAC propiamente dicha; el guion ya acepta el rol como argumento |
+| **RNF-14** | Validar y sanear la entrada; consultas parametrizadas | 🔴 **Incumplido · con prueba dedicada, 16-nov noche** | La mitad de *«consultas parametrizadas»* **cumple y quedó demostrada**: el byte nulo llega al motor como parámetro ligado en vez de ejecutarse. La mitad de *«validar y sanear»* **no**: `?filtro=gomez%00` atraviesa controlador, servicio y repositorio y lo rechaza PostgreSQL ([H-19](A4-hallazgos-rnf.md)), y un nombre de parámetro vacío produce **500 en nueve endpoints** ([H-18](A4-hallazgos-rnf.md)). Evidencia: `herramientas-rnf/evidencias/zap/zap-api-admin-2026-11-16.json` |
 | **RNF-15** | Token expira ≤ 60 min; el cliente lo borra al salir | 🟢 **Verificado · ahora también en ejecución** | `JwtServiceTest`, `JwtAuthenticationFilterTest`, `session.service.spec.ts`; `application.yaml:38`. **16-nov:** la respuesta real del login devuelve `expiraEn: 3600` segundos = 60 min exactos |
 | **RNF-16** | Auditoría append-only, 5 años, autenticaciones exitosas **y fallidas** | 🟢 **Verificado · ahora también en ejecución** | `AuditoriaIntegracionIT`, `AuditoriaAspectTest`, **y evidencia de ejecución del 16-nov**: sobre el entorno aislado, `sigra.historial_auditoria` registró `LOGIN_FALLIDO` y `LOGIN_EXITOSO` con fecha y hora, rol, acción y detalle. Ver [herramientas-rnf §2.4](herramientas-rnf/README.md) |
-| **RNF-17** | Errores sin contraseñas, tokens, SQL, rutas ni trazas | 🟢 **Verificado** | `HallazgosContratoErrorTest`, `ContratoError*Test`, `GlobalExceptionHandlerTest`. Los mensajes genéricos que OBS-01 observa en el despliegue **cumplen** este requisito: no filtran nada. Que dejen al usuario sin salida es un problema de producto, no de RNF-17 |
+| **RNF-17** | Errores sin contraseñas, tokens, SQL, rutas ni trazas | 🟢 **Verificado · ahora también bajo escaneo activo** | `HallazgosContratoErrorTest`, `ContratoError*Test`, `GlobalExceptionHandlerTest`. Los mensajes genéricos que OBS-01 observa en el despliegue **cumplen** este requisito: no filtran nada. **16-nov noche:** con 120 reglas de ZAP activas y **24 respuestas 500 provocadas**, ni un cuerpo trajo traza, clase, SQL ni ruta interna, y no se levantó ninguna alerta de divulgación. La única observación de exposición es `/actuator/health` abierto, sin anclaje en el SRS (**OBS-03**) |
 
 ### 2.3 Disponibilidad · RNF-18 · titular José
 
@@ -177,7 +184,7 @@ sale tráfico, y **no afecta a RNF-11**).
 
 | RNF | Criterio y umbral del SRS | Veredicto | Evidencia |
 | --- | --- | --- | --- |
-| **RNF-21** | WCAG 2.1 AA: contraste ≥ 4.5:1, teclado en notas y observaciones, labels en todo campo | 🟡 **Corregido a mano, sin automatizar** | Andrea Avendaño trabajó el contraste 4,5:1 y el desborde en móvil (ACT-096, PR frontend #91, en estado *Pendiente*). **No hay verificación automática**: `@axe-core/playwright` no está instalado ([H-04](A4-hallazgos-rnf.md)) |
+| **RNF-21** | WCAG 2.1 AA: contraste ≥ 4.5:1, teclado en notas y observaciones, labels en todo campo | 🟡 **Automatizado en la ruta pública · 1,00 · el resto sin medir** | Andrea Avendaño trabajó el contraste 4,5:1 y el desborde en móvil (ACT-096, PR frontend #91). **16-nov noche:** Lighthouse CI da **accesibilidad 1,00 en las seis corridas** de `/login` (Vercel y local), con contraste, `label`, `tabindex`, `button-name`, `aria-*` y `target-size` en verde, y los umbrales escritos como aserciones en `lighthouse/lighthouserc.json` (§3.6). **Reserva:** `/login` es la única ruta pública; **notas y observaciones —las que el SRS nombra— siguen sin medir**, bloqueadas por [H-20](A4-hallazgos-rnf.md) |
 
 **Novedad de la noche del 16: hay una primera señal automática, y salió de buscar otra cosa.** El escaneo de
 SonarQube al frontend devolvió **cuatro hallazgos de accesibilidad** sobre las plantillas, con
@@ -193,7 +200,7 @@ que es justo donde el SRS exige teclado), `Web:S6825` ×3 (`aria-hidden` en celd
 
 ---
 
-## 3. Las cuatro mediciones nuevas, con su salida real
+## 3. Las mediciones nuevas, con su salida real
 
 ### 3.1 RNF-11 · TLS 1.2+ en producción — 🟢 **cumple**
 
@@ -360,6 +367,81 @@ media hora de trabajo y convierte el dato más discutible de la entrega en el m�
 
 ---
 
+### 3.5 RNF-14 · Escaneo activo de la API — 🔴 **el único incumplimiento demostrado por ejecución**
+
+OWASP ZAP 2.17.0 (`zap-api-scan.py` sobre el OpenAPI del backend: **61 rutas, 81 operaciones**),
+contra el entorno aislado del 8081 y **nunca contra Render ni Vercel**. Procedimiento completo y
+trampas en [herramientas-rnf §6](herramientas-rnf/README.md).
+
+| Corrida | Veredicto de ZAP | Qué demuestra |
+| --- | --- | --- |
+| **Sin token** | `PASS: 120 · WARN: 0` | **Nada se obtiene sin JWT**: 265 peticiones, todas 401. Es el *deny by default* de RNF-13 verificado en ejecución |
+| **Autenticada como ADMINISTRADOR** | `PASS: 119 · WARN-NEW: 2` | **24 respuestas 500** en nueve endpoints de listado y la cabecera `Cross-Origin-Resource-Policy` ausente |
+
+```bash
+# El defecto, en una línea
+curl -s -D - -H "Authorization: Bearer $TOK"   "http://localhost:8081/api/v1/programas?=&codigo=ing&estado=ACTIVO"
+# HTTP/1.1 500 · {"status":500,"error":"INTERNAL_SERVER_ERROR",
+#                 "mensaje":"Ocurrió un error inesperado en el servidor"}
+
+# Y el que prueba la mitad de "sanear"
+curl -s -H "Authorization: Bearer $TOK"   "http://localhost:8081/api/v1/estudiantes?filtro=gomez%00"
+# HTTP 409 · y en el registro: ERROR: invalid byte sequence for encoding "UTF8": 0x00
+```
+
+**Cómo se sostiene el 🔴, y dónde un revisor podría discutirlo.** Hay que decirlo con precisión,
+porque son dos cosas de peso distinto:
+
+- **[H-19](A4-hallazgos-rnf.md) es el que incumple RNF-14 sin discusión.** El texto del SRS dice
+  «validar y sanear los datos recibidos **antes de procesarlos o almacenarlos**». Un byte de
+  control recorrió controlador, servicio y repositorio, y lo detuvo el motor de base de datos. No
+  hubo saneamiento en ningún borde.
+- **[H-18](A4-hallazgos-rnf.md) admite otra lectura**, y queda registrada: se puede clasificar como
+  defecto de **manejo de errores** —la entrada sí se detecta como inválida, lo que falla es el
+  código de respuesta— y no de validación. **No cambia el color**, porque H-19 ya lo fija, pero sí
+  cambia a quién se le pide el arreglo. Lo dejamos escrito para no repetir el error de método de
+  H-06 y H-10 en sentido contrario: afirmar más de lo que la evidencia aguanta.
+
+**Lo que este escaneo NO cubre, y hay que declararlo.** Se corrió con **un solo rol**: contrasta
+el perímetro, no la Matriz RBAC entre roles. Y el escaneo autenticado **escribe** —dejó 112
+facultades basura y 435 filas de auditoría—, así que exige respaldo y restauración de la base, que
+es parte del procedimiento.
+
+### 3.6 RNF-08 y RNF-21 · Lighthouse CI — 🟡 los dos, por la misma razón: **alcance**
+
+Lighthouse 12.6.1 vía `@lhci/cli` 0.15.x, preset *desktop*, **tres corridas por URL**, con los
+umbrales del SRS escritos como aserciones (`interactive ≤ 3000 ms`, `accessibility ≥ 0,9`,
+`color-contrast`/`label`/`tabindex` en 1).
+
+| | Vercel `/login` | Local `/login` |
+| --- | --- | --- |
+| **TTI — el umbral de RNF-08** | mediana **1 267 ms** · peor **3 439 ms** | mediana **1 459 ms** · peor 1 690 ms |
+| Bloqueo total (TBT) | 100 / **2 786** / 274 ms | **0 ms** las tres |
+| **Accesibilidad — RNF-21** | **1,00 · 1,00 · 1,00** | **1,00 · 1,00 · 1,00** |
+| Bytes transferidos | 1 087 715 | 1 416 020 |
+
+**Las dos reservas, que son las que impiden el verde.**
+
+1. **RNF-08: `lhci` asserta contra la mediana.** La corrida de **3 439 ms** —por encima de los 3 s
+   del SRS— **no hizo fallar la puerta**. Con el mismo bundle, el TBT fue de 100 a 2 786 ms, así
+   que la variación es de CPU del cliente, no del servidor: en local, el TBT fue 0 en las tres. Es
+   el **mismo patrón de H-17**: una medida que cambia de veredicto según la carga de la máquina.
+   Se declara, no se promedia para que salga bonito.
+2. **RNF-21: `/login` es la única ruta pública.** Las pantallas que el SRS nombra —**notas y
+   observaciones**— están detrás del login, y la corrida autenticada **se canceló** al descubrir
+   que el frontend local habla con la base de producción ([H-20](A4-hallazgos-rnf.md)). El 1,00 es
+   real y es la primera cifra automática de RNF-21, pero es de una pantalla de cuatro campos.
+
+**El aviso que sale en las dos URL, y por qué no es contradicción.** `total-byte-weight` marca
+1,08 MB contra el presupuesto de 500 kB de `angular.json:51-62`. No se contradice con los
+356,04 kB raw del presupuesto: el presupuesto mide **el bundle inicial** y Lighthouse mide **todo
+lo que la página descarga**. No mezclar las dos cifras en el informe.
+
+**Evidencia.** `herramientas-rnf/evidencias/lhci-vercel-login-2026-11-16/` y
+`lhci-local-login-2026-11-16/` — informe JSON y HTML de cada corrida.
+
+---
+
 ## 4. Lo que falta para pasar amarillos a verdes, con nombre y bloqueo
 
 | # | Qué falta | Quién puede | Bloqueo real |
@@ -374,7 +456,10 @@ media hora de trabajo y convierte el dato más discutible de la entrega en el m�
 | 6 | ~~URL de producción del frontend~~ | — | ✅ **Resuelto:** `https://sigra.vercel.app`, de la auditoría de José. Falta comprobarle el rechazo de TLS 1.0 |
 | 7 | **Dejar OBS-01 escrita en 0000041 y 0000048**, que son las incidencias abiertas que tocan esas pantallas | Andrés / José | Ninguno. **No se crea ticket nuevo**: el procedimiento del equipo es revisar las existentes |
 | 8 | Reproducir OBS-01 en QA correlacionando `X-Request-Id` | Backend + frontend + operaciones | Requiere observabilidad del despliegue |
-| 9 | Correr `./gradlew dependencyCheckAnalyze` y llevar el informe de CVE | Andrés / José | **Ninguno** — el plugin ya está aplicado; no hace falta `admin` |
+| 9 | Correr `./gradlew dependencyCheckAnalyze` y llevar el informe de CVE | Andrés / José | 🔴 **Corregido el 16-nov noche: se ejecutó y FALLA.** `NvdApiException: Invalid API Key, length of 0` a los 40 s — el plugin 13.0.0 exige clave de NVD. No es `admin`: la clave es **gratuita y autogestionada** en `nvd.nist.gov/developers/request-an-api-key`. El dato de CVE que ya tenemos lo dio **Trivy**, que no pide clave |
+| 10 | **Correr ZAP con los tres roles** y comparar los informes, para cerrar la Matriz RBAC de RNF-13 | Andrés / José | **Ninguno.** El guion acepta el rol como argumento: `bash zap/escanear-api-autenticado.sh profesor.bruno@uco.net.co`. Exige respaldar y restaurar la base, porque el escaneo escribe |
+| 11 | **Imagen del frontend contra el 8081** + `collect.puppeteerScript` con login, para medir RNF-21 en notas y observaciones | Andrés | 🔴 **[H-20](A4-hallazgos-rnf.md)**: hoy el frontend local apunta a la base de producción, así que no se puede iniciar sesión para medir |
+| 12 | Clave de NVD para que `dependencyCheckAnalyze` tenga catálogo | Andrés / José | Ninguno — formulario público, llega por correo. **No confundir con la fila 3** |
 
 ---
 

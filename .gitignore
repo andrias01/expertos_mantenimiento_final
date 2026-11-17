@@ -4,3 +4,12 @@ jmeter.log
 # JMeter descomprimido (~90 MB). Ver jmeter/README.md para instalarlo.
 apache-jmeter-*/
 jmeter.tgz
+
+# ZAP: el fichero de propiedades lleva el JWT en claro (el guion lo borra al terminar).
+herramientas-rnf/evidencias/zap/jwt.prop
+
+# Lighthouse CI: directorio de trabajo. La evidencia versionada va en evidencias/lhci-*.
+herramientas-rnf/.lighthouseci/
+
+# Volcado de la base previo a un escaneo activo de ZAP (datos sembrados, 150 kB).
+herramientas-rnf/evidencias/zap/sigra-antes-de-zap.sql

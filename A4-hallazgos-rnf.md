@@ -7,6 +7,7 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 | --- | --- |
 | **Apertura del registro** | 7 de noviembre de 2026 |
 | **Revisión contra el SRS** | 7 de noviembre de 2026 — un hallazgo retirado, uno reformulado, tres nuevos |
+| **Sexta revisión** | **16 de noviembre de 2026, noche** — entran los tres instrumentos que faltaban: **OWASP ZAP** autenticado contra el entorno aislado, **Lighthouse CI** y **Trivy** sobre el frontend. Tres hallazgos nuevos (**H-18**, **H-19**, **H-20**), dos observaciones (**OBS-03**, **OBS-04**) y **una corrección**: `dependencyCheckAnalyze` no corre sin clave de NVD, contra lo que decía ACT-122 |
 | **Quinta revisión** | **16 de noviembre de 2026, cierre del día** — una tercera corrida de carga, **idéntica en parámetros** a la que abrió H-17, da el resultado contrario. H-17 sigue abierto y en severidad alta, pero su **magnitud pasa a revisión** y deja de bloquear la entrega |
 | **Cuarta revisión** | **16 de noviembre de 2026, tarde** — primera medición de carga: entra **H-17**, la tensión medida entre RNF-10 y RNF-03 |
 | **Tercera revisión** | **16 de noviembre de 2026** — H-08 confirmado integrado en `develop`; H-10 completado en los dos lados; las dos observaciones de la auditoría de José quedan como **OBS-01 y OBS-02**, fuera del registro de RNF por no tener anclaje en el SRS |
@@ -46,7 +47,7 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 | [H-09](#h-09-media--rnf-18-no-tiene-medición-de-uptime-ni-de-mttr) | Media | Disponibilidad | RNF-18 no tiene medición de uptime ni de MTTR | José | 🟡 **En corrección** · uptime medido; MTTR sin evento |
 | [H-12](#h-12-media--los-dos-rnf-que-el-equipo-nos-asignó-se-resolvieron-sin-nuestra-validación) | Media | Mantenibilidad | Los dos RNF que el equipo nos asignó se resolvieron sin nuestra validación | Ambos | 🔴 **Nuevo** · 15-nov |
 | [H-13](#h-13-media--ninguna-incidencia-está-cerrada-en-mantis) | Media | Trazabilidad | Ninguna de las 31 incidencias está en estado `cerrada` en Mantis | Ambos | 🔴 **Nuevo** · 15-nov |
-| [H-04](#h-04-media--rnf-21-no-tiene-verificación-automatizada) | Media | Accesibilidad | RNF-21 no tiene verificación automatizada | Andrés | 🟡 **Abierto** · corregido a mano por UI/UX, sin automatizar |
+| [H-04](#h-04-media--rnf-21-no-tiene-verificación-automatizada) | Media | Accesibilidad | RNF-21 no tiene verificación automatizada | Andrés | 🟡 **En corrección** · 16-nov noche: Lighthouse CI da **1,00 en `/login`**; las pantallas autenticadas siguen sin medir (bloqueado por H-20) |
 | [H-05](#h-05-media--no-hay-análisis-estático-de-código) | Media | Mantenibilidad | No hay análisis estático de código | Ambos | 🟡 **Cerrado en el backend** · Sonar: mantenibilidad **A**, deuda 15 min. **Frontend sin escanear y el criterio de cierre escrito —linter en el CI— no se cumple** |
 | [H-14](#h-14-baja--el-entorno-local-no-puede-compilar-el-frontend) | Baja | Mantenibilidad | El entorno local no puede compilar el frontend (Node por debajo del mínimo) | Andrés | 🔴 **Abierto** · 15-nov |
 | [H-07](#h-07-baja--el-readme-del-backend-contradice-a-buildgradle-sobre-jacoco) | Baja | Mantenibilidad | El README del backend contradice a `build.gradle` sobre JaCoCo | Ambos | 🔴 **Abierto** · ahora también desactualizado por el fix de H-08 |
@@ -54,13 +55,35 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 
 ### Movimiento del 8 al 16 de noviembre
 
-| | 8-nov | 15-nov | **16-nov** |
-| --- | --- | --- | --- |
-| Abiertos | 9 | 7 | **8** |
-| En corrección | 0 | 4 | **4** |
-| Cerrados con evidencia | 0 | 2 | **2** |
-| De severidad alta | 3 | 4 | **4** (H-01, H-03, H-11, **H-17**) |
-| Total del registro | 10 | 14 | **15** |
+| | 8-nov | 15-nov | 16-nov | **16-nov noche** |
+| --- | --- | --- | --- | --- |
+| Abiertos | 9 | 7 | 8 | **11** |
+| En corrección | 0 | 4 | 4 | **4** |
+| Cerrados con evidencia | 0 | 2 | 2 | **2** |
+| De severidad alta | 3 | 4 | 4 | **6** (H-01, H-03, H-11, H-17, **H-18**, **H-20**) |
+| Total del registro | 10 | 14 | 15 | **18** |
+| Observaciones sin anclaje en el SRS | — | — | 2 | **4** |
+
+### Nuevos de la noche del 16 de noviembre — los que salieron de los instrumentos
+
+| ID | Severidad | Atributo | Hallazgo | Instrumento que lo encontró |
+| --- | --- | --- | --- | --- |
+| [H-18](#h-18-alta--nueve-endpoints-de-listado-responden-500-ante-un-nombre-de-parámetro-vacío) | **Alta** | Seguridad · RNF-14 | Nueve endpoints de listado responden 500 ante un nombre de parámetro vacío | OWASP ZAP, escaneo activo autenticado |
+| [H-20](#h-20-alta--el-frontend-del-entorno-aislado-está-compilado-contra-la-base-de-producción) | **Alta** | Entorno de verificación | El frontend del entorno «aislado» está compilado contra la base de producción | Preparación de Lighthouse autenticado |
+| [H-19](#h-19-media--un-byte-nulo-en-un-filtro-de-texto-llega-hasta-postgresql-y-la-respuesta-dice-409) | Media | Seguridad · RNF-14 | Un byte nulo en un filtro de texto llega hasta PostgreSQL; la respuesta dice 409 | OWASP ZAP |
+| [OBS-03](#obs-03-baja--cabecera-de-aislamiento-ausente-y-actuatorhealth-sin-autenticación) | Baja | Configuración | `Cross-Origin-Resource-Policy` ausente y `/actuator/health` sin autenticación | OWASP ZAP |
+| [OBS-04](#obs-04-baja--la-auditoría-guarda-hora-local-sin-zona-y-el-reloj-del-motor-va-en-utc) | Baja | Modelo de datos | La auditoría guarda hora local sin zona y el motor va en UTC | Verificación del efecto de ZAP en la base |
+
+**Lo que estos cinco tienen en común, y por qué importa para la reunión del 17.** Los catorce
+hallazgos anteriores eran, casi todos, **límites de nuestra capacidad de verificar**. Estos cinco
+salen de **ejecutar** los instrumentos contra el producto, y tres apuntan al producto, no a
+nosotros. Es el cambio de etapa que el registro venía esperando desde H-17.
+
+Y dejaron también evidencia **a favor** del producto, que vale igual: con 120 reglas activas de
+ZAP, **ninguna de las 81 operaciones de la API respondió nada sin token** (RNF-13, *deny by
+default*, verificado en ejecución y no solo con pruebas unitarias) y **ningún cuerpo de error
+filtró traza, clase, SQL ni ruta interna** (RNF-17). Y Lighthouse dio **1,00 de accesibilidad** en
+`/login` en las seis corridas (RNF-21, con el alcance limitado que se explica en H-04).
 
 > **Corrección del propio registro, hecha el 16-nov por la tarde.** Esta tabla llegó a decir
 > **3 cerrados** contando H-05. Al revisar su criterio de cierre escrito —*«el CI ejecuta el linter
@@ -234,6 +257,36 @@ una formalidad de proceso.
 nuestro** ni debería hacerse a ciegas el día antes del cierre: `tomcat-embed-core` viene con Spring
 Boot y subirlo a mano puede romper la compatibilidad. Lo que corresponde es **reportar el dato** y
 que el equipo decida con el revisor técnico.
+
+**Corrección del 16 de noviembre, noche: `dependencyCheckAnalyze` NO corre en local.** En
+**ACT-122** quedó escrito que sí, y que «lo bloqueado era la compuerta de CI, no la auditoría».
+**La primera mitad es falsa.** Se ejecutó y falla a los 40 segundos:
+
+```
+Caused by: io.github.jeremylong.openvulnerability.client.nvd.NvdApiException:
+  Invalid API Key, length of 0 too short to provided a masked partial key
+> Task :dependencyCheckAnalyze FAILED        (BUILD FAILED in 40s)
+```
+
+El plugin 13.0.0 construye su catálogo desde la API de NVD y **exige clave**. `build.gradle:57-62`
+solo la pasa si existe `NVD_API_KEY`, y no existe ni en el entorno ni en `~/.gradle`; sin catálogo
+en caché, el análisis no arranca. Es el **cuarto** caso del mismo error de método: se afirmó sin
+ejecutar.
+
+**Lo que esto cambia, y lo que no.** El dato de las 4 CRITICAL y 10 HIGH **sigue en pie**: lo dio
+Trivy, que no pide clave. Lo que cambia es el camino alterno que el registro ofrecía. Y hay una
+buena noticia dentro: **la clave de NVD es gratuita y autogestionada**
+(`nvd.nist.gov/developers/request-an-api-key`, llega por correo), así que **no depende del permiso
+de administrador de H-01** y la puede pedir cualquiera de los dos. Son dos pedidos distintos, y
+conviene no volverlos a mezclar:
+
+| Pedido | A quién | Para qué |
+| --- | --- | --- |
+| Dos variables de repositorio | Admin del repositorio (Juan Camilo / Jean Paul) | La compuerta de SCA en el CI — **el hallazgo H-01** |
+| Clave de NVD | A NIST, por formulario | Que `dependencyCheckAnalyze` corra, con su `failBuildOnCVSS = 4.0` |
+
+**Evidencia de esta corrección.** Salida completa de `./gradlew dependencyCheckAnalyze
+--no-daemon` del 16-nov · `herramientas-rnf/README.md` §8.1.
 
 ---
 
@@ -657,6 +710,35 @@ amarillo sostenido en evidencia en lugar de amarillo por ausencia. Y llevar al e
 sobre la dependencia nueva, que no es nuestra para tomar.
 
 **Severidad.** Se mantiene **media**.
+
+**Seguimiento · 16 de noviembre de 2026, noche. Ya hay instrumento, y da 1,00.** Lighthouse CI
+corre con `npx`, sin contenedor y sin dependencia nueva en el repositorio del producto, y **los
+umbrales del SRS están escritos como aserciones** en
+`herramientas-rnf/lighthouse/lighthouserc.json`: `categories:accessibility ≥ 0,9` más
+`color-contrast`, `label` y `tabindex` en 1. Resultado en tres corridas por URL:
+
+| URL | Accesibilidad | Aserciones de RNF-21 |
+| --- | --- | --- |
+| `https://sigra.vercel.app/login` | **1,00 · 1,00 · 1,00** | contraste, `label`, `tabindex`, `button-name`, `aria-*`, `target-size`: todas en verde |
+| `http://localhost:4200/login` | **1,00 · 1,00 · 1,00** | igual |
+
+**Y aun así el hallazgo no se cierra, por dos razones concretas.**
+
+1. **Alcance de una página.** Lighthouse mide **la página que carga**, y `/login` es la única ruta
+   pública. Las pantallas que el SRS nombra explícitamente —**notas y observaciones**, donde hay
+   que verificar el recorrido por teclado— están detrás del login. Y son justo donde Sonar
+   encontró cuatro *code smells* de accesibilidad (`Web:S6845` `tabindex`, `Web:S6825` ×3). Un
+   1,00 en el login **no dice nada** de ellas.
+2. **Está bloqueado por [H-20](#h-20-alta--el-frontend-del-entorno-aislado-está-compilado-contra-la-base-de-producción).**
+   La corrida autenticada se preparó y **se canceló**: el frontend del 4200 habla con la base de
+   producción, así que iniciar sesión para medir habría escrito en producción.
+
+**Criterio de cierre, ahora concreto.** Una imagen del frontend contra el 8081 (H-20) y un
+`collect.puppeteerScript` que haga el login antes de medir `profesor/notas` y la pantalla de
+observaciones. Con eso, RNF-21 queda automatizado donde el SRS lo exige y H-04 se cierra.
+
+**Estado.** 🟡 **Pasa de abierto a en corrección** · instrumento montado y con dato, alcance
+incompleto.
 
 ---
 
@@ -1341,6 +1423,205 @@ logins solapados.
 
 ---
 
+## H-18 (alta) — Nueve endpoints de listado responden 500 ante un nombre de parámetro vacío
+
+**Atributo de calidad afectado.** Seguridad (validación de entrada).
+**RNF comprometido.** **RNF-14** — «validar y sanear los datos recibidos antes de procesarlos».
+Es el primer hallazgo que ataca el 🟡 con el que RNF-14 estaba en el catálogo: *«Jakarta Validation
++ JPA; sin prueba dedicada de saneamiento»* ([A1 §1.2](A1-catalogo-rnf.md)). Ya hay instrumento
+dedicado, y encontró esto.
+**Titular.** José (seguridad). **Encontrado por.** Andrés, 16-nov, escaneo activo de ZAP.
+
+**Qué se encontró.** Un **nombre de parámetro vacío** en la cadena de consulta (`?=` o `&=&`)
+hace que el backend responda **HTTP 500**. No es un caso de laboratorio: ZAP lo disparó 24 veces
+sobre **nueve endpoints de listado distintos**, que son los que la interfaz usa para filtrar.
+
+| Endpoint | Instancias |
+| --- | --- |
+| `/api/v1/auditoria` | 5 |
+| `/api/v1/acciones-mejora` | 4 |
+| `/api/v1/conclusiones` | 4 |
+| `/api/v1/programas` | 4 |
+| `/api/v1/facultades` | 2 |
+| `/api/v1/semestres` | 2 |
+| `/api/v1/estudiantes` · `/api/v1/profesores` · `/api/v1/resultados-aprendizaje` | 1 cada uno |
+
+**Cómo se reproduce.** Con el entorno aislado arriba y un JWT de cualquier rol autorizado:
+
+```bash
+curl -s -D - -H "Authorization: Bearer $TOK" \
+  "http://localhost:8081/api/v1/programas?=&codigo=ing&estado=ACTIVO"
+# HTTP/1.1 500
+# {"status":500,"error":"INTERNAL_SERVER_ERROR",
+#  "mensaje":"Ocurrió un error inesperado en el servidor"}
+```
+
+La misma petición sin el `?=` responde **200**.
+
+**Causa, con la traza en la mano.** El registro del backend dice
+`Evento error=UNEXPECTED ... causa=InvalidParameterException`. La excepción **no tiene
+`@ExceptionHandler`** en `GlobalExceptionHandler.java`, que sí mapea a 400 los casos de entrada
+inválida que conoce (`MethodArgumentNotValidException`, `MethodArgumentTypeMismatchException`,
+`HttpMessageNotReadableException`, cuerpo ilegible, tipo de contenido). Al no estar mapeada, cae
+en el ramo genérico y sale como 500. **La entrada se detecta como inválida y aun así se contesta
+«error inesperado del servidor».**
+
+**Evidencia.** `herramientas-rnf/evidencias/zap/zap-api-admin-2026-11-16.json` (alerta *A Server
+Error response code was returned by the server*, 24 instancias) · la salida de `curl` de arriba ·
+`docker logs sigra-backend-rnf`.
+
+**Riesgo si no se corrige.** Tres cosas, en orden de importancia:
+
+1. **Un 500 es un diagnóstico falso.** Quien lea el tablero de errores verá «fallo del servidor»
+   donde hay una petición mal formada del cliente. Es exactamente el patrón de **0000053**
+   («falla intermitente al cargar combos … en todos los roles», [H-11](#h-11-alta--0000053-sin-dueño-y-con-impacto-rnf-por-confirmar)):
+   **no afirmamos que sea la misma causa**, pero un endpoint de listado que devuelve 500 ante una
+   cadena de consulta imperfecta es una hipótesis que hay que descartar antes de culpar a la
+   concurrencia.
+2. **Ensucia la medición de disponibilidad.** Los 500 cuentan como error en cualquier sonda de
+   RNF-18 y en los percentiles de JMeter.
+3. **Es ruido útil para quien pruebe la API**: 24 respuestas 500 reproducibles son un mapa de
+   dónde falta validación.
+
+**Lo que NO es.** No es inyección y no es filtración: el cuerpo del 500 no trae traza, ni clase, ni
+SQL, ni ruta interna. **Eso confirma RNF-17 en ejecución**, con 120 reglas activas de ZAP y ni una
+alerta de divulgación.
+
+**Severidad y por qué.** **Alta.** Afecta a nueve endpoints de producción, se dispara con una
+petición trivial que cualquier cliente puede mandar por accidente, y toca un RNF que estaba en
+amarillo justo por falta de verificación de saneamiento. La corrección es acotada: mapear la
+excepción a 400.
+
+**Dueño de la corrección.** El equipo de desarrollo, con el revisor técnico. **No es nuestro
+arreglo** y no se toca el producto desde este rol.
+
+**Criterio de verificación de la corrección.** Las nueve rutas responden **400** a `?=` y el
+escaneo autenticado de ZAP vuelve con **0 instancias** de *A Server Error response code*.
+Se comprueba con `bash zap/escanear-api-autenticado.sh`.
+
+**Cómo reportarlo, según el procedimiento del equipo.** No se crea incidencia nueva: se comenta
+sobre **0000053** —que es la que toca estas pantallas— con la reproducción de arriba, y entra al
+registro de errores del libro como **ERR**.
+
+**Estado.** 🔴 **Nuevo** · 16 de noviembre de 2026, noche.
+
+---
+
+## H-19 (media) — Un byte nulo en un filtro de texto llega hasta PostgreSQL, y la respuesta dice 409
+
+**Atributo de calidad afectado.** Seguridad (saneamiento de entrada).
+**RNF comprometido.** **RNF-14**, la segunda mitad: *«emplear consultas parametrizadas o
+equivalentes»* sí se cumple; *«validar y sanear los datos recibidos»*, no.
+**Titular.** José. **Encontrado por.** Andrés, 16-nov, escaneo activo de ZAP.
+
+**Qué se encontró.** Un byte nulo (`%00`) en un filtro de texto atraviesa toda la aplicación y
+**lo rechaza el motor de base de datos**, no la validación:
+
+```
+org.hibernate.orm.jdbc.error : ERROR: invalid byte sequence for encoding "UTF8": 0x00
+  Where: unnamed portal parameter $1
+```
+
+Y la respuesta al cliente es **409 CONFLICT** con *«La operación entra en conflicto con información
+ya registrada en el sistema»* — un mensaje que describe un conflicto de datos que no existe.
+
+**Cómo se reproduce.**
+
+```bash
+curl -s -w "\nHTTP %{http_code}\n" -H "Authorization: Bearer $TOK" \
+  "http://localhost:8081/api/v1/estudiantes?filtro=gomez%00"
+# HTTP 409 · {"status":409,"error":"CONFLICT","mensaje":"La operación entra en conflicto..."}
+```
+
+**Evidencia.** Salida de `curl` de arriba · `docker logs sigra-backend-rnf` (SQLState **22021**,
+`HHH000247`) · la alerta de ZAP que lo originó en
+`herramientas-rnf/evidencias/zap/zap-api-admin-2026-11-16.json`.
+
+**Riesgo si no se corrige.** El dato tranquilizador primero: **la consulta va parametrizada**, y es
+precisamente por eso que el byte llega como parámetro ligado y revienta en el motor en vez de
+ejecutarse. **No hay inyección.** Lo que sí hay:
+
+- **Entrada no saneada** que recorre controlador, servicio y repositorio sin que nadie la mire.
+- **Un código de estado que miente.** Un 409 le dice al cliente «ya existe algo así»; un
+  desarrollador que depure por el código de respuesta buscará duplicados que no existen.
+- **Ruido en la auditoría** si el intento queda registrado como conflicto de negocio.
+
+**Severidad y por qué.** **Media.** No es explotable para leer ni alterar datos, y hace falta
+construir la petición a mano. Sube a alta si aparece un camino donde el mismo texto sin sanear se
+**almacene** en vez de consultarse.
+
+**Dueño de la corrección.** El equipo de desarrollo. Lo acotado es sanear los filtros de texto en
+el borde (rechazar caracteres de control) y mapear `DataIntegrityViolationException` por formato a
+**400**, no a 409.
+
+**Criterio de verificación de la corrección.** `?filtro=gomez%00` responde **400** y el registro
+del backend no muestra `SQLState 22021`.
+
+**Estado.** 🔴 **Nuevo** · 16 de noviembre de 2026, noche.
+
+---
+
+## H-20 (alta) — El frontend del entorno «aislado» está compilado contra la base de producción
+
+**Atributo de calidad afectado.** Mantenibilidad (reproducibilidad y seguridad del entorno de
+verificación).
+**RNF comprometido.** Ninguno directamente: **es un riesgo de nuestro propio instrumento**, de la
+misma familia que [H-14](#h-14-baja--el-entorno-local-no-puede-compilar-el-frontend). Bloquea la
+medición automatizada de **RNF-21** y de **RNF-08** sobre pantallas autenticadas.
+**Encontrado por.** Andrés, 16-nov, al preparar la corrida autenticada de Lighthouse.
+
+**Qué se encontró.** El `README` de `herramientas-rnf` §0 ya advierte que el contenedor
+`sigra-backend` (8080) apunta a Supabase. **Lo que faltaba decir es que el frontend apunta a ese
+backend.** El bundle que sirve `sigra-frontend` en el 4200 trae compilado:
+
+```
+http://localhost:8080/api
+```
+
+y `docker inspect sigra-backend` responde:
+
+```
+DB_URL=jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com:5432/postgres?...currentSchema=sigra
+```
+
+Es decir: **abrir `localhost:4200` e iniciar sesión es operar la base de producción desde una
+pantalla que todo el mundo lee como «local».** El backend aislado del 8081 no tiene frontend.
+
+**Cómo se reproduce.**
+
+```bash
+docker exec sigra-frontend sh -c 'grep -rho "http://localhost:80[0-9][0-9][a-z/]*" /app/browser' | sort -u
+docker inspect sigra-backend --format '{{json .Config.Env}}' | tr ',' '\n' | grep DB_URL
+```
+
+**Evidencia.** Las dos salidas de arriba · `src/environments/environment.ts:3` del frontend, que
+en el repositorio apunta a Render (`https://software4-sigra-backend.onrender.com/api`), lo que
+confirma que **el `apiUrl` se decide al compilar la imagen** y hay que comprobarlo, no suponerlo.
+
+**Riesgo si no se corrige.** Es el riesgo que de verdad importa de este lote: cualquier integrante
+—o cualquiera de nosotros con prisa— puede hacer pruebas destructivas creyendo que está en un
+entorno desechable. Nosotros estuvimos a un `click` de medir accesibilidad iniciando sesión contra
+producción, y **la corrida se canceló por esto**. El antecedente es el mismo de ERR-022: la
+alternativa local estaba rota, así que todo el equipo apuntó a Supabase.
+
+**Severidad y por qué.** **Alta.** No es un defecto del producto, pero es una trampa activa en el
+entorno con el que verificamos, y el daño posible es sobre datos reales.
+
+**Dueño de la corrección.** Andrés (es nuestro entorno).
+
+**Criterio de verificación de la corrección.** Una imagen `sigra-frontend-rnf` compilada con
+`apiUrl = http://localhost:8081/api`, servida en otro puerto, y la comprobación de §2.4 del README
+—un login fallido sube `intentos_fallidos` **en `sigra-pg-rnf`**— hecha **desde el navegador**.
+Mientras eso no exista, en el README queda escrito que el 4200 no se usa para nada autenticado.
+
+**Lo que conviene proponerle al equipo.** Que `environment.ts` tome el `apiUrl` de una variable de
+entorno en vez de tenerlo fijo en el código: hoy saber contra qué base habla un despliegue exige
+desensamblar el bundle.
+
+**Estado.** 🔴 **Nuevo** · 16 de noviembre de 2026, noche.
+
+---
+
 ## Observaciones sin anclaje en el SRS
 
 > **Por qué esta sección existe, y por qué estas dos cosas **no** son hallazgos de RNF.**
@@ -1431,6 +1712,73 @@ ella se completó la verificación de **RNF-11 de punta a punta** (ver [H-10](#h
 y quedó resuelto el pedido P-08.
 
 **Estado.** 🔴 Abierta · revisión de configuración, no hallazgo de RNF.
+
+---
+
+### OBS-03 (baja) — Cabecera de aislamiento ausente y `/actuator/health` sin autenticación
+
+**Qué es.** Una **revisión de configuración**, de la misma naturaleza que OBS-02. El SRS no exige
+ninguna de las dos cosas, y por eso no es hallazgo de RNF.
+**Observado por.** Andrés, 16 de noviembre de 2026, escaneo de ZAP contra el entorno aislado.
+
+Dos observaciones del mismo escaneo:
+
+1. **`Cross-Origin-Resource-Policy` ausente** en las respuestas de la API (ZAP: *Cross-Origin-Resource-Policy
+   Header Missing or Invalid*, 5 instancias consolidadas; la regla 90004 es la de aislamiento
+   frente a Spectre). Lo que **sí** está presente, y conviene dejarlo escrito porque contrasta con
+   OBS-02: `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Cache-Control: no-store` y
+   `WWW-Authenticate: Bearer`. **Las cabeceras que OBS-02 echaba de menos en Vercel sí las pone el
+   backend.**
+2. **`/actuator/health` responde 200 sin token**, con `{"groups":["liveness","readiness"],…}`.
+   ZAP lo marcó *Spring Actuator Information Leak* (Medium) en la corrida piloto.
+
+**No se declara vulnerabilidad.** No se demostró impacto explotable. El actuator abierto es,
+además, **lo que hace posible la sonda de RNF-18**: cerrarlo sin más rompería el monitor de Uptime
+Kuma y la medición de disponibilidad. Si se cierra, hay que darle a Kuma un camino autenticado.
+
+**Severidad: baja.** Se cierra con una **decisión escrita** de quien administre el despliegue.
+
+**Evidencia.** `herramientas-rnf/evidencias/zap/zap-api-admin-2026-11-16.json` ·
+`zap-api-piloto-autenticado-2026-11-16.json` · `curl -D - http://localhost:8081/actuator/health`.
+
+**Estado.** 🔴 Abierta · revisión de configuración, no hallazgo de RNF.
+
+---
+
+### OBS-04 (baja) — La auditoría guarda hora local sin zona, y el reloj del motor va en UTC
+
+**Qué es.** Una **observación de modelo de datos**. El SRS pide que cada registro de auditoría
+lleve «usuario, fecha y hora, acción y resultado» (RNF-16) y **no dice en qué zona**, así que no
+hay incumplimiento que declarar. Siguiendo la regla de método de este documento, no se le pone un
+RNF al lado.
+**Observado por.** Andrés, 16 de noviembre de 2026, al medir el efecto del escaneo de ZAP.
+
+`sigra.historial_auditoria.fecha_hora` es `timestamp without time zone` y guarda **hora local**,
+mientras el reloj del motor va en **UTC**:
+
+```
+now() = 2026-11-17 02:53:02+00   |   max(fecha_hora) = 2026-11-16 21:51:55
+```
+
+Cinco horas de diferencia sobre el mismo evento. El síntoma práctico apareció solo: una consulta
+tan natural como `WHERE fecha_hora > now() - interval '40 minutes'` devuelve **cero filas**
+mientras la tabla crece.
+
+**Por qué nos importa, aunque no sea un RNF incumplido.** Dos usos reales dependen de cruzar esas
+marcas con otras fuentes: el **MTTR de RNF-18** (los eventos de Render y de Uptime Kuma van en
+UTC) y cualquier reconstrucción de un incidente. Con cinco horas de desfase y sin zona declarada,
+el cruce hay que hacerlo a mano y es fácil equivocarse en la dirección del ajuste.
+
+**Severidad: baja.** No se pierde información —la marca es consistente consigo misma— y la
+conservación *append-only* de RNF-16 sigue verificada.
+
+**Lo que conviene proponerle al equipo.** `timestamptz` en columnas de auditoría, o dejar escrito
+en el catálogo de datos que la columna va en hora de Colombia. Es decisión del equipo, no nuestra.
+
+**Evidencia.** Consulta de arriba contra `sigra-pg-rnf` ·
+`information_schema.columns` para el tipo de la columna.
+
+**Estado.** 🔴 Abierta · observación de modelo de datos.
 
 ---
 

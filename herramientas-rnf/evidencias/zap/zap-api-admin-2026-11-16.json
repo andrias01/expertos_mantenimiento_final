@@ -1,0 +1,3279 @@
+{
+	"@programName": "ZAP",
+	"@version": "2.17.0",
+	"@generated": "Tue, 17 Nov 2026 02:50:16",
+	"created": "2026-11-17T02:50:16.150440059Z",
+	"insights":[
+		{
+			"level": "Medium",
+			"reason": "Exceeded High",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.code.4xx",
+			"description": "Percentage of responses with status code 4xx",
+			"statistic": "93"
+		},
+		{
+			"level": "Low",
+			"reason": "Warning",
+			"site": "",
+			"key": "insight.log.warn",
+			"description": "ZAP warnings logged - see the zap.log file for details",
+			"statistic": "3"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.code.2xx",
+			"description": "Percentage of responses with status code 2xx",
+			"statistic": "6"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.endpoint.ctype.application/json",
+			"description": "Percentage of endpoints with content type application/json",
+			"statistic": "100"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.endpoint.method.DELETE",
+			"description": "Percentage of endpoints with method DELETE",
+			"statistic": "2"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.endpoint.method.GET",
+			"description": "Percentage of endpoints with method GET",
+			"statistic": "69"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.endpoint.method.PATCH",
+			"description": "Percentage of endpoints with method PATCH",
+			"statistic": "7"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.endpoint.method.POST",
+			"description": "Percentage of endpoints with method POST",
+			"statistic": "14"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.endpoint.method.PUT",
+			"description": "Percentage of endpoints with method PUT",
+			"statistic": "6"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.endpoint.total",
+			"description": "Count of total endpoints",
+			"statistic": "277"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.response.slow",
+			"description": "Percentage of slow responses",
+			"statistic": "1"
+		}
+	],
+	"site":[ 
+		{
+			"@name": "http://host.docker.internal:8081",
+			"@host": "host.docker.internal",
+			"@port": "8081",
+			"@ssl": "false",
+			"alerts": [ 
+				{
+					"pluginid": "100000",
+					"alertRef": "100000-2",
+					"alert": "A Server Error response code was returned by the server",
+					"name": "A Server Error response code was returned by the server",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "Low (High)",
+					"desc": "<p>A response code of 500 was returned by the server.</p><p>This may indicate that the application is failing to handle unexpected input correctly.</p><p>Raised by the 'Alert on HTTP Response Code Error' script</p>",
+					"instances":[ 
+						{
+							"id": "15680",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora?resultadoAprendizajeId=6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c&asignaturaId=3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f&=&convertida=false",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora (asignaturaId,convertida,resultadoAprendizajeId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15637",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora?=&asignaturaId=3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f&semestreId=7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d&convertida=false",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora (asignaturaId,convertida,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15705",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora?resultadoAprendizajeId=6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c&asignaturaId=3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f&semestreId=7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d&=",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora (asignaturaId,resultadoAprendizajeId,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15656",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora?resultadoAprendizajeId=6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c&=&semestreId=7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d&convertida=false",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora (convertida,resultadoAprendizajeId,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15703",
+							"uri": "http://host.docker.internal:8081/api/v1/auditoria?desde=2026-10-01&hasta=2026-10-20&=&pagina=0&tamano=20",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auditoria (desde,hasta,pagina,tamano)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15760",
+							"uri": "http://host.docker.internal:8081/api/v1/auditoria?desde=2026-10-01&hasta=2026-10-20&tipoEntidad=USUARIO&pagina=0&=",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auditoria (desde,hasta,pagina,tipoEntidad)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15737",
+							"uri": "http://host.docker.internal:8081/api/v1/auditoria?desde=2026-10-01&hasta=2026-10-20&tipoEntidad=USUARIO&=&tamano=20",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auditoria (desde,hasta,tamano,tipoEntidad)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15679",
+							"uri": "http://host.docker.internal:8081/api/v1/auditoria?desde=2026-10-01&=&tipoEntidad=USUARIO&pagina=0&tamano=20",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auditoria (desde,pagina,tamano,tipoEntidad)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15655",
+							"uri": "http://host.docker.internal:8081/api/v1/auditoria?=&hasta=2026-10-20&tipoEntidad=USUARIO&pagina=0&tamano=20",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auditoria (hasta,pagina,tamano,tipoEntidad)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15692",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones?resultadoAprendizajeId=6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c&=&asignaturaId=3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f&estado=VIGENTE",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones (asignaturaId,estado,resultadoAprendizajeId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15673",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones?=&semestreId=7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d&asignaturaId=3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f&estado=VIGENTE",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones (asignaturaId,estado,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15752",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones?resultadoAprendizajeId=6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c&semestreId=7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d&asignaturaId=3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f&=",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones (asignaturaId,resultadoAprendizajeId,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15730",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones?resultadoAprendizajeId=6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c&semestreId=7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d&=&estado=VIGENTE",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones (estado,resultadoAprendizajeId,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15681",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes?=",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15695",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades?=&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades (estado)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15728",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades?nombre=ingenieria&=",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades (nombre)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15706",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores?=",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15711",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?=&codigo=ing&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (codigo,estado,facultadId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15763",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?nombre=sistemas&codigo=ing&=&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (codigo,estado,nombre)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15775",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?nombre=sistemas&codigo=ing&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&=",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (codigo,facultadId,nombre)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15745",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?nombre=sistemas&=&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (estado,facultadId,nombre)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15753",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje?=",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15770",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres?codigo=2027&=",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres (codigo)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "15755",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres?=&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres (estado)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						}
+					],
+					"count": "24",
+					"systemic": false,
+					"solution": "",
+					"otherinfo": "",
+					"reference": "",
+					"cweid": "388",
+					"wascid": "20",
+					"sourceid": "16793"
+				},
+				{
+					"pluginid": "90004",
+					"alertRef": "90004-1",
+					"alert": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+					"name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>Cross-Origin-Resource-Policy header is an opt-in header designed to counter side-channels attacks like Spectre. Resource should be specifically set as shareable amongst different origins.</p>",
+					"instances":[ 
+						{
+							"id": "112",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes?filtro=g%C3%B3mez",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes (filtro)",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "54",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores?filtro=g%C3%B3mez",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores (filtro)",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "53",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?nombre=sistemas&codigo=ing&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (codigo,estado,facultadId,nombre)",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "52",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres?codigo=2027&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres (codigo,estado)",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "51",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres ()({codigo,fechaInicio,fechaFin})",
+							"method": "POST",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure that the application/web server sets the Cross-Origin-Resource-Policy header appropriately, and that it sets the Cross-Origin-Resource-Policy header to 'same-origin' for all web pages.</p><p>'same-site' is considered as less secured and should be avoided.</p><p>If resources must be shared, set the header to 'cross-origin'.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Resource-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-resource-policy).</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+					"cweid": "693",
+					"wascid": "14",
+					"sourceid": "57"
+				},
+				{
+					"pluginid": "100000",
+					"alertRef": "100000-1",
+					"alert": "A Client Error response code was returned by the server",
+					"name": "A Client Error response code was returned by the server",
+					"riskcode": "0",
+					"confidence": "3",
+					"riskdesc": "Informational (High)",
+					"desc": "<p>A response code of 404 was returned by the server.</p><p>This may indicate that the application is failing to handle unexpected input correctly.</p><p>Raised by the 'Alert on HTTP Response Code Error' script</p>",
+					"instances":[ 
+						{
+							"id": "12",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a",
+							"method": "DELETE",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13886",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a\/",
+							"method": "DELETE",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "150",
+							"uri": "http://host.docker.internal:8081/api/v1/matriculas/8f7e6d5c-4b3a-4291-8c7d-6b5a4f3e2d1c?confirmar=http%3A%2F%2Fwww.google.com%2F",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/matriculas\/8f7e6d5c-4b3a-4291-8c7d-6b5a4f3e2d1c (confirmar)",
+							"method": "DELETE",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "82",
+							"uri": "http://host.docker.internal:8081/api/v1/matriculas/8f7e6d5c-4b3a-4291-8c7d-6b5a4f3e2d1c?confirmar=false",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/matriculas\/8f7e6d5c-4b3a-4291-8c7d-6b5a4f3e2d1c (confirmar)",
+							"method": "DELETE",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13892",
+							"uri": "http://host.docker.internal:8081/api/v1/matriculas/8f7e6d5c-4b3a-4291-8c7d-6b5a4f3e2d1c/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/matriculas\/8f7e6d5c-4b3a-4291-8c7d-6b5a4f3e2d1c\/",
+							"method": "DELETE",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "5",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"method": "DELETE",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13898",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/",
+							"method": "DELETE",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "423",
+							"uri": "http://host.docker.internal:8081",
+							"nodeName": "http:\/\/host.docker.internal:8081",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13913",
+							"uri": "http://host.docker.internal:8081/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "83",
+							"uri": "http://host.docker.internal:8081/5476567271622934317",
+							"nodeName": "http:\/\/host.docker.internal:8081\/5476567271622934317",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "441",
+							"uri": "http://host.docker.internal:8081/api",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13915",
+							"uri": "http://host.docker.internal:8081/api/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "84",
+							"uri": "http://host.docker.internal:8081/api/7001984825551734364",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/7001984825551734364",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "478",
+							"uri": "http://host.docker.internal:8081/api/v1",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13916",
+							"uri": "http://host.docker.internal:8081/api/v1/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "85",
+							"uri": "http://host.docker.internal:8081/api/v1/7342542072744713678",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/7342542072744713678",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "546",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora?resultadoAprendizajeId=http%3A%2F%2Fwww.google.com%2F&asignaturaId=3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f&semestreId=7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d&convertida=false",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora (asignaturaId,convertida,resultadoAprendizajeId,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13919",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "86",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora/7594810806234955226",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora\/7594810806234955226",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "16",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora\/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13917",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora\/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "87",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e/2619312837298816873",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora\/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e\/2619312837298816873",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "15780",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e/actuator/health",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora\/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e\/actuator\/health",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "548",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaciones-docentes",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaciones-docentes",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "405",
+							"otherinfo": ""
+						},
+						{
+							"id": "13921",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaciones-docentes/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaciones-docentes\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "556",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaciones-docentes/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaciones-docentes\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13923",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaciones-docentes/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaciones-docentes\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "89",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaciones-docentes/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/8429418873739404992",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaciones-docentes\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/8429418873739404992",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "88",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaciones-docentes/7526044465279501819",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaciones-docentes\/7526044465279501819",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "45",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas?texto=c%C3%A1lculo&programaId=4d5e6f7a-8b9c-4d0e-1f2a-3b4c5d6e7f8a&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&estado=BORRADOR&raMin=5&raMax=7&semestreId=semestreId",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas (estado,facultadId,programaId,raMax,raMin,semestreId,texto)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13924",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "14",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13926",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "91",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f/1022020083562570875",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f\/1022020083562570875",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "90",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/599659162459474078",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/599659162459474078",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "593",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13927",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "92",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/4381756740838338683",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/4381756740838338683",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "611",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/resultados-aprendizaje",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/resultados-aprendizaje",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "621",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/resultados-aprendizaje?estado=http%3A%2F%2Fwww.google.com%2F",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/resultados-aprendizaje (estado)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "47",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/resultados-aprendizaje?estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/resultados-aprendizaje (estado)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13930",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/resultados-aprendizaje/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/resultados-aprendizaje\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "93",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/resultados-aprendizaje/5176268138867567010",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/resultados-aprendizaje\/5176268138867567010",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "631",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/resultados-aprendizaje/rendimiento?semestreId=http%3A%2F%2Fwww.google.com%2F",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/resultados-aprendizaje\/rendimiento (semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "80",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/resultados-aprendizaje/rendimiento?semestreId=9d8c7b6a-5f4e-4d3c-b2a1-0f9e8d7c6b5a",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/resultados-aprendizaje\/rendimiento (semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13929",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/resultados-aprendizaje/rendimiento/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/resultados-aprendizaje\/rendimiento\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "629",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/mias?facultadId=http%3A%2F%2Fwww.google.com%2F",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/mias (facultadId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "81",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/mias?facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/mias (facultadId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13933",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/mias/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/mias\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "685",
+							"uri": "http://host.docker.internal:8081/api/v1/auditoria?desde=http%3A%2F%2Fwww.google.com%2F&hasta=2026-10-20&tipoEntidad=USUARIO&pagina=0&tamano=20",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auditoria (desde,hasta,pagina,tamano,tipoEntidad)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13935",
+							"uri": "http://host.docker.internal:8081/api/v1/auditoria/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auditoria\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "94",
+							"uri": "http://host.docker.internal:8081/api/v1/auditoria/1018945117246240483",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auditoria\/1018945117246240483",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "79",
+							"uri": "http://host.docker.internal:8081/api/v1/auditoria/mis-eventos?desde=desde&hasta=hasta&tipoEntidad=USUARIO&pagina=0&tamano=20",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auditoria\/mis-eventos (desde,hasta,pagina,tamano,tipoEntidad)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13934",
+							"uri": "http://host.docker.internal:8081/api/v1/auditoria/mis-eventos/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auditoria\/mis-eventos\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "665",
+							"uri": "http://host.docker.internal:8081/api/v1/auth",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auth",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13938",
+							"uri": "http://host.docker.internal:8081/api/v1/auth/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auth\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "95",
+							"uri": "http://host.docker.internal:8081/api/v1/auth/8154056906513142339",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auth\/8154056906513142339",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "686",
+							"uri": "http://host.docker.internal:8081/api/v1/calificaciones",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/calificaciones",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13942",
+							"uri": "http://host.docker.internal:8081/api/v1/calificaciones/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/calificaciones\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "96",
+							"uri": "http://host.docker.internal:8081/api/v1/calificaciones/5015844049839615931",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/calificaciones\/5015844049839615931",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "405",
+							"otherinfo": ""
+						},
+						{
+							"id": "78",
+							"uri": "http://host.docker.internal:8081/api/v1/calificaciones/evaluaciones?resultadoAprendizajeId=resultadoAprendizajeId&semestreId=semestreId",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/calificaciones\/evaluaciones (resultadoAprendizajeId,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13941",
+							"uri": "http://host.docker.internal:8081/api/v1/calificaciones/evaluaciones/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/calificaciones\/evaluaciones\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "706",
+							"uri": "http://host.docker.internal:8081/api/v1/calificaciones/id",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/calificaciones\/id",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "405",
+							"otherinfo": ""
+						},
+						{
+							"id": "13943",
+							"uri": "http://host.docker.internal:8081/api/v1/calificaciones/id/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/calificaciones\/id\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "97",
+							"uri": "http://host.docker.internal:8081/api/v1/calificaciones/id/3257565600101476050",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/calificaciones\/id\/3257565600101476050",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "77",
+							"uri": "http://host.docker.internal:8081/api/v1/calificaciones/id/historial",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/calificaciones\/id\/historial",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13944",
+							"uri": "http://host.docker.internal:8081/api/v1/calificaciones/id/historial/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/calificaciones\/id\/historial\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "765",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones?resultadoAprendizajeId=http%3A%2F%2Fwww.google.com%2F&semestreId=7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d&asignaturaId=3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f&estado=VIGENTE",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones (asignaturaId,estado,resultadoAprendizajeId,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13945",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "98",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones/3490299836034008268",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones\/3490299836034008268",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "76",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones/5e6f7a8b-9c0d-4e1f-2a3b-4c5d6e7f8a9b",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones\/5e6f7a8b-9c0d-4e1f-2a3b-4c5d6e7f8a9b",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13946",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones/5e6f7a8b-9c0d-4e1f-2a3b-4c5d6e7f8a9b/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones\/5e6f7a8b-9c0d-4e1f-2a3b-4c5d6e7f8a9b\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "99",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones/5e6f7a8b-9c0d-4e1f-2a3b-4c5d6e7f8a9b/6196474380180688256",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones\/5e6f7a8b-9c0d-4e1f-2a3b-4c5d6e7f8a9b\/6196474380180688256",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "15708",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes?filtro=%00",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes (filtro)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "409",
+							"otherinfo": ""
+						},
+						{
+							"id": "13951",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "100",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/2290113526599752372",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/2290113526599752372",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "10",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13950",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "101",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a/7358878837397116436",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a\/7358878837397116436",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "71",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a/asignaturas",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a\/asignaturas",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13949",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a/asignaturas/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a\/asignaturas\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "798",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/me",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/me",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13954",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/me/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/me\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "102",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/me/1883000766577040505",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/me\/1883000766577040505",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "75",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/me/historial",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/me\/historial",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13952",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/me/historial/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/me\/historial\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "73",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/me/materias",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/me\/materias",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13955",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/me/materias/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/me\/materias\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "103",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/me/materias/8363913282012392330",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/me\/materias\/8363913282012392330",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "74",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/me/materias/8f7e6d5c-4b3a-4291-8c7d-6b5a4f3e2d1c",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/me\/materias\/8f7e6d5c-4b3a-4291-8c7d-6b5a4f3e2d1c",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13953",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/me/materias/8f7e6d5c-4b3a-4291-8c7d-6b5a4f3e2d1c/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/me\/materias\/8f7e6d5c-4b3a-4291-8c7d-6b5a4f3e2d1c\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "72",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/me/progreso",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/me\/progreso",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13957",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/me/progreso/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/me\/progreso\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "834",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13960",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "8",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13961",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "105",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d/5918226776949365754",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d\/5918226776949365754",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "104",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/8055351890219545171",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/8055351890219545171",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "852",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/evaluacionId",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/evaluacionId",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13963",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/evaluacionId/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/evaluacionId\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "106",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/evaluacionId/2940504542150843709",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/evaluacionId\/2940504542150843709",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "28",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/evaluacionId/calificaciones",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/evaluacionId\/calificaciones",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13962",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/evaluacionId/calificaciones/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/evaluacionId\/calificaciones\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "1074",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades?nombre=ingenieria&estado=http%3A%2F%2Fwww.google.com%2F",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades (estado,nombre)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13965",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "107",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades/262986954571552877",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades\/262986954571552877",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "6",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades\/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13964",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades\/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "108",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f/6119081084359516714",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades\/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f\/6119081084359516714",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "882",
+							"uri": "http://host.docker.internal:8081/api/v1/matriculas",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/matriculas",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "894",
+							"uri": "http://host.docker.internal:8081/api/v1/matriculas?asignaturaId=http%3A%2F%2Fwww.google.com%2F&semestreId=9d8c7b6a-5f4e-4d3c-b2a1-0f9e8d7c6b5a&incluirInactivas=false",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/matriculas (asignaturaId,incluirInactivas,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "24",
+							"uri": "http://host.docker.internal:8081/api/v1/matriculas?asignaturaId=7c6b5a4f-9e3d-4c1b-8a09-f8e7d6c5b4a3&semestreId=9d8c7b6a-5f4e-4d3c-b2a1-0f9e8d7c6b5a&incluirInactivas=false",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/matriculas (asignaturaId,incluirInactivas,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13968",
+							"uri": "http://host.docker.internal:8081/api/v1/matriculas/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/matriculas\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "109",
+							"uri": "http://host.docker.internal:8081/api/v1/matriculas/3112196665541663202",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/matriculas\/3112196665541663202",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "405",
+							"otherinfo": ""
+						},
+						{
+							"id": "13970",
+							"uri": "http://host.docker.internal:8081/api/v1/niveles-logro/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/niveles-logro\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13972",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "919",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "405",
+							"otherinfo": ""
+						},
+						{
+							"id": "13975",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "111",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/5321354893951179833",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/5321354893951179833",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "939",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/asignaturas?estado=http%3A%2F%2Fwww.google.com%2F",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/asignaturas (estado)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "70",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/asignaturas?estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/asignaturas (estado)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13974",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/asignaturas/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/asignaturas\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "110",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/8168921308993077917",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/8168921308993077917",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "405",
+							"otherinfo": ""
+						},
+						{
+							"id": "1275",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?nombre=sistemas&codigo=ing&facultadId=http%3A%2F%2Fwww.google.com%2F&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (codigo,estado,facultadId,nombre)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13977",
+							"uri": "http://host.docker.internal:8081/api/v1/programas/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2",
+							"uri": "http://host.docker.internal:8081/api/v1/programas/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13976",
+							"uri": "http://host.docker.internal:8081/api/v1/programas/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "114",
+							"uri": "http://host.docker.internal:8081/api/v1/programas/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/4423985411769140364",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/4423985411769140364",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "113",
+							"uri": "http://host.docker.internal:8081/api/v1/programas/5720941442414533305",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas\/5720941442414533305",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "953",
+							"uri": "http://host.docker.internal:8081/api/v1/reportes",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/reportes",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13980",
+							"uri": "http://host.docker.internal:8081/api/v1/reportes/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/reportes\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "115",
+							"uri": "http://host.docker.internal:8081/api/v1/reportes/4330681972198263345",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/reportes\/4330681972198263345",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "69",
+							"uri": "http://host.docker.internal:8081/api/v1/reportes/matriculas-programa-semestre?semestreId=semestreId&programaId=programaId&facultadId=facultadId",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/reportes\/matriculas-programa-semestre (facultadId,programaId,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13983",
+							"uri": "http://host.docker.internal:8081/api/v1/reportes/matriculas-programa-semestre/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/reportes\/matriculas-programa-semestre\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "965",
+							"uri": "http://host.docker.internal:8081/api/v1/reportes/rendimiento-ra?semestreId=http%3A%2F%2Fwww.google.com%2F&programaId=5a4b3c2d-1e0f-4a9b-8c7d-6e5f4a3b2c1d&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&asignaturaId=7c9e6679-7425-40de-944b-e07fc1f90ae7",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/reportes\/rendimiento-ra (asignaturaId,facultadId,programaId,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "68",
+							"uri": "http://host.docker.internal:8081/api/v1/reportes/rendimiento-ra?semestreId=9d8c7b6a-5f4e-4d3c-b2a1-0f9e8d7c6b5a&programaId=5a4b3c2d-1e0f-4a9b-8c7d-6e5f4a3b2c1d&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&asignaturaId=7c9e6679-7425-40de-944b-e07fc1f90ae7",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/reportes\/rendimiento-ra (asignaturaId,facultadId,programaId,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13981",
+							"uri": "http://host.docker.internal:8081/api/v1/reportes/rendimiento-ra/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/reportes\/rendimiento-ra\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "980",
+							"uri": "http://host.docker.internal:8081/api/v1/reportes/riesgo-academico?semestreId=http%3A%2F%2Fwww.google.com%2F&programaId=5a4b3c2d-1e0f-4a9b-8c7d-6e5f4a3b2c1d&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&asignaturaId=7c9e6679-7425-40de-944b-e07fc1f90ae7&minRaNoAlcanzados=1",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/reportes\/riesgo-academico (asignaturaId,facultadId,minRaNoAlcanzados,programaId,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "67",
+							"uri": "http://host.docker.internal:8081/api/v1/reportes/riesgo-academico?semestreId=9d8c7b6a-5f4e-4d3c-b2a1-0f9e8d7c6b5a&programaId=5a4b3c2d-1e0f-4a9b-8c7d-6e5f4a3b2c1d&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&asignaturaId=7c9e6679-7425-40de-944b-e07fc1f90ae7&minRaNoAlcanzados=1",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/reportes\/riesgo-academico (asignaturaId,facultadId,minRaNoAlcanzados,programaId,semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13982",
+							"uri": "http://host.docker.internal:8081/api/v1/reportes/riesgo-academico/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/reportes\/riesgo-academico\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "1123",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje?estado=http%3A%2F%2Fwww.google.com%2F",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje (estado)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13986",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "0",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13984",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "117",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/9190271344995574267",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/9190271344995574267",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "989",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/evaluaciones?semestreId=http%3A%2F%2Fwww.google.com%2F",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/evaluaciones (semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "20",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/evaluaciones?semestreId=9d8c7b6a-5f4e-4d3c-b2a1-0f9e8d7c6b5a",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/evaluaciones (semestreId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13987",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/evaluaciones/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/evaluaciones\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "987",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/semestres",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/semestres",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13989",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/semestres/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/semestres\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "1004",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/semestres/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/semestres\/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13992",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/semestres/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/semestres\/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "119",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/semestres/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05/119252362669307019",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/semestres\/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05\/119252362669307019",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "65",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/semestres/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05/estadisticas",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/semestres\/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05\/estadisticas",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13990",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/semestres/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05/estadisticas/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/semestres\/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05\/estadisticas\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "120",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/semestres/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05/estadisticas/8269569517899800743",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/semestres\/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05\/estadisticas\/8269569517899800743",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "118",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/semestres/7796212879224501286",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/semestres\/7796212879224501286",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "116",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/4837008882479243449",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/4837008882479243449",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "1027",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13993",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "121",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/1159897202148800806",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/1159897202148800806",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "1044",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13995",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "122",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres/6439120958300164934",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres\/6439120958300164934",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "1073",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres\/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13998",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres\/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "124",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d/3561922002934694274",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres\/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d\/3561922002934694274",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "1102",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d/conclusiones",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres\/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d\/conclusiones",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "405",
+							"otherinfo": ""
+						},
+						{
+							"id": "14000",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d/conclusiones/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres\/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d\/conclusiones\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "125",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d/conclusiones/673529445358260110",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres\/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d\/conclusiones\/673529445358260110",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "66",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d/conclusiones/estado",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres\/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d\/conclusiones\/estado",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "14001",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d/conclusiones/estado/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres\/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d\/conclusiones\/estado\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "1306",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres?codigo=2027&estado=http%3A%2F%2Fwww.google.com%2F",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres (codigo,estado)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "14003",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "14002",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres/2027-1/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres\/2027-1\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "126",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres/6790263159963748732",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres\/6790263159963748732",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "64",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres/mios",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres\/mios",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "14004",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres/mios/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres\/mios\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "14006",
+							"uri": "http://host.docker.internal:8081/api/v1/tipos-documento/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/tipos-documento\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "63",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaciones-docentes/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/desasignar",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaciones-docentes\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/desasignar",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13875",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaciones-docentes/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/desasignar/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaciones-docentes\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/desasignar\/",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "62",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f/activar",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f\/activar",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13880",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f/activar/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f\/activar\/",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "127",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f/inactivar?confirmar=http%3A%2F%2Fwww.google.com%2F",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f\/inactivar (confirmar)",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "61",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f/inactivar?confirmar=false",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f\/inactivar (confirmar)",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13878",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f/inactivar/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f\/inactivar\/",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "60",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d/inactivar",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d\/inactivar",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13884",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d/inactivar/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d\/inactivar\/",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "59",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d/reactivar",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d\/reactivar",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13895",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d/reactivar/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d\/reactivar\/",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "58",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f/inactivar",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades\/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f\/inactivar",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13885",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f/inactivar/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades\/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f\/inactivar\/",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "57",
+							"uri": "http://host.docker.internal:8081/api/v1/programas/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/inactivar",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/inactivar",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13902",
+							"uri": "http://host.docker.internal:8081/api/v1/programas/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/inactivar/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/inactivar\/",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "56",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/inactivar",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/inactivar",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13901",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/inactivar/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/inactivar\/",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "55",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/reactivar",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/reactivar",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13908",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/reactivar/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/reactivar\/",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "410",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres/2027-1",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres\/2027-1 ()({fechaFin})",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13903",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres/2027-1/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres\/2027-1\/ ()({fechaFin})",
+							"method": "PATCH",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "134",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e/conversion",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora\/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e\/conversion ()({fechaTentativa,porcentaje})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "50",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e/conversion",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora\/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e\/conversion ()({fechaTentativa,porcentaje})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13873",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e/conversion/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora\/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e\/conversion\/ ()({fechaTentativa,porcentaje})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "49",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaciones-docentes",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaciones-docentes ()({profesorIds:[],asignaturaIds:[]})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13874",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaciones-docentes/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaciones-docentes\/ ()({profesorIds:[],asignaturaIds:[]})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "46",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas ()({codigo,nombre,programaId})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "415",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas ()({codigo,nombre,programaId})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13876",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/ ()({codigo,nombre,programaId})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "48",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/resultados-aprendizaje",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/resultados-aprendizaje ()({codigo,descripcion})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "360",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/resultados-aprendizaje",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/resultados-aprendizaje ()({codigo,descripcion})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13879",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/7c9e6679-7425-40de-944b-e07fc1f90ae7/resultados-aprendizaje/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/7c9e6679-7425-40de-944b-e07fc1f90ae7\/resultados-aprendizaje\/ ()({codigo,descripcion})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "130",
+							"uri": "http://host.docker.internal:8081/api/v1/auth/login",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auth\/login ()({correoInstitucional,contrasena})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "32",
+							"uri": "http://host.docker.internal:8081/api/v1/auth/login",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auth\/login ()({correoInstitucional,contrasena})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "401",
+							"otherinfo": ""
+						},
+						{
+							"id": "13888",
+							"uri": "http://host.docker.internal:8081/api/v1/auth/login/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/auth\/login\/ ()({correoInstitucional,contrasena})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "31",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones/5e6f7a8b-9c0d-4e1f-2a3b-4c5d6e7f8a9b/acciones-mejora",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones\/5e6f7a8b-9c0d-4e1f-2a3b-4c5d6e7f8a9b\/acciones-mejora ()({nombre,descripcion})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "146",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones/5e6f7a8b-9c0d-4e1f-2a3b-4c5d6e7f8a9b/acciones-mejora",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones\/5e6f7a8b-9c0d-4e1f-2a3b-4c5d6e7f8a9b\/acciones-mejora ()({nombre,descripcion})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13889",
+							"uri": "http://host.docker.internal:8081/api/v1/conclusiones/5e6f7a8b-9c0d-4e1f-2a3b-4c5d6e7f8a9b/acciones-mejora/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/conclusiones\/5e6f7a8b-9c0d-4e1f-2a3b-4c5d6e7f8a9b\/acciones-mejora\/ ()({nombre,descripcion})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "30",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes ()({tipoDocumentoId,numeroDocumento,primerNombre,segundoNombre,primerApellido,segundoApellido,correoInstitucional})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13882",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/ ()({tipoDocumentoId,numeroDocumento,primerNombre,segundoNombre,primerApellido,segundoApellido,correoInstitucional})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "29",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/evaluacionId/calificaciones",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/evaluacionId\/calificaciones ()({matriculaId,nota,observacion})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13893",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/evaluacionId/calificaciones/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/evaluacionId\/calificaciones\/ ()({matriculaId,nota,observacion})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "27",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades ()({nombre})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "14738",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades ()({nombre})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "409",
+							"otherinfo": ""
+						},
+						{
+							"id": "13894",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades\/ ()({nombre})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "25",
+							"uri": "http://host.docker.internal:8081/api/v1/matriculas",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/matriculas ()({estudianteId,asignaturaId,semestreId})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13896",
+							"uri": "http://host.docker.internal:8081/api/v1/matriculas/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/matriculas\/ ()({estudianteId,asignaturaId,semestreId})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "26",
+							"uri": "http://host.docker.internal:8081/api/v1/matriculas/con-estudiante",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/matriculas\/con-estudiante ()({estudiante:{tipoDocumentoId,numeroDocumento,primerNombre,segundoNombre,primerApellido,segundoApellido,correoInstitucional},asignaturaId,semestreId})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13881",
+							"uri": "http://host.docker.internal:8081/api/v1/matriculas/con-estudiante/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/matriculas\/con-estudiante\/ ()({estudiante:{tipoDocumentoId,numeroDocumento,primerNombre,segundoNombre,primerApellido,segundoApellido,correoInstitucional},asignaturaId,semestreId})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "23",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores ()({tipoDocumentoId,numeroDocumento,primerNombre,segundoNombre,primerApellido,segundoApellido,correoInstitucional})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13900",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/ ()({tipoDocumentoId,numeroDocumento,primerNombre,segundoNombre,primerApellido,segundoApellido,correoInstitucional})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "22",
+							"uri": "http://host.docker.internal:8081/api/v1/programas",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas ()({nombre,codigo,facultadId})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "183",
+							"uri": "http://host.docker.internal:8081/api/v1/programas",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas ()({nombre,codigo,facultadId})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13907",
+							"uri": "http://host.docker.internal:8081/api/v1/programas/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas\/ ()({nombre,codigo,facultadId})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "252",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/evaluaciones",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/evaluaciones ()({nombre,fechaTentativa,porcentaje,descripcion})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "21",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/evaluaciones",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/evaluaciones ()({nombre,fechaTentativa,porcentaje,descripcion})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13899",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/evaluaciones/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/evaluaciones\/ ()({nombre,fechaTentativa,porcentaje,descripcion})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "18",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/semestres/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05/estadisticas/recalculo",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/semestres\/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05\/estadisticas\/recalculo",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13911",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/semestres/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05/estadisticas/recalculo/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/semestres\/6b1f9d7e-5c3a-4f21-9e8b-2d4a7c6e1f05\/estadisticas\/recalculo\/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "19",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d/conclusiones",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres\/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d\/conclusiones",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13905",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c/semestres/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d/conclusiones/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/6f7a8b9c-0d1e-4f2a-3b4c-5d6e7f8a9b0c\/semestres\/7a8b9c0d-1e2f-4a3b-4c5d-6e7f8a9b0c1d\/conclusiones\/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "426",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres ()({codigo,fechaInicio,fechaFin})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "4027",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres ()({codigo,fechaInicio,fechaFin})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "409",
+							"otherinfo": ""
+						},
+						{
+							"id": "13904",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres\/ ()({codigo,fechaInicio,fechaFin})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "10378",
+							"uri": "http://host.docker.internal:8081/computeMetadata/v1/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/computeMetadata\/v1\/ ()({fechaTentativa,porcentaje})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "10331",
+							"uri": "http://host.docker.internal:8081/latest/meta-data/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/latest\/meta-data\/ ()({fechaTentativa,porcentaje})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "10588",
+							"uri": "http://host.docker.internal:8081/metadata/instance",
+							"nodeName": "http:\/\/host.docker.internal:8081\/metadata\/instance ()({fechaTentativa,porcentaje})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "10612",
+							"uri": "http://host.docker.internal:8081/metadata/v1",
+							"nodeName": "http:\/\/host.docker.internal:8081\/metadata\/v1 ()({fechaTentativa,porcentaje})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "10429",
+							"uri": "http://host.docker.internal:8081/opc/v1/instance/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/opc\/v1\/instance\/ ()({fechaTentativa,porcentaje})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "10487",
+							"uri": "http://host.docker.internal:8081/opc/v2/instance/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/opc\/v2\/instance\/ ()({fechaTentativa,porcentaje})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "10635",
+							"uri": "http://host.docker.internal:8081/openstack/latest/meta_data.json",
+							"nodeName": "http:\/\/host.docker.internal:8081\/openstack\/latest\/meta_data.json ()({fechaTentativa,porcentaje})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "17",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora\/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e ()({nombre,descripcion})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "133",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora\/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e ()({nombre,descripcion})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13872",
+							"uri": "http://host.docker.internal:8081/api/v1/acciones-mejora/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/acciones-mejora\/8b9c0d1e-2f3a-4b4c-5d6e-7f8a9b0c1d2e\/ ()({nombre,descripcion})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "15",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f ()({nombre})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "129",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f ()({nombre})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13877",
+							"uri": "http://host.docker.internal:8081/api/v1/asignaturas/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/asignaturas\/3c4d5e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f\/ ()({nombre})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13",
+							"uri": "http://host.docker.internal:8081/api/v1/calificaciones/id",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/calificaciones\/id ()({nota,observacion})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13887",
+							"uri": "http://host.docker.internal:8081/api/v1/calificaciones/id/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/calificaciones\/id\/ ()({nota,observacion})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "11",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a ()({tipoDocumentoId,numeroDocumento,primerNombre,segundoNombre,primerApellido,segundoApellido,correoInstitucional})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13890",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a\/ ()({tipoDocumentoId,numeroDocumento,primerNombre,segundoNombre,primerApellido,segundoApellido,correoInstitucional})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "216",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d ()({nombre,fechaTentativa,porcentaje,descripcion})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "9",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d ()({nombre,fechaTentativa,porcentaje,descripcion})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "13883",
+							"uri": "http://host.docker.internal:8081/api/v1/evaluaciones/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/evaluaciones\/3f2b8c1d-6a4e-4b9f-a7d5-1c0e9f8a7b6d\/ ()({nombre,fechaTentativa,porcentaje,descripcion})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "7",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades\/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f ()({nombre})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "145",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades\/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f ()({nombre})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13891",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades\/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f\/ ()({nombre})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "4",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d ()({tipoDocumentoId,numeroDocumento,primerNombre,segundoNombre,primerApellido,segundoApellido,correoInstitucional})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "13897",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/ ()({tipoDocumentoId,numeroDocumento,primerNombre,segundoNombre,primerApellido,segundoApellido,correoInstitucional})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "3",
+							"uri": "http://host.docker.internal:8081/api/v1/programas/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d ()({nombre,facultadId})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "148",
+							"uri": "http://host.docker.internal:8081/api/v1/programas/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d ()({nombre,facultadId})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13909",
+							"uri": "http://host.docker.internal:8081/api/v1/programas/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/ ()({nombre,facultadId})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "1",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d ()({descripcion})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "377",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d ()({descripcion})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13910",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d\/ ()({descripcion})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						}
+					],
+					"count": "275",
+					"systemic": false,
+					"solution": "",
+					"otherinfo": "",
+					"reference": "",
+					"cweid": "388",
+					"wascid": "20",
+					"sourceid": "22"
+				},
+				{
+					"pluginid": "10049",
+					"alertRef": "10049-1",
+					"alert": "Non-Storable Content",
+					"name": "Non-Storable Content",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>",
+					"instances":[ 
+						{
+							"id": "40",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						},
+						{
+							"id": "41",
+							"uri": "http://host.docker.internal:8081/api/v1/estudiantes/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/estudiantes\/4e3d2c1b-6a5f-4b8e-9d7c-1f0e9d8c7b6a ()({tipoDocumentoId,numeroDocumento,primerNombre,segundoNombre,primerApellido,segundoApellido,correoInstitucional})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "PUT ",
+							"otherinfo": ""
+						},
+						{
+							"id": "42",
+							"uri": "http://host.docker.internal:8081/api/v1/facultades/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/facultades\/7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f ()({nombre})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "PUT ",
+							"otherinfo": ""
+						},
+						{
+							"id": "38",
+							"uri": "http://host.docker.internal:8081/api/v1/profesores/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/profesores\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d ()({tipoDocumentoId,numeroDocumento,primerNombre,segundoNombre,primerApellido,segundoApellido,correoInstitucional})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "PUT ",
+							"otherinfo": ""
+						},
+						{
+							"id": "39",
+							"uri": "http://host.docker.internal:8081/api/v1/resultados-aprendizaje/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/resultados-aprendizaje\/1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d ()({descripcion})",
+							"method": "PUT",
+							"param": "",
+							"attack": "",
+							"evidence": "PUT ",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).</p>",
+					"otherinfo": "",
+					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+					"cweid": "524",
+					"wascid": "13",
+					"sourceid": "1"
+				}
+			]
+		}
+	],
+	"sequences":[
+	]
+
+}

@@ -1,0 +1,479 @@
+{
+	"@programName": "ZAP",
+	"@version": "2.17.0",
+	"@generated": "Tue, 17 Nov 2026 02:47:38",
+	"created": "2026-11-17T02:47:38.262003836Z",
+	"insights":[
+		{
+			"level": "Low",
+			"reason": "Warning",
+			"site": "",
+			"key": "insight.log.warn",
+			"description": "ZAP warnings logged - see the zap.log file for details",
+			"statistic": "3"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.code.2xx",
+			"description": "Percentage of responses with status code 2xx",
+			"statistic": "48"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.code.4xx",
+			"description": "Percentage of responses with status code 4xx",
+			"statistic": "51"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.endpoint.ctype.application/json",
+			"description": "Percentage of endpoints with content type application/json",
+			"statistic": "100"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.endpoint.method.GET",
+			"description": "Percentage of endpoints with method GET",
+			"statistic": "100"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "http://host.docker.internal:8081",
+			"key": "insight.endpoint.total",
+			"description": "Count of total endpoints",
+			"statistic": "26"
+		}
+	],
+	"site":[ 
+		{
+			"@name": "http://host.docker.internal:8081",
+			"@host": "host.docker.internal",
+			"@port": "8081",
+			"@ssl": "false",
+			"alerts": [ 
+				{
+					"pluginid": "40042",
+					"alertRef": "40042",
+					"alert": "Spring Actuator Information Leak",
+					"name": "Spring Actuator Information Leak",
+					"riskcode": "2",
+					"confidence": "2",
+					"riskdesc": "Medium (Medium)",
+					"desc": "<p>Spring Actuator for Health is enabled and may reveal sensitive information about this application. Spring Actuators can be used for real monitoring purposes, but should be used with caution as to not expose too much information about the application or the infrastructure running it.</p>",
+					"instances":[ 
+						{
+							"id": "416",
+							"uri": "http://host.docker.internal:8081/actuator/health",
+							"nodeName": "http:\/\/host.docker.internal:8081\/actuator\/health",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "{\"groups\":[\"liveness\",\"readiness\"],\"status\":\"UP\"}",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"systemic": false,
+					"solution": "<p>Disable the Health Actuators and other actuators, or restrict them to administrative users.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://docs.spring.io/spring-boot/api/rest/actuator/index.html#overview</p>",
+					"cweid": "215",
+					"wascid": "13",
+					"sourceid": "811"
+				},
+				{
+					"pluginid": "100000",
+					"alertRef": "100000-2",
+					"alert": "A Server Error response code was returned by the server",
+					"name": "A Server Error response code was returned by the server",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "Low (High)",
+					"desc": "<p>A response code of 500 was returned by the server.</p><p>This may indicate that the application is failing to handle unexpected input correctly.</p><p>Raised by the 'Alert on HTTP Response Code Error' script</p>",
+					"instances":[ 
+						{
+							"id": "398",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?=&codigo=ing&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (codigo,estado,facultadId)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "405",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?nombre=sistemas&codigo=ing&=&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (codigo,estado,nombre)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "410",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?nombre=sistemas&codigo=ing&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&=",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (codigo,facultadId,nombre)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "400",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?nombre=sistemas&=&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (estado,facultadId,nombre)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "401",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres?codigo=2027&=",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres (codigo)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						},
+						{
+							"id": "399",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres?=&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres (estado)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500",
+							"otherinfo": ""
+						}
+					],
+					"count": "6",
+					"systemic": false,
+					"solution": "",
+					"otherinfo": "",
+					"reference": "",
+					"cweid": "388",
+					"wascid": "20",
+					"sourceid": "768"
+				},
+				{
+					"pluginid": "90004",
+					"alertRef": "90004-1",
+					"alert": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+					"name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>Cross-Origin-Resource-Policy header is an opt-in header designed to counter side-channels attacks like Spectre. Resource should be specifically set as shareable amongst different origins.</p>",
+					"instances":[ 
+						{
+							"id": "8",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?nombre=sistemas&codigo=ing&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (codigo,estado,facultadId,nombre)",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "9",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres?codigo=2027&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres (codigo,estado)",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"systemic": false,
+					"solution": "<p>Ensure that the application/web server sets the Cross-Origin-Resource-Policy header appropriately, and that it sets the Cross-Origin-Resource-Policy header to 'same-origin' for all web pages.</p><p>'same-site' is considered as less secured and should be avoided.</p><p>If resources must be shared, set the header to 'cross-origin'.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Resource-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-resource-policy).</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+					"cweid": "693",
+					"wascid": "14",
+					"sourceid": "5"
+				},
+				{
+					"pluginid": "100000",
+					"alertRef": "100000-1",
+					"alert": "A Client Error response code was returned by the server",
+					"name": "A Client Error response code was returned by the server",
+					"riskcode": "0",
+					"confidence": "3",
+					"riskdesc": "Informational (High)",
+					"desc": "<p>A response code of 404 was returned by the server.</p><p>This may indicate that the application is failing to handle unexpected input correctly.</p><p>Raised by the 'Alert on HTTP Response Code Error' script</p>",
+					"instances":[ 
+						{
+							"id": "3",
+							"uri": "http://host.docker.internal:8081",
+							"nodeName": "http:\/\/host.docker.internal:8081",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "346",
+							"uri": "http://host.docker.internal:8081/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "0",
+							"uri": "http://host.docker.internal:8081/8386298728990351268",
+							"nodeName": "http:\/\/host.docker.internal:8081\/8386298728990351268",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "4",
+							"uri": "http://host.docker.internal:8081/api",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "349",
+							"uri": "http://host.docker.internal:8081/api/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "1",
+							"uri": "http://host.docker.internal:8081/api/5056805906034430444",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/5056805906034430444",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "5",
+							"uri": "http://host.docker.internal:8081/api/v1",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "350",
+							"uri": "http://host.docker.internal:8081/api/v1/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2",
+							"uri": "http://host.docker.internal:8081/api/v1/601348643265459020",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/601348643265459020",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "20",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?nombre=sistemas&codigo=ing&facultadId=http%3A%2F%2Fwww.google.com%2F&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (codigo,estado,facultadId,nombre)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "351",
+							"uri": "http://host.docker.internal:8081/api/v1/programas/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "10",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres?codigo=2027&estado=http%3A%2F%2Fwww.google.com%2F",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres (codigo,estado)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "352",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "253",
+							"uri": "http://host.docker.internal:8081/computeMetadata/v1/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/computeMetadata\/v1\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "249",
+							"uri": "http://host.docker.internal:8081/latest/meta-data/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/latest\/meta-data\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "261",
+							"uri": "http://host.docker.internal:8081/metadata/instance",
+							"nodeName": "http:\/\/host.docker.internal:8081\/metadata\/instance",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "262",
+							"uri": "http://host.docker.internal:8081/metadata/v1",
+							"nodeName": "http:\/\/host.docker.internal:8081\/metadata\/v1",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "255",
+							"uri": "http://host.docker.internal:8081/opc/v1/instance/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/opc\/v1\/instance\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "257",
+							"uri": "http://host.docker.internal:8081/opc/v2/instance/",
+							"nodeName": "http:\/\/host.docker.internal:8081\/opc\/v2\/instance\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "263",
+							"uri": "http://host.docker.internal:8081/openstack/latest/meta_data.json",
+							"nodeName": "http:\/\/host.docker.internal:8081\/openstack\/latest\/meta_data.json",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						}
+					],
+					"count": "20",
+					"systemic": false,
+					"solution": "",
+					"otherinfo": "",
+					"reference": "",
+					"cweid": "388",
+					"wascid": "20",
+					"sourceid": "12"
+				},
+				{
+					"pluginid": "10049",
+					"alertRef": "10049-1",
+					"alert": "Non-Storable Content",
+					"name": "Non-Storable Content",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>",
+					"instances":[ 
+						{
+							"id": "7",
+							"uri": "http://host.docker.internal:8081/api/v1/programas?nombre=sistemas&codigo=ing&facultadId=7c8d9e0f-1a2b-4c3d-8e4f-5a6b7c8d9e0f&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/programas (codigo,estado,facultadId,nombre)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						},
+						{
+							"id": "6",
+							"uri": "http://host.docker.internal:8081/api/v1/semestres?codigo=2027&estado=ACTIVO",
+							"nodeName": "http:\/\/host.docker.internal:8081\/api\/v1\/semestres (codigo,estado)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						}
+					],
+					"count": "2",
+					"systemic": false,
+					"solution": "<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).</p>",
+					"otherinfo": "",
+					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+					"cweid": "524",
+					"wascid": "13",
+					"sourceid": "5"
+				}
+			]
+		}
+	],
+	"sequences":[
+	]
+
+}
