@@ -1,60 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
   <hashTree>
-    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="RNF-01 a RNF-06 Rendimiento - SIGRA" enabled="true">
-      <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
-      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="RNF-01 a RNF-06 Rendimiento - SIGRA">
+      <stringProp name="TestPlan.comments">Umbrales textuales del SRS: RNF-03 autenticacion &lt; 4 s; RNF-04 CRUD de catalogo &lt; 3 s; RNF-06 estadisticas &lt; 5 s. RNF-01 son 20 usuarios concurrentes (propiedad usuarios). La clave NO se guarda aqui: se pasa con -Jclave=... al ejecutar.</stringProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments">
         <collectionProp name="Arguments.arguments">
           <elementProp name="HOST" elementType="Argument">
             <stringProp name="Argument.name">HOST</stringProp>
             <stringProp name="Argument.value">${__P(host,127.0.0.1)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="PUERTO" elementType="Argument">
             <stringProp name="Argument.name">PUERTO</stringProp>
-            <stringProp name="Argument.value">${__P(puerto,8080)}</stringProp>
+            <stringProp name="Argument.value">${__P(puerto,8081)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="PROTOCOL" elementType="Argument">
             <stringProp name="Argument.name">PROTOCOL</stringProp>
             <stringProp name="Argument.value">${__P(protocol,http)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="USUARIOS" elementType="Argument">
             <stringProp name="Argument.name">USUARIOS</stringProp>
             <stringProp name="Argument.value">${__P(usuarios,20)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="RAMPA" elementType="Argument">
             <stringProp name="Argument.name">RAMPA</stringProp>
             <stringProp name="Argument.value">${__P(rampa,20)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="ITERACIONES" elementType="Argument">
             <stringProp name="Argument.name">ITERACIONES</stringProp>
             <stringProp name="Argument.value">${__P(iteraciones,5)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="CORREO" elementType="Argument">
             <stringProp name="Argument.name">CORREO</stringProp>
-            <stringProp name="Argument.value">${__P(correo,administrador.prueba@uco.net.co)}</stringProp>
+            <stringProp name="Argument.value">${__P(correo,admin.bruno@uco.net.co)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="CLAVE" elementType="Argument">
             <stringProp name="Argument.name">CLAVE</stringProp>
-            <stringProp name="Argument.value">${__P(clave,CAMBIAME)}</stringProp>
+            <stringProp name="Argument.value">${__P(clave,PasswordSeguro123*)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
       </elementProp>
-      <stringProp name="TestPlan.comments">Umbrales textuales del SRS: RNF-03 autenticacion &lt; 4 s; RNF-04 CRUD de catalogo &lt; 3 s; RNF-06 estadisticas &lt; 5 s. RNF-01 son 20 usuarios concurrentes (propiedad usuarios). La clave NO se guarda aqui: se pasa con -Jclave=... al ejecutar.</stringProp>
     </TestPlan>
     <hashTree>
-      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="Valores HTTP por defecto" enabled="true">
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="Valores HTTP por defecto">
+        <intProp name="HTTPSampler.connect_timeout">10000</intProp>
+        <intProp name="HTTPSampler.response_timeout">60000</intProp>
         <stringProp name="HTTPSampler.domain">${HOST}</stringProp>
         <stringProp name="HTTPSampler.port">${PUERTO}</stringProp>
         <stringProp name="HTTPSampler.protocol">${PROTOCOL}</stringProp>
-        <stringProp name="HTTPSampler.connect_timeout">10000</stringProp>
-        <stringProp name="HTTPSampler.response_timeout">60000</stringProp>
-        <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario">
           <collectionProp name="Arguments.arguments"/>
         </elementProp>
+        <stringProp name="HTTPSampler.implementation"></stringProp>
       </ConfigTestElement>
       <hashTree/>
-      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Cabeceras JSON" enabled="true">
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Cabeceras JSON">
         <collectionProp name="HeaderManager.headers">
           <elementProp name="" elementType="Header">
             <stringProp name="Header.name">Content-Type</stringProp>
@@ -67,18 +74,18 @@
         </collectionProp>
       </HeaderManager>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="RNF-01 20 usuarios concurrentes" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" enabled="true">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">${ITERACIONES}</stringProp>
-        </elementProp>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="RNF-01 20 usuarios concurrentes">
         <stringProp name="ThreadGroup.num_threads">${USUARIOS}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${RAMPA}</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController">
+          <stringProp name="LoopController.loops">${ITERACIONES}</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RNF-03 POST /api/v1/auth/login" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RNF-03 POST /api/v1/auth/login">
           <stringProp name="HTTPSampler.path">/api/v1/auth/login</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -86,7 +93,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{"correoInstitucional":"${CORREO}","contrasena":"${CLAVE}"}</stringProp>
+                <stringProp name="Argument.value">{&quot;correoInstitucional&quot;:&quot;${CORREO}&quot;,&quot;contrasena&quot;:&quot;${CLAVE}&quot;}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -101,10 +108,11 @@
             <stringProp name="JSONPostProcessor.referenceNames">TOKEN</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$.token</stringProp>
             <stringProp name="JSONPostProcessor.defaultValues">SIN_TOKEN</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Authorization Bearer" enabled="true">
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Authorization Bearer">
           <collectionProp name="HeaderManager.headers">
             <elementProp name="" elementType="Header">
               <stringProp name="Header.name">Authorization</stringProp>
@@ -113,10 +121,11 @@
           </collectionProp>
         </HeaderManager>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RNF-04 GET /api/v1/profesores" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RNF-04 GET /api/v1/profesores">
           <stringProp name="HTTPSampler.path">/api/v1/profesores?page=0&amp;size=20</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
         </HTTPSamplerProxy>
@@ -126,10 +135,11 @@
           </DurationAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RNF-04 GET /api/v1/asignaturas" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RNF-04 GET /api/v1/asignaturas">
           <stringProp name="HTTPSampler.path">/api/v1/asignaturas?page=0&amp;size=20</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
         </HTTPSamplerProxy>
@@ -139,10 +149,11 @@
           </DurationAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RNF-06 GET /api/v1/niveles-logro" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RNF-06 GET /api/v1/niveles-logro">
           <stringProp name="HTTPSampler.path">/api/v1/niveles-logro</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
         </HTTPSamplerProxy>
@@ -152,11 +163,159 @@
           </DurationAssertion>
           <hashTree/>
         </hashTree>
-        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Pausa de usuario real" enabled="true">
+        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Pausa de usuario real">
           <stringProp name="ConstantTimer.delay">1000</stringProp>
         </ConstantTimer>
         <hashTree/>
       </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="Ver Árbol de Resultados">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Informe Agregado">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Reporte resumen">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Gráfico de Resultados">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
     </hashTree>
   </hashTree>
 </jmeterTestPlan>

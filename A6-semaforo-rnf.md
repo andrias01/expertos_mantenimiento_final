@@ -40,9 +40,15 @@ así que la comparación es válida.
 | | 8 de noviembre | 15 de noviembre | **16 de noviembre** |
 | --- | --- | --- | --- |
 | 🟢 Verificados con evidencia | 7 | 9 | **11** |
-| 🟡 Parciales, con la reserva declarada | 3 | 9 | **6** |
-| 🔴 Sin instrumento, fuera de alcance o **incumplido** | 13 | 5 | **6** |
+| 🟡 Parciales, con la reserva declarada | 3 | 9 | **7** |
+| 🔴 Sin instrumento, fuera de alcance o **incumplido** | 13 | 5 | **5** |
 | | 23 | 23 | 23 |
+
+> **Corregido al cierre del 16 de noviembre.** Durante unas horas esta tabla dijo 11 / 6 / 6, con
+> **RNF-03 en rojo**. Una tercera corrida de carga, con **parámetros idénticos** a la que motivó el
+> rojo, dio el resultado contrario (§3.4). RNF-03 vuelve a **amarillo**: no porque cumpla, sino
+> porque **la medición no es reproducible todavía** y afirmar el incumplimiento sería tan
+> infundado como afirmar el cumplimiento.
 
 **La tarde del 16 de noviembre cambió el panorama de verdad**, porque por primera vez hubo
 **medición de carga** y no solo inspección:
@@ -51,12 +57,14 @@ así que la comparación es válida.
 | --- | --- | --- |
 | **RNF-04** | 🟡 instrumento sin ejecutar | 🟢 **p95 1 394 / 1 108 ms** contra 3 000 |
 | **RNF-06** | 🟡 bloqueado | 🟢 **p90 42 ms** contra 5 000 (en la API) |
-| **RNF-01** | 🟡 sin ejecutar | 🟡 aguanta 20 concurrentes sin errores, pero no los tiempos |
-| **RNF-03** | 🟡 sin ejecutar | 🔴 **NO CUMPLE: p95 5 493 ms** contra 4 000 |
+| **RNF-01** | 🟡 sin ejecutar | 🟡 **20 hilos concurrentes alcanzados y medidos**, sin errores |
+| **RNF-03** | 🟡 sin ejecutar | 🟡 **medido 3 veces, con resultados que se contradicen** |
 
-Es el primer rojo del proyecto que no es «falta instrumento» sino **«medimos y no cumple»**. Y su
-causa es otro requisito del SRS: el factor 12 de BCrypt que pide RNF-10. Ver
-[H-17](A4-hallazgos-rnf.md).
+Lo que el día entrega de verdad no es un veredicto sobre RNF-03, sino algo más incómodo y más
+útil: **la primera medición de carga del proyecto, y la prueba de que todavía no es repetible**.
+La tensión de fondo —el factor 12 de BCrypt que exige RNF-10 encarece cada login— está
+identificada y es real; lo que no está es su magnitud. Ver [§3.4](#34-rnf-01-03-04-y-06--las-tres-corridas-de-carga-y-por-qué-no-coinciden)
+y [H-17](A4-hallazgos-rnf.md).
 
 **El conteo no se movió el 16 de noviembre, y conviene explicar por qué no.** Ese día pasó lo
 siguiente: se confirmó que **RNF-20 (a) quedó integrado** en `develop`, se completó **RNF-11 en
@@ -97,12 +105,12 @@ RNF-18 (sin ninguna caída registrada que medir). Cinco de 23.
 
 | RNF | Criterio y umbral del SRS | Veredicto | Evidencia |
 | --- | --- | --- | --- |
-| **RNF-01** | 20 usuarios concurrentes | 🟡 **Ejecutado · aguanta la concurrencia, no los tiempos** | 400 muestras con 20 hilos, **cero errores de conexión**, todos `200`. Pero el SRS pide 20 concurrentes *cumpliendo los tiempos de RNF-03 a RNF-08*, y RNF-03 no se cumple: ver [H-17](A4-hallazgos-rnf.md) |
+| **RNF-01** | 20 usuarios concurrentes | 🟡 **Ejecutado · la concurrencia se alcanza; el veredicto cuelga de RNF-03** | Tres corridas de 20 hilos (§3.4). La concurrencia es real y está medida: `allThreads` llega a **20** y **84 de las 400 muestras** de la corrida de las 16:00 se ejecutaron con los 20 hilos activos a la vez, **cero errores**, todos `200`. Pero el SRS pide 20 concurrentes *cumpliendo los tiempos de RNF-03 a RNF-08*, y el número de RNF-03 todavía no es reproducible: ver [H-17](A4-hallazgos-rnf.md) |
 | **RNF-02** | 10 en lectura y escritura simultánea | 🔴 **Sin instrumento** | El plan solo lee; el POST de calificación necesita datos sembrados |
-| **RNF-03** | 95 % de autenticaciones < 4 s | 🔴 **NO CUMPLE · medido** | **p95 = 5 493 ms** con logins solapados (46 de 100 por encima de 4 s). Con logins escalonados, p95 = 546 ms. Causa: BCrypt factor 12, que exige RNF-10. [H-17](A4-hallazgos-rnf.md) |
-| **RNF-04** | 95 % de CRUD de catálogo < 3 s | 🟢 **Verificado · medido** | p95 **1 394 ms** (`/profesores`) y **1 108 ms** (`/asignaturas`) con 20 concurrentes, contra 3 000 ms. Cumple con margen |
+| **RNF-03** | 95 % de autenticaciones < 4 s | 🟡 **Medido tres veces · el resultado no es reproducible** | Dos corridas **con parámetros idénticos** dan veredictos opuestos: 09:15 → p95 **5 493 ms** (46 de 100 por encima de 4 s); 16:00 → p95 **1 035 ms**, cero incumplimientos. La diferencia es la carga de la máquina, no el plan. Ver §3.4 y [H-17](A4-hallazgos-rnf.md). **No se puede afirmar que cumple ni que no cumple** hasta repetir con la máquina en estado controlado |
+| **RNF-04** | 95 % de CRUD de catálogo < 3 s | 🟢 **Verificado · medido 3 veces** | Cumple en las tres corridas, y es el criterio más sólido de la sección: peor caso p95 **1 394 ms** (`/profesores`) y **1 108 ms** (`/asignaturas`) con la máquina saturada; mejor caso **29,8** y **24,9 ms**. Contra 3 000 ms, cumple incluso en el peor de los escenarios medidos |
 | **RNF-05** | 95 % de calificaciones < 3 s | 🔴 **Sin instrumento** | Requiere evaluación y matrícula sembradas |
-| **RNF-06** | 90 % de estadísticas < 5 s | 🟢 **Verificado en la API · medido** | p90 **42 ms** en `GET /niveles-logro` con 20 concurrentes, contra 5 000 ms. **Reserva:** mide el endpoint, no la pantalla; `/profesor/estadisticas` sigue devolviendo error genérico en el despliegue (OBS-01), así que el tiempo *de la vista* no está medido |
+| **RNF-06** | 90 % de estadísticas < 5 s | 🟢 **Verificado en la API · medido 3 veces** | p90 entre **13 ms** y **42 ms** en `GET /niveles-logro` con 20 concurrentes, contra 5 000 ms. Dos órdenes de magnitud de margen en el peor caso. **Reserva:** mide el endpoint, no la pantalla; `/profesor/estadisticas` sigue devolviendo error genérico en el despliegue (OBS-01), así que el tiempo *de la vista* no está medido |
 | **RNF-07** | 50 evaluaciones por asignatura/semestre | 🔴 **Sin instrumento** | Verificación de volumen; se siembra y se repite la medición |
 | **RNF-08** | 95 % de páginas < 3 s con ≥ 5 Mbps | 🟡 **Presupuesto activo; falta la medición de tiempo** | `angular.json:51-62` — presupuesto `initial` 500 kB aviso / 1 MB error, evaluado en cada `ng build` del CI |
 | **RNF-09** | Tiempos sostenidos 4 meses | 🔴 **Fuera de alcance** | La ventana del proyecto son 15 días. Requiere decisión escrita de tratamiento |
@@ -140,15 +148,52 @@ RNF-18 (sin ninguna caída registrada que medir). Cinco de 23.
 | **RNF-20 (a)** | Cobertura ≥ 70 % en RF-04, RF-05, **RF-14** y **RF-16** | 🟢 **Verificado · integrado en `bb72c07`** | Ver §3.3 — global **92,39 %** sobre `d6fa7e1`; la regla de los cuatro módulos está en `develop` desde el PR #117 |
 | **RNF-20 (b)** | OpenAPI de todo endpoint protegido con 200/400/401/403/404 | 🟢 **Verificado** | 10 clases `*ApiDocumentacionIT` en verde en el CI; contrato en `/v3/api-docs` |
 
+**Respaldo nuevo del 16-nov, y hay que presentarlo en su sitio.** SonarQube Community 26.11 escaneó
+el backend: puerta de calidad **OK**, **mantenibilidad A**, deuda técnica **15 minutos** sobre
+14 422 líneas, duplicación 0,5 %, complejidad ciclomática 1 282, 0 bugs, 0 *security hotspots* y
+3 *code smells* (los tres `java:S2187` en clases de prueba, falso positivo de patrón — detalle en
+[H-05](A4-hallazgos-rnf.md)). Cobertura según Sonar 90,5 %, que concuerda con el 92,39 % de JaCoCo.
+
+| | |
+| --- | --- |
+| **Qué cambia del veredicto** | **Nada del semáforo.** RNF-20 ya estaba 🟢 por cobertura y OpenAPI, que es lo único que el SRS exige |
+| **Qué sí aporta** | La palabra «mantenibilidad» del §13 pasa a tener un número y una letra detrás, no solo un porcentaje de líneas cubiertas |
+| **Reserva obligatoria** | El SRS **no exige** una calificación de Sonar. La letra **respalda**, no define. Y los umbrales de fiabilidad y seguridad (peor que B hace fallar) **son nuestros**, no del SRS |
+| **Evidencia** | `herramientas-rnf/evidencias/sonar-backend-2026-11-16-*.json`, bajada de la API — no una captura |
+
+**Y esa misma noche del 16 se escaneó el frontend** —puerta de calidad **OK**—, con lo que el respaldo cubre los dos repositorios:
+mantenibilidad **A**, deuda **65 min** sobre 25 006 líneas, fiabilidad **A**, 0 bugs, 0 *hotspots*,
+7 *code smells* y **duplicación 3,7 %**. Va **sin cobertura** por [H-14](A4-hallazgos-rnf.md), así
+que lleva una puerta sin esa condición; la cobertura del frontend se sigue leyendo del CI. La letra
+de seguridad sale **B** por una única vulnerabilidad `MINOR` que **es un falso positivo
+comprobado** (`new URL(url, 'http://relative.invalid')`, un TLD reservado por RFC 2606: por ahí no
+sale tráfico, y **no afecta a RNF-11**).
+
+| Dato a vigilar | Por qué |
+| --- | --- |
+| **Duplicación 3,7 % en el frontend** contra 0,5 % en el backend | Es el indicador que el manual asocia al riesgo del código generado con IA. No incumple nada —el SRS no fija umbral— pero es **la cifra a mirar en el próximo mantenimiento** |
+
 ### 2.6 Accesibilidad · RNF-21 · titular Andrés
 
 | RNF | Criterio y umbral del SRS | Veredicto | Evidencia |
 | --- | --- | --- | --- |
 | **RNF-21** | WCAG 2.1 AA: contraste ≥ 4.5:1, teclado en notas y observaciones, labels en todo campo | 🟡 **Corregido a mano, sin automatizar** | Andrea Avendaño trabajó el contraste 4,5:1 y el desborde en móvil (ACT-096, PR frontend #91, en estado *Pendiente*). **No hay verificación automática**: `@axe-core/playwright` no está instalado ([H-04](A4-hallazgos-rnf.md)) |
 
+**Novedad de la noche del 16: hay una primera señal automática, y salió de buscar otra cosa.** El escaneo de
+SonarQube al frontend devolvió **cuatro hallazgos de accesibilidad** sobre las plantillas, con
+archivo y línea: `Web:S6845` (`tabindex` en un elemento no interactivo **en la pantalla de notas**,
+que es justo donde el SRS exige teclado), `Web:S6825` ×3 (`aria-hidden` en celdas decorativas) y
+`Web:S9379` (`autofocus` en el login).
+
+| | |
+| --- | --- |
+| **Qué cambia** | Ya no es exacto decir que RNF-21 no tiene **ninguna** verificación automatizada |
+| **Qué no cambia** | El veredicto sigue 🟡 y H-04 sigue abierto: **Sonar no mide contraste** —el primer umbral literal del RNF— **ni recorre la aplicación**, lee plantillas. El «teclado completo en notas y observaciones» solo se demuestra navegando |
+| **Qué hacemos con ellos** | Entran como **puntos del recorrido manual por teclado**, no como incumplimientos. El de `aria-hidden` hay que **confirmarlo navegando**: `td`/`th` no son focusables por defecto |
+
 ---
 
-## 3. Las tres mediciones nuevas, con su salida real
+## 3. Las cuatro mediciones nuevas, con su salida real
 
 ### 3.1 RNF-11 · TLS 1.2+ en producción — 🟢 **cumple**
 
@@ -276,6 +321,45 @@ integraciones.
 
 ---
 
+### 3.4 RNF-01, 03, 04 y 06 · Las tres corridas de carga, y por qué no coinciden
+
+Las tres se ejecutaron el **16 de noviembre** contra el entorno aislado (`127.0.0.1:8081` sobre
+`sigra-pg-rnf`), con el mismo usuario `admin.bruno@uco.net.co` —hash `$2a$12$…`, factor 12
+confirmado en `seed-roles.sql`— y el mismo plan `RNF-01-06-rendimiento.jmx`:
+
+| # | `.jtl` | Hora | Iteraciones | Login p95 | `/profesores` p95 | `/asignaturas` p95 | `/niveles-logro` p90 | Incumplimientos |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | `rnf01-06-local.jtl` | 09:15 | **5** (solapados) | **5 493 ms** 🔴 | 1 394 ms | 1 108 ms | 42 ms | **46 de 100** |
+| 2 | `rnf01-control.jtl` | 09:17 | **1** (escalonados) | 546 ms ✅ | 29 ms | 23 ms | 17 ms | 0 |
+| 3 | `rnf01-06-local-2.jtl` | **16:00** | **5** (solapados) | **1 035 ms** ✅ | 29,8 ms | 24,9 ms | 13 ms | **0 de 400** |
+
+**Las corridas 1 y 3 son la misma prueba.** No es una interpretación: `mantenimiento-rnf/jmeter.log`
+registra para la de las 16:00 `usuarios=20`, `rampa=20`, `iteraciones=5`, `correo=admin.bruno@uco.net.co`,
+`puerto=8081` — exactamente los parámetros de la corrida 1. Y aun así el login pasa de **5 493 ms
+con 46 incumplimientos** a **1 035 ms con cero**.
+
+**Qué lo explica.** La corrida 1 se tomó con seis contenedores encima, SonarQube incluido; la 3,
+con la máquina descargada. El dato que lo delata es la corrida 2: un login **escalonado** costó
+allí 546 ms, mientras que en la corrida 3 un login **solapado con otros 19** costó 307 ms de
+mediana. Un login aislado no puede ser más lento que veinte simultáneos si la CPU está libre: lo
+que varió entre la mañana y la tarde fue cuánta CPU quedaba para el backend.
+
+**Qué sobrevive y qué no:**
+
+| Afirmación | Estado |
+| --- | --- |
+| La concurrencia de 20 se alcanza y se sostiene | ✅ **Firme.** `allThreads` llega a 20; 84 de las 400 muestras de la corrida 3 se tomaron con los 20 hilos vivos |
+| RNF-04 y RNF-06 cumplen | ✅ **Firme.** Cumplen en las tres corridas, incluso con la máquina saturada |
+| El login es la operación que se degrada bajo presión de CPU, y la causa es BCrypt factor 12 | ✅ **Firme.** Es la única que se mueve, y la causa está en `SecurityConfig.java:39` |
+| **RNF-03 no cumple con 20 concurrentes** | ⚠️ **No sostenible hoy.** Dos corridas idénticas, veredictos opuestos |
+| La magnitud de la degradación | ⚠️ **Desconocida.** Entre 1,2× y 10×, según el estado de la máquina |
+
+**Lo que falta, y es barato:** repetir la corrida de carga **tres veces seguidas con la máquina en
+estado conocido** —anotando qué contenedores están arriba— y reportar la mediana de las tres. Es
+media hora de trabajo y convierte el dato más discutible de la entrega en el más sólido.
+
+---
+
 ## 4. Lo que falta para pasar amarillos a verdes, con nombre y bloqueo
 
 | # | Qué falta | Quién puede | Bloqueo real |
@@ -283,7 +367,9 @@ integraciones.
 | 1 | ~~Abrir el PR del fix de H-08~~ | — | ✅ **Hecho.** Integrado en `develop` (`bb72c07`) vía PR #117 el 16-nov |
 | 2 | ~~PostgreSQL local para correr los 20 usuarios~~ | — | ✅ **Resuelto el 16-nov.** [`herramientas-rnf/`](herramientas-rnf/README.md) levanta PostgreSQL aislado + backend en 8081, verificado: un login fallido mueve el contador **en la base local**, no en Supabase |
 | 3 | Activar `SIGRA_ENABLE_DEPENDENCY_REVIEW` y `SIGRA_ENABLE_OWASP_SCA` | **Solo un admin del repo** (Juan Camilo / Jean Paul) | Andrés tiene `push`, **no `admin`**: no puede. **Lleva 9 días pedido** y entre tanto entraron los PR #117, #118 y el R4, todos con el SCA saltado |
-| 4 | SonarQube para la nota de mantenibilidad | Andrés | 🟡 **Contenedor levantado** (`localhost:9000`, versión 26.11, `status: UP`). Falta generar el token y escanear |
+| 4 | SonarQube para la nota de mantenibilidad | Andrés | 🟢 **Backend escaneado** (16-nov): puerta **OK**, mantenibilidad **A**, deuda **15 min**, cobertura 90,5 %. Evidencia en `herramientas-rnf/evidencias/sonar-backend-2026-11-16-*.json` |
+| 4a | ~~Escanear el frontend~~ y meter el análisis estático en el CI | **admin** (CI) | ✅ **Frontend escaneado el 16-nov por la noche**: **A**, deuda 65 min, duplicación 3,7 %, y **4 hallazgos de accesibilidad que alimentan RNF-21**. 🟡 Queda el CI: exige `SONAR_TOKEN` en los secretos, **el mismo permiso `admin` de la fila 3** — pedirlo junto. Por eso [H-05](A4-hallazgos-rnf.md) sigue amarillo |
+| 4b | **Repetir la corrida de carga 3 veces con la máquina en estado conocido**, para cerrar RNF-03 | Andrés | 🔴 **Nada lo bloquea.** El entorno ya está levantado y el comando está escrito ([`jmeter/README.md` §4.2.1](jmeter/README.md)). Es media hora, y sin eso el dato de RNF-03 no se sostiene — ver §3.4 |
 | 5 | `@axe-core/playwright` para automatizar RNF-21 | Equipo de frontend | Decisión del equipo: es una dependencia nueva |
 | 6 | ~~URL de producción del frontend~~ | — | ✅ **Resuelto:** `https://sigra.vercel.app`, de la auditoría de José. Falta comprobarle el rechazo de TLS 1.0 |
 | 7 | **Dejar OBS-01 escrita en 0000041 y 0000048**, que son las incidencias abiertas que tocan esas pantallas | Andrés / José | Ninguno. **No se crea ticket nuevo**: el procedimiento del equipo es revisar las existentes |
@@ -304,7 +390,7 @@ decisión es un criterio de finalización incumplido (§13), y nos lo cobran a n
 | **D-2** | **RNF-09** (4 meses de operación continua) | Fuera de alcance con justificación — **es la única opción honesta** | PO |
 | **D-3** | **RNF-18 MTTR** | (a) se acepta «sin evento que medir» como veredicto · (b) se define un procedimiento de respuesta a caída y se verifica en seco | PO |
 | **D-4** | **OBS-01**: cuatro vistas con error genérico en el despliegue | (a) se reproduce y corrige antes del cierre · (b) se declara defecto conocido. **No es un RNF**, así que no condiciona el §13; sí condiciona la calidad del producto que se entrega | Equipo + PO |
-| **D-6** | **[H-17](A4-hallazgos-rnf.md)**: RNF-03 incumplido con logins solapados, por el BCrypt que exige RNF-10 | (a) **declarar por escrito que los 20 usuarios de RNF-01 son usuarios en sesión, no autenticando a la vez** — la lectura más realista, y cuesta un párrafo · (b) deuda técnica documentada con la medición adjunta · (c) medir en hardware representativo antes de concluir. **No se propone bajar el factor de BCrypt**: sería incumplir RNF-10 para cumplir RNF-03 | **PO** |
+| **D-6** | **[H-17](A4-hallazgos-rnf.md)**: el login se degrada bajo presión de CPU por el BCrypt que exige RNF-10. **Ojo:** la magnitud está en revisión — dos corridas idénticas se contradicen (§3.4), así que esta decisión **ya no es urgente ni bloquea la entrega** | (a) **declarar por escrito que los 20 usuarios de RNF-01 son usuarios en sesión, no autenticando a la vez** — la lectura más realista, cuesta un párrafo y **se sostiene por sí sola**, con independencia de cómo cierre la medición · (b) deuda técnica documentada con las tres corridas adjuntas · (c) **repetir la medición en estado controlado antes de decidir nada** — la opción recomendada ahora. **No se propone bajar el factor de BCrypt**: sería incumplir RNF-10 para cumplir RNF-03 | **PO**, sin prisa |
 | **D-5** | **[H-03](A4-hallazgos-rnf.md)**: diez módulos nuevos, un flujo E2E | (a) un spec por rol antes del cierre · (b) deuda técnica con justificación escrita | Equipo |
 
 ---

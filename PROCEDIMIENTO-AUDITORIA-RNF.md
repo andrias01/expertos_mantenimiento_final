@@ -90,21 +90,32 @@ columnas y nada más**:
 
 ### 1.4 Umbrales del SRS y veredicto
 
-| Petición | RNF | Umbral | Escalonado (16-nov) | **Solapado (16-nov)** | Veredicto |
-| --- | --- | --- | --- | --- | --- |
-| `POST /auth/login` | RNF-03 | 95 % < **4 000 ms** | p95 **546 ms** ✅ | p95 **5 493 ms** ❌ | 🔴 **NO CUMPLE** |
-| `GET /profesores` | RNF-04 | 95 % < **3 000 ms** | p95 29 ms | p95 **1 394 ms** | 🟢 cumple |
-| `GET /asignaturas` | RNF-04 | 95 % < **3 000 ms** | p95 23 ms | p95 **1 108 ms** | 🟢 cumple |
-| `GET /niveles-logro` | RNF-06 | 90 % < **5 000 ms** | p90 17 ms | p90 **42 ms** | 🟢 cumple |
+| Petición | RNF | Umbral | Escalonado 09:17 | Solapado 09:15 (máquina cargada) | **Solapado 16:00 (máquina libre)** | Veredicto |
+| --- | --- | --- | --- | --- | --- | --- |
+| `POST /auth/login` | RNF-03 | 95 % < **4 000 ms** | p95 **546 ms** ✅ | p95 **5 493 ms** ❌ | p95 **1 035 ms** ✅ | 🟡 **no reproducible** |
+| `GET /profesores` | RNF-04 | 95 % < **3 000 ms** | p95 29 ms | p95 **1 394 ms** | p95 29,8 ms | 🟢 cumple siempre |
+| `GET /asignaturas` | RNF-04 | 95 % < **3 000 ms** | p95 23 ms | p95 **1 108 ms** | p95 24,9 ms | 🟢 cumple siempre |
+| `GET /niveles-logro` | RNF-06 | 90 % < **5 000 ms** | p90 17 ms | p90 **42 ms** | p90 13 ms | 🟢 cumple siempre |
+
+> ⚠️ **Las dos columnas de «solapado» son la misma prueba**, con los mismos parámetros
+> (`usuarios=20 rampa=20 iteraciones=5`, mismo usuario, mismo puerto), separadas por seis horas y
+> por el estado de la máquina. Dan veredictos opuestos sobre RNF-03. **Por eso el veredicto de esa
+> fila es amarillo y no rojo:** no tenemos el dato. Ver [A6 §3.4](A6-semaforo-rnf.md).
 
 **RNF-01** (20 usuarios concurrentes) se verifica por el hecho de que la corrida completó 400
 muestras con los 20 hilos activos y **ningún error de conexión**: todos los códigos fueron `200`.
-El sistema aguanta 20 usuarios; lo que no aguanta son los tiempos de RNF-03 mientras lo hace.
+En la corrida de las 16:00, **84 de las 400 muestras** se tomaron con los 20 hilos vivos a la vez
+(columna `allThreads` del `.jtl`). El sistema aguanta 20 usuarios; si aguanta además los tiempos
+de RNF-03 mientras lo hace es justamente lo que está en revisión.
 
 ### 1.5 El hallazgo, y cómo explicarlo sin exagerar
 
-El login pasa de **546 ms a 5 493 ms** —factor diez— cuando los logins se solapan. Y arrastra al
-resto: `GET /profesores` pasa de 29 ms a 1 394 ms, sin que ese endpoint haya cambiado.
+Con la máquina cargada, el login pasa de **546 ms a 5 493 ms** —factor diez— cuando los logins se
+solapan, y arrastra al resto: `GET /profesores` pasa de 29 ms a 1 394 ms sin que ese endpoint haya
+cambiado. **Con la máquina libre, la misma prueba da p95 de 1 035 ms y cero incumplimientos.** Las
+dos cosas son ciertas, y la segunda obliga a enunciar el hallazgo con cuidado: lo que está medido
+es que **el login es la única operación que se degrada cuando falta CPU**, no cuánto se degrada en
+un entorno representativo.
 
 **La causa está identificada y no es un misterio:** `SecurityConfig.java:39` declara
 `new BCryptPasswordEncoder(12)`. Factor 12 son 4 096 rondas de hash, ~300-500 ms de CPU **por
@@ -127,8 +138,12 @@ sería incumplir RNF-10 para cumplir RNF-03.
 2. El perfil de 5 iteraciones hace que cada usuario **vuelva a autenticarse** cada pocos segundos.
    Un usuario real entra una vez por sesión. El perfil es más agresivo que la realidad, **y hay que
    decirlo**.
-3. Lo que la medición sí demuestra, y es suficiente: **con llegada simultánea sostenida, el umbral
-   de RNF-03 no se cumple**, y la causa es conocida.
+3. Lo que la medición sí demuestra: **con llegada simultánea sostenida y la CPU disputada, el
+   umbral de RNF-03 no se cumple**, y la causa es conocida.
+4. **La reserva nº 1 resultó ser la dominante.** Repetida la misma corrida con la máquina libre,
+   RNF-03 cumple. **Antes de reportar cualquier número de carga: tres corridas con la máquina en
+   el mismo estado, anotando `docker ps`, y se reporta la mediana.** Una sola corrida no es una
+   medición.
 
 ---
 
@@ -247,29 +262,53 @@ códigos 200/400/401/403/404 documentados debe hacer fallar la prueba de su mód
 
 ### 4.3 SonarQube
 
-1. `http://localhost:9000` → `admin` / `admin`. **Cambia la contraseña**: la instancia queda abierta
-   en tu red local con las credenciales por defecto.
-2. *My Account → Security → Generate Token*.
-3. Desde `software4-SIGRA-backend\SIGRA`, con el escáner en Docker (**no** agregues el plugin al
-   `build.gradle`: eso es tocar el repositorio del producto y no nos corresponde):
+> Reescrito el 16 de noviembre, después de montarlo de verdad. **La versión anterior de este paso
+> decía `admin` / `admin` y eso ya no funciona** — ver el aviso de más abajo.
+
+**Un solo comando**, desde cualquier carpeta:
 
 ```powershell
-.\gradlew compileJava
-docker run --rm --network sigra-rnf -v "${PWD}:/usr/src" sonarsource/sonar-scanner-cli -Dsonar.host.url=http://sonarqube:9000 -Dsonar.token=TU_TOKEN -Dsonar.projectKey=sigra-backend -Dsonar.sources=src/main -Dsonar.java.binaries=build/classes
+powershell -ExecutionPolicy Bypass -File "mantenimiento-rnf\herramientas-rnf\escanear-sonar.ps1" -Proyecto ambos -Token "squ_..." -Version "<id del mantenimiento o la fecha>"
 ```
 
-**Qué mirar en el tablero**, cuatro cosas y en este orden:
+Escanea, imprime el veredicto y **deja la evidencia en `herramientas-rnf/evidencias/`**. La primera
+vez, agrega `-Configurar`: crea los proyectos y las puertas de calidad. Detalle de cada paso en
+[`herramientas-rnf/README.md` §4](herramientas-rnf/README.md).
+
+> ⚠️ **`admin / admin` no sirve, y no es un olvido.** Al montar la instancia funcionó unos minutos
+> y después empezó a responder **401**; cambiarle la contraseña devuelve `old_password_incorrect`.
+> SonarQube invalida la contraseña por defecto tras el primer uso y **la cuenta `admin` quedó
+> inaccesible**. Se usa el usuario `rnf`, miembro de `sonar-administrators` — credenciales en
+> [`herramientas-rnf/README.md` §4.1](herramientas-rnf/README.md). Son de una instancia local y
+> desechable.
+
+**El token** se genera en *My Account → Security → Generate Token*, tipo **User Token**. SonarQube
+**no lo vuelve a mostrar**, así que anótalo donde lo vayas a usar. **No va al repositorio**: el
+script lo toma de `-Token` o de `$env:SONAR_TOKEN`. Si `api/user_tokens/search` te devuelve la lista
+vacía, el token de la auditoría anterior ya no existe y hay que generar otro.
+
+**Siempre con `-Version`.** Es lo que convierte el escaneo en instrumento de mantenimiento y no en
+una foto: sin él, todos los análisis quedan como `projectVersion: "not provided"` y la pestaña
+*New Code* —la que responde «¿este mantenimiento degradó algo?»— queda vacía. Ver
+[A3 §7.3](A3-criterios-verificacion.md).
+
+**Qué mirar en el tablero**, cinco cosas y en este orden:
 
 | Métrica | Qué significa | Qué anotar |
 | --- | --- | --- |
+| **Quality Gate** | El veredicto de una ojeada | `Passed` o `Failed` |
 | **Maintainability rating** | A–E. Es el dato de RNF-20 que JaCoCo no da | La letra |
-| **Technical debt** | Tiempo estimado de arreglo | Horas o días |
-| **Bugs / blocker y critical** | Defectos probables | Cuántos de cada severidad |
+| **Technical debt** | Tiempo estimado de arreglo | Minutos, horas o días |
+| **Bugs** de severidad `blocker` y `critical` | Defectos probables | Cuántos de cada severidad |
 | **Security hotspots** | Puntos a revisar a mano, **no** vulnerabilidades confirmadas | Cuántos, y **no los llames vulnerabilidades** |
 
 > **No conviertas un *code smell* en hallazgo de RNF.** El SRS no exige una calificación de Sonar.
 > Sonar **sostiene** el veredicto de mantenibilidad; no lo define. Si Sonar da C, eso es insumo
 > para la retrospectiva, no un incumplimiento del §13.
+
+> ⚠️ **Y la frase que no se puede escribir.** «Cero vulnerabilidades» a secas, citando Sonar, es
+> falso: el escáner registra `Dependency analysis skipped`. Esa pregunta la contesta el **paso 5**,
+> y el 16-nov contestó **4 CRITICAL y 10 HIGH**. Las dos cifras van juntas o ninguna.
 
 ---
 
@@ -464,7 +503,8 @@ En este orden:
 - [ ] Uptime Kuma lleva **más de 24 h** encendido
 - [ ] TLS comprobado en los **dos** despliegues, incluido que **1.0 falle**
 - [ ] Cobertura verificada **y** probado que la regla muerde al subir el umbral
-- [ ] Sonar escaneado y la calificación de mantenibilidad anotada
+- [ ] Sonar escaneado **con `-Version`**, la calificación anotada y **la evidencia bajada a
+      `herramientas-rnf/evidencias/`** (el tablero vive en un volumen de Docker; no es evidencia citable)
 - [ ] Informe de dependencias generado
 - [ ] Lighthouse corrido, y el recorrido por **teclado** hecho a mano
 - [ ] ZAP **solo** contra 8081
@@ -479,7 +519,7 @@ En este orden:
 | # | Criterio | Comando | Qué mirar | Umbral |
 | --- | --- | --- | --- | --- |
 | 1 | RNF-01 | JMeter, `-Jusuarios=20` | 400 muestras sin errores de conexión | 20 concurrentes |
-| 2 | **RNF-03** | JMeter | `95th pct` del login | **< 4 000 ms** → 🔴 5 493 ms |
+| 2 | **RNF-03** | JMeter | `95th pct` del login | **< 4 000 ms** → 🟡 **5 493 ms o 1 035 ms según la carga de la máquina; sin repetir, no hay dato** |
 | 3 | RNF-04 | JMeter | `95th pct` de profesores y asignaturas | < 3 000 ms → 🟢 |
 | 4 | RNF-06 | JMeter | **`90th pct`** de niveles-logro | < 5 000 ms → 🟢 |
 | 5 | RNF-08 | Lighthouse + `ng build` | LCP y bundle inicial | < 3 000 ms · < 500 kB → 🟢 356 kB |
@@ -495,7 +535,7 @@ En este orden:
 | 15 | RNF-20b | `*ApiDocumentacionIT` | las 10 clases en verde | 🟢 |
 | 16 | RNF-21 | Lighthouse + **teclado a mano** | contraste, labels, orden de foco | 🟡 |
 | 17 | H-01 | `dependencyCheckAnalyze` o Trivy | HIGH y CRITICAL | cero |
-| 18 | H-05 | SonarQube | calificación de mantenibilidad | A o B |
+| 18 | H-05 | SonarQube (`escanear-sonar.ps1`) | calificación de mantenibilidad, **los dos repositorios** | A o B |
 
 ---
 

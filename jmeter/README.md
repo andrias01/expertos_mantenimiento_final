@@ -118,7 +118,7 @@ DB_URL=jdbc:postgresql://127.0.0.1:5433/sigra DB_USERNAME=postgres DB_PASSWORD=r
 Se necesita además **un usuario administrador sembrado** en esa base para que el login responda
 200. Los seeds de Bruno (`software4-SIGRA-backend/bruno/`) sirven para eso.
 
-### 4.2 Ejecutar
+### 4.2 Ejecutar (bash)
 
 ```bash
 cd mantenimiento-rnf/jmeter
@@ -135,6 +135,38 @@ cd mantenimiento-rnf/jmeter
 > **La contraseña nunca va dentro del `.jmx`.** Se pasa con `-Jclave=`. El archivo versionado
 > tiene el literal `CAMBIAME` como valor por defecto, justamente para que falle si alguien lo
 > corre sin pensar.
+
+### 4.2.1 La misma ejecución desde PowerShell (computadora de Andrés)
+
+El comando de 4.2 está escrito para `bash`. En Windows PowerShell cambia por algo más que las
+rutas: **cada propiedad `-J` tiene que ir entre comillas dobles**. Esta es la línea que
+efectivamente corre en la máquina de Andrés, con JMeter descomprimido en `C:\apache-jmeter-5.6.3`:
+
+```powershell
+cd 'E:\...\SIGRA\repositorio\mantenimiento-rnf'
+
+C:\apache-jmeter-5.6.3\bin\jmeter.bat -n `
+  -t jmeter\RNF-01-06-rendimiento.jmx `
+  -l jmeter\resultados\rnf01-06-local-2.jtl `
+  -e -o jmeter\resultados\rnf01-06-local-2-reporte `
+  "-Jhost=127.0.0.1" "-Jpuerto=8081" "-Jprotocol=http" `
+  "-Jusuarios=20" "-Jrampa=20" "-Jiteraciones=5" `
+  "-Jcorreo=admin.bruno@uco.net.co" `
+  "-Jclave=<la clave del usuario sembrado>"
+```
+
+> **Las comillas dobles no son estética.** Sin ellas, PowerShell 5.1 parte `-Jhost=127.0.0.1` en
+> **dos** argumentos (`-Jhost=127` y `.0.0.1`), porque corta el token después del número, y JMeter
+> aborta con `An error occurred: Unknown arg: .0.0.1`. Solo afecta a los valores con puntos como
+> la IP; `-Jpuerto=8081` sobrevive por casualidad, no por estar bien escrito. Las comillas
+> **simples** tampoco resuelven la clave: son de PowerShell y no llegan al proceso.
+
+Dos cosas de esa máquina que son del entorno, no del plan de pruebas:
+
+| | |
+| --- | --- |
+| **Puerto 8081** | El backend se levanta en `8081`, no en el `8080` de 4.1; de ahí `-Jpuerto=8081`. Si se usa el `.env.rnf` tal como está en 4.1, el valor correcto es `8080`. |
+| **Nombres de salida nuevos en cada corrida** | JMeter **aborta si el `.jtl` ya existe o si el directorio de `-o` no está vacío**. Por eso el sufijo `-2`: hay que cambiar el nombre o borrar la corrida anterior de `resultados/`. |
 
 ### 4.3 Umbrales que el plan ya tiene puestos
 
@@ -159,6 +191,55 @@ En `resultados/<nombre>-reporte/index.html`, tabla *Statistics*:
   que el SRS pide, no el promedio.
 - Columna **`Error %`** → incluye las muestras que incumplieron la Duration Assertion.
 - **`90th pct`** para RNF-06, porque el SRS pide 90 % y no 95 % en estadísticas.
+- `#Samples` tiene que dar `usuarios × iteraciones` por petición (100 con el perfil estándar) y
+  `4 ×` eso en el `Total`. Si no cuadra, la corrida se cortó y el resto de la tabla no sirve.
+
+> ⚠️ **La tabla APDEX no sirve para el veredicto, y es la trampa más fácil de este informe.**
+> Usa los umbrales **por defecto de JMeter** —500 ms tolerable, 1,5 s frustrante—, **no los del
+> SRS**. Un login con Apdex 0,790 **no está incumpliendo RNF-03**: se le está midiendo contra
+> 500 ms cuando el umbral del SRS es 4 000 ms. Lo mismo con la columna **`Average`**: el SRS
+> habla de percentiles, no de promedios. **Solo *Statistics*, y solo las columnas de arriba.**
+
+Las secciones *Errors* y *Top 5 Errors by sampler* vacías, y *Requests Summary* en PASS 100 %,
+dicen lo mismo que `Error % = 0`. Son redundantes; no aportan un dato propio.
+
+**La concurrencia de RNF-01 no sale en el informe HTML.** Hay que leerla del `.jtl` crudo,
+columna `allThreads`:
+
+```bash
+# Máximo de hilos simultáneos alcanzado
+awk -F, 'NR>1 && $13>m{m=$13} END{print m}' resultados/<nombre>.jtl
+# Cuántas muestras se tomaron con la concurrencia completa
+awk -F, 'NR>1 && $13==20{n++} END{print n}' resultados/<nombre>.jtl
+```
+
+> Con rampa de 20 s, los primeros hilos terminan antes de que arranquen los últimos, así que la
+> concurrencia plena dura una ventana estrecha. Citar **cuántas muestras** se tomaron con los 20
+> hilos vivos, no solo que el máximo fue 20.
+
+### 4.5 Una corrida no es una medición
+
+Lo aprendimos el 16 de noviembre por la vía cara: dos corridas con **parámetros idénticos**, a
+seis horas de distancia, dieron p95 de login de **5 493 ms** y **1 035 ms**. La diferencia era
+cuántos contenedores había encima de la máquina, no el plan de pruebas. El detalle completo está
+en [A6 §3.4](../A6-semaforo-rnf.md) y en [H-17](../A4-hallazgos-rnf.md).
+
+**La regla que queda:** antes de reportar un número de carga, **correr la prueba tres veces con la
+máquina en el mismo estado** y anotar qué había levantado (`docker ps`). Reportar la mediana de
+las tres, no la peor ni la mejor.
+
+### 4.6 Corridas ya ejecutadas
+
+| `.jtl` | Fecha y hora | Perfil | Para qué sirve |
+| --- | --- | --- | --- |
+| `rnf01-06-local.jtl` | 16-nov 09:15 | 20 hilos · 5 iter. | Corrida de carga **con la máquina cargada** (SonarQube y 5 contenedores más) |
+| `rnf01-control.jtl` | 16-nov 09:17 | 20 hilos · **1 iter.** | Control: logins escalonados, para aislar el efecto del solapamiento |
+| `rnf01-06-local-2.jtl` | 16-nov 16:00 | 20 hilos · 5 iter. | **Misma prueba que la primera**, con la máquina descargada. La que destapó que el dato no era reproducible |
+
+> **Higiene pendiente.** `mantenimiento-rnf/jmeter.log` guarda la línea
+> `Setting JMeter property: clave=…` **en claro**. Es la clave del usuario sembrado de pruebas, la
+> misma que está en `seed-roles.sql`, así que no es un secreto real — pero el log viaja con la
+> entrega y contradice la regla que este mismo README declara en §4.2. **No versionar `jmeter.log`.**
 
 ---
 

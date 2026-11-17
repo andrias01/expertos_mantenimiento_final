@@ -39,8 +39,8 @@ Base de 23 criterios: RNF-18 cuenta como dos y RNF-20 también.
 | Instrumento | Estado | Criterios que habilita | Sección |
 | --- | --- | --- | --- |
 | **`curl` contra el despliegue de Render** | ✅ Ejecutado | RNF-11 (TLS 1.2+) | §1 · RNF-11 |
-| **Apache JMeter 5.6.3** | ✅ Un plan ejecutado, uno listo | RNF-18 uptime (ejecutado) · RNF-01, 03, 04, 06 (listos) | §2 y §3 |
-| **SonarQube / SonarCloud** | ✅ **Levantado** (local, Docker) | RNF-20 (mantenibilidad, más allá de cobertura) | [§7](#7-seguridad-de-dependencias-y-análisis-estático--transversal) |
+| **Apache JMeter 5.6.3** | ✅ **Los dos planes ejecutados** (16-nov) | RNF-18 uptime · RNF-01, 03, 04, 06 — **tres corridas, ver §2.2.1** | §2 y §3 |
+| **SonarQube / SonarCloud** | ✅ **Los dos escaneados**: backend 16-nov (puerta **OK**, mantenibilidad **A**) y frontend 16-nov por la noche (**A**, deuda 65 min). 🟡 Falta el CI | RNF-20 (mantenibilidad, más allá de cobertura) | [§7.2](#72-análisis-estático--sonarqube--backend-ejecutado--frontend-y-ci-pendientes) y [§7.3](#73-cómo-sonar-deja-de-ser-una-foto-y-se-vuelve-instrumento-de-mantenimiento) |
 | **PostgreSQL aislado** (Docker) | ✅ **Levantado**, con esquema y seeds | Desbloquea RNF-01, 03, 04 y 06 sin cargar la base compartida | [herramientas-rnf](herramientas-rnf/README.md) |
 | **Uptime Kuma** (Docker) | ✅ **Levantado** | RNF-18 con ventana de días, no de 208 s | [herramientas-rnf §5](herramientas-rnf/README.md) |
 | **OWASP Dependency-Check** | ✅ **Disponible sin permisos** | H-01: el plugin ya está aplicado en `build.gradle:5` | §7.1 |
@@ -164,12 +164,12 @@ curl -s -o /dev/null -w "%{http_code} %{redirect_url}\n" "${H/https/http}"      
 
 | RNF | Umbral | Instrumento | Estado |
 | --- | --- | --- | --- |
-| RNF-01 | 20 usuarios concurrentes | JMeter, `-Jusuarios=20` | 🟡 listo, sin ejecutar |
+| RNF-01 | 20 usuarios concurrentes | JMeter, `-Jusuarios=20` | 🟡 **ejecutado 3 veces** · 20 hilos alcanzados, veredicto atado a RNF-03 |
 | RNF-02 | 10 en lectura/escritura simultánea | JMeter + POST de calificación | 🔴 el plan solo lee |
-| RNF-03 | 95 % de autenticaciones < 4 s | JMeter, Duration Assertion 4 000 ms | 🟡 listo, sin ejecutar |
-| RNF-04 | 95 % de CRUD de catálogo < 3 s | JMeter, Duration Assertion 3 000 ms | 🟡 listo, sin ejecutar |
+| RNF-03 | 95 % de autenticaciones < 4 s | JMeter, Duration Assertion 4 000 ms | 🟡 **ejecutado · dos corridas de carga se contradicen**, ver §2.2.1 |
+| RNF-04 | 95 % de CRUD de catálogo < 3 s | JMeter, Duration Assertion 3 000 ms | 🟢 **ejecutado · cumple en las 3 corridas** |
 | RNF-05 | 95 % de calificaciones < 3 s | JMeter + datos sembrados | 🔴 sin sembrar |
-| RNF-06 | 90 % de estadísticas < 5 s | JMeter, Duration Assertion 5 000 ms | 🟡 listo, sin ejecutar |
+| RNF-06 | 90 % de estadísticas < 5 s | JMeter, Duration Assertion 5 000 ms | 🟢 **ejecutado · cumple en las 3 corridas** |
 | RNF-07 | 50 evaluaciones por asignatura | Siembra + repetir la medición | 🔴 sin sembrar |
 | RNF-08 | 95 % de páginas < 3 s | Presupuesto de `angular.json` + panel de red | 🟡 **bundle medido** |
 | RNF-09 | Sostenido 4 meses | — | 🔴 **fuera de alcance** |
@@ -200,6 +200,38 @@ jmeter -n -t jmeter/RNF-01-06-rendimiento.jmx \
 > base compartida del equipo. Correr esta prueba así es una prueba de carga en producción. El
 > procedimiento correcto —PostgreSQL en Docker con `docs/db/SIGRA_SCHEMA_CURRENT.sql` y un `.env`
 > aparte— está en [`jmeter/README.md` §4.1](jmeter/README.md).
+
+### 2.2.1 Corridas ejecutadas · 16 de noviembre de 2026
+
+Hay **tres** corridas en `jmeter/resultados/`, todas contra el entorno aislado
+(`127.0.0.1:8081` sobre `sigra-pg-rnf`), mismo usuario `admin.bruno@uco.net.co` con hash
+`$2a$12$…` y mismo backend. Conviene tenerlas separadas porque **no dicen lo mismo**:
+
+| # | Archivo `.jtl` | Hora | Perfil | Login p95 | `/profesores` p95 | `/asignaturas` p95 | `/niveles-logro` p90 | Errores |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | `rnf01-06-local.jtl` | 09:15 | 20 hilos · rampa 20 s · **5 iter.** | **5 493 ms** 🔴 | 1 394 ms | 1 108 ms | 42 ms | **46/100** en login |
+| 2 | `rnf01-control.jtl` | 09:17 | 20 hilos · rampa 20 s · **1 iter.** | 546 ms ✅ | 29 ms | 23 ms | 17 ms | 0 |
+| 3 | `rnf01-06-local-2.jtl` | **16:00** | 20 hilos · rampa 20 s · **5 iter.** | **1 035 ms** ✅ | 29,8 ms | 24,9 ms | 13 ms | **0/400** |
+
+**Las corridas 1 y 3 tienen parámetros idénticos** —lo confirma `mantenimiento-rnf/jmeter.log`,
+que registra `usuarios=20 rampa=20 iteraciones=5 correo=admin.bruno@uco.net.co` en la de las
+16:00— **y dan veredictos opuestos sobre RNF-03**. La diferencia no está en el plan de pruebas
+sino en la máquina: la corrida 1 se tomó con seis contenedores encima (SonarQube incluido) y la 3
+con la máquina descargada. Es la reserva nº 1 de [H-17](A4-hallazgos-rnf.md) dejando de ser
+hipótesis y volviéndose el factor dominante de la medición.
+
+**Lo que eso obliga a hacer, y está pendiente:** repetir la corrida de carga **tres veces con la
+máquina en el mismo estado**, registrando qué contenedores estaban arriba. Mientras no exista eso,
+el número de RNF-03 **no es reproducible** y no se puede afirmar ni que cumple ni que no cumple.
+Lo que sí está demostrado y no depende de la máquina: **la tensión entre RNF-10 y RNF-03 es real**
+—el login es la única operación que se degrada bajo presión de CPU, y la causa es el BCrypt
+factor 12 de `SecurityConfig.java:39`.
+
+> **Trampa al leer el informe HTML.** La tabla **APDEX** usa los umbrales **por defecto de JMeter**
+> (500 ms tolerable / 1,5 s frustrante), **no los del SRS**. En la corrida 3 el login sale con
+> Apdex 0,790 y eso **no es un incumplimiento de RNF-03**: se le está midiendo contra 500 ms
+> cuando el umbral es 4 000 ms. El veredicto se lee **solo** en la tabla *Statistics*, columna
+> `95th pct` (y `90th pct` para RNF-06), nunca en Apdex ni en `Average`.
 
 ### 2.3 Criterio ejecutable · RNF-08 (bundle) · **ya medido**
 
@@ -336,19 +368,159 @@ RNF-20 tiene dos partes y hay que verificarlas por separado.
 | **Estado 15-nov** | Asimétrico y **sin cambio desde el 8 de noviembre**. Reconfirmado por API: `gh api repos/.../actions/variables` devuelve `total_count: 0`, así que los dos trabajos se saltan en cada corrida. Es [H-01](A4-hallazgos-rnf.md) |
 | **Por qué no lo cerramos nosotros** | Crear una variable de repositorio exige permiso `admin`; el nuestro es `push`. **Es un pedido al equipo, no una tarea nuestra** |
 
-### 7.2 Análisis estático · SonarQube · ⏳ plan listo
+### 7.2 Análisis estático · SonarQube · ✅ **los dos repositorios escaneados** · 🟡 falta el CI
 
-> Nuevo el 15 de noviembre de 2026. Ver [H-05](A4-hallazgos-rnf.md), en corrección.
+> Nuevo el 15 de noviembre de 2026. **Los dos ejecutados el 16** (el frontend, ya de noche). Ver
+> [H-05](A4-hallazgos-rnf.md), que sigue 🟡 **en corrección**: su criterio de cierre —linter en el
+> CI— no se cumple, y eso depende de un permiso que no tenemos.
 
 | | |
 | --- | --- |
-| **Criterio** | Los dos repositorios obtienen calificación de mantenibilidad **A o B**, sin *bugs* de severidad `blocker` ni `critical`, y sin puntos calientes de seguridad sin revisar. |
+| **Criterio** | Los dos repositorios obtienen calificación de mantenibilidad **A o B**, sin *bugs* de severidad `blocker` ni `critical`, y sin puntos calientes de seguridad sin revisar |
 | **Qué aporta sobre JaCoCo** | JaCoCo responde «cuánto código tocan las pruebas». Mantenibilidad es más: complejidad ciclomática, duplicación, reglas incumplidas, deuda técnica estimada. Y Sonar **consume el XML de JaCoCo**, así que la cobertura corregida en H-08 queda visible en el mismo tablero |
-| **Camino 1 · hoy, sin permisos** | SonarQube Community en Docker: `docker run -d --name sonarqube -p 9000:9000 sonarqube:community`, y escanear cada repositorio con el *scanner*. Para el backend basta el plugin de Gradle; para el frontend, `sonar-scanner` con `sonar.sources=src` y `sonar.javascript.lcov.reportPaths` |
-| **Camino 2 · permanente, en el CI** | **SonarCloud**, gratuito en repositorios públicos —y los dos lo son: `gh repo view` devuelve `"visibility":"PUBLIC"`. Requiere que un admin cree el proyecto y agregue `SONAR_TOKEN` a los secretos de Actions |
-| **Bloqueo actual** | Camino 1: **Docker Desktop no está arrancado**. Camino 2: **el mismo bloqueo de permisos de H-01** — conviene pedir las dos cosas juntas, porque es la misma pantalla de Settings |
-| **Evidencia esperada** | Captura del tablero con la calificación de mantenibilidad de cada proyecto, y el enlace |
-| **Reserva** | El SRS **no exige** análisis estático. Es un instrumento que nos damos para sostener el veredicto de mantenibilidad con algo más que cobertura; no es un incumplimiento si no se hace |
+| **Instrumento** | SonarQube Community **26.11** en Docker, `http://localhost:9000`, puerto elegido en [herramientas-rnf](herramientas-rnf/README.md). El escáner va en contenedor: **no se agrega el plugin al `build.gradle` del producto**, porque sería un PR al repositorio del equipo que no nos corresponde abrir |
+| **Cómo se repite** | `herramientas-rnf\escanear-sonar.ps1`, un solo comando. Escanea, y **baja la evidencia a `herramientas-rnf/evidencias/`** |
+| **Puerta de calidad** | `SIGRA RNF-20`, **ocho** condiciones: cuatro globales que pusimos nosotros y **cuatro que SonarQube añade solo** sobre código nuevo. De las ocho, **una sola es del SRS** |
+
+**Las ocho condiciones de la puerta, y de dónde sale cada una.** Esto se corrigió el 16-nov: el
+apartado decía «cuatro condiciones», y son ocho. **`api/qualitygates/create` no crea la puerta
+vacía** — SonarQube 26.11 le añade las cuatro de *Clean as You Code*, que la API marca con
+`"isCaycCondition": true`.
+
+| Condición | Valor | Origen | ¿Es exigencia del SRS? |
+| --- | --- | --- | --- |
+| `coverage < 70` → falla | 70 % | **RNF-20 (a)**, textual | **Sí** |
+| `sqale_rating > 2` → falla | peor que **B** | Criterio nuestro | No |
+| `reliability_rating > 2` → falla | peor que **B** | Criterio nuestro | No |
+| `security_rating > 2` → falla | peor que **B** | Criterio nuestro | No |
+| `new_violations > 0` → falla | 0 | **Añadida por SonarQube** | No |
+| `new_coverage < 80` → falla | 80 % sobre código nuevo | **Añadida por SonarQube** | No — y **choca con el 70 % del SRS**: es más estricta, y solo sobre lo que se toque |
+| `new_duplicated_lines_density > 3` → falla | 3 % sobre código nuevo | **Añadida por SonarQube** | No |
+| `new_security_hotspots_reviewed < 100` → falla | 100 % | **Añadida por SonarQube** | No |
+
+**Las cuatro de código nuevo se conservan a propósito**, porque son casi literalmente el criterio de
+no degradación de [§7.3](#73-cómo-sonar-deja-de-ser-una-foto-y-se-vuelve-instrumento-de-mantenimiento):
+lo que entra tiene que venir cubierto, sin duplicar y sin hallazgos. **Pero hay que declararlas como
+nuestras**, y en particular **no presentar el 80 % de `new_coverage` como si lo pidiera el SRS**: el
+SRS pide 70 % global.
+
+> **Y una consecuencia que explica una lectura rara del tablero.** Las condiciones de código nuevo
+> **solo se evalúan si hay código nuevo**. En un primer análisis no hay con qué comparar, se omiten,
+> y el veredicto sale de las globales: por eso el informe dice «4 condiciones» con una puerta de
+> ocho. No es un fallo — es, otra vez, la razón por la que `-Version` importa.
+
+#### Resultado del backend · 16 de noviembre de 2026
+
+| Métrica | Valor | Veredicto contra el criterio |
+| --- | --- | --- |
+| **Puerta de calidad** | **OK** | ✅ las **4 condiciones globales** evaluadas. Las otras 4, de código nuevo, no se evaluaron por no haber línea base |
+| **Mantenibilidad** | **A** | ✅ el criterio pedía A o B |
+| **Deuda técnica** | **15 min** sobre 14 422 líneas | — |
+| Cobertura (Sonar) | **90,5 %** (líneas 93,5 %, ramas 82 %) | ✅ concuerda con JaCoCo |
+| Fiabilidad · Seguridad | **A** · **A** | ✅ |
+| **Bugs** `blocker`/`critical` | **0** | ✅ el criterio habla de *bugs*, y hay cero |
+| *Code smells* | **3**, severidad **BLOCKER**, todas `java:S2187` **en clases de prueba** | ⚠️ no son *bugs*, pero hay que anticipar la lectura. Ver [H-05](A4-hallazgos-rnf.md) |
+| Security hotspots | **0** | ✅ ninguno sin revisar |
+| Duplicación · Complejidad | 0,5 % · 1 282 | — |
+
+**Evidencia.** `herramientas-rnf/evidencias/sonar-backend-2026-11-16-{medidas,puerta,issues,hotspots,analisis}.json`,
+bajados de la API del servidor. **No una captura**: el tablero vive en el volumen `sonarqube-data`
+y si el volumen se borra, la evidencia se iría con él.
+
+#### Resultado del frontend · 16 de noviembre de 2026, 19:26 local
+
+251 archivos, revisión de SCM `dd97c25`. Sonar lo fecha en UTC, así que su tablero dice `2026-11-17`. **Sin cobertura por diseño:** `ng test --code-coverage` no
+corre en local por [H-14](A4-hallazgos-rnf.md), así que lleva la puerta `SIGRA RNF-20 sin cobertura`
+—a la que **se le quitó la condición de cobertura de código nuevo** que Sonar añade sola— porque
+dejarla haría fallar la puerta **por falta de dato y no por falta de calidad**.
+
+| Métrica | Valor | Veredicto contra el criterio |
+| --- | --- | --- |
+| **Mantenibilidad** | **A** | ✅ el criterio pedía A o B |
+| **Deuda técnica** | **65 min** sobre 25 006 líneas | — |
+| Fiabilidad | **A** | ✅ |
+| **Seguridad** | **B** — 1 vulnerabilidad `MINOR` | ✅ pasa, y además **es un falso positivo comprobado**: `new URL(url, 'http://relative.invalid')` es una base para parsear URLs relativas sobre un TLD reservado (RFC 2606); por ahí no sale tráfico. **No afecta a RNF-11** |
+| **Bugs** `blocker`/`critical` | **0** | ✅ |
+| Security hotspots | **0** | ✅ ninguno sin revisar |
+| *Code smells* | **7**, todos `MAJOR` | ⚠️ **4 son de accesibilidad y van a RNF-21** — ver abajo |
+| Duplicación · Complejidad | **3,7 %** · 2 730 | 3,7 % contra el 0,5 % del backend: es el dato a vigilar en los próximos mantenimientos |
+| Cobertura | **0 %** | No medible en local (H-14). Se lee del CI |
+
+**Con esto el criterio de este apartado queda cumplido en los dos repositorios.**
+
+**El aporte inesperado, y es el que más sirve a nuestro rol:** cuatro de los siete *code smells* son
+de accesibilidad —`Web:S6845` (`tabindex` en un elemento no interactivo, **en la pantalla de
+notas**), `Web:S6825` ×3 (`aria-hidden` en celdas decorativas) y `Web:S9379` (`autofocus` en el
+login)—. [H-04](A4-hallazgos-rnf.md) daba RNF-21 por no automatizable; **esta es la primera señal
+automática que tenemos.** No es una auditoría WCAG y no se convierte en incumplimiento por
+aparecer en Sonar: entran como **puntos a comprobar en el recorrido por teclado**. Detalle regla por
+regla en [herramientas-rnf §4.8](herramientas-rnf/README.md).
+
+**Puerta de calidad del frontend: `OK`**, tras reescanear. Las cuatro condiciones evaluadas:
+`sqale_rating` 1 = A ✅, `reliability_rating` 1 = A ✅, `security_rating` 2 = B ✅ *(pasa en el
+límite, y por un falso positivo)*, `new_violations` 0 ✅.
+
+> ⚠️ **La reserva que esto dejó como regla.** La puerta correcta se asignó **después** del primer
+> escaneo, y **SonarQube solo recalcula el estado al analizar**: hasta el reescaneo, la API devolvía
+> la evaluación de la puerta por defecto, que era `OK` **con cero condiciones** — un verde que no
+> evalúa nada. **Si se toca la puerta, hay que reescanear antes de citar el veredicto**, y mirar
+> siempre **cuántas condiciones se evaluaron**.
+
+#### Lo que falta, con su bloqueo real
+
+| Falta | Bloqueo |
+| --- | --- |
+| ~~Escanear el frontend~~ | ✅ **Hecho el 16-nov por la noche**: mantenibilidad **A**, deuda 65 min. Queda una tarea de un minuto: **reescanearlo** para que la puerta correcta se evalúe, y **renombrar el proyecto** a «SIGRA frontend» en *Project Settings* (26.11 no expone API para renombrar) |
+| **Camino 2 · SonarCloud en el CI** | **El mismo permiso `admin` de [H-01](A4-hallazgos-rnf.md).** Es gratis en repositorios públicos y los dos lo son. Hay que pedirlo **en el mismo mensaje** que las variables de SCA: es la misma pantalla de *Settings* |
+| **Comparación entre mantenimientos** | Nada lo bloquea, pero exige disciplina: **un `-Version` por mantenimiento**. Sin eso todos los análisis quedan como `not provided` y el panel de *New Code* está vacío — ver §7.3 |
+
+> ⚠️ **La reserva que no se puede omitir al citar este tablero.** Sonar reporta **0 vulnerabilidades
+> de código** y en su propio registro escribe `Dependency analysis skipped`: **no analizó las
+> dependencias.** Trivy, sobre la misma imagen, encontró **4 CRITICAL y 10 HIGH**. Presentar solo el
+> tablero y decir «cero vulnerabilidades» sería un informe falso. Son dos preguntas:
+>
+> | Pregunta | Herramienta | Resultado del 16-nov |
+> | --- | --- | --- |
+> | ¿El código que escribimos tiene fallos? | SonarQube | 0 bugs, 0 vulnerabilidades |
+> | ¿Las librerías que usamos tienen CVE? | Trivy / Dependency-Check | **4 CRITICAL, 10 HIGH** |
+
+> **Y la reserva de método.** El SRS **no exige** análisis estático. Es un instrumento que nos damos
+> para sostener el veredicto de mantenibilidad con algo más que cobertura; **no es un
+> incumplimiento del §13 si Sonar diera C**, sería insumo para la retrospectiva.
+
+---
+
+### 7.3 Cómo Sonar deja de ser una foto y se vuelve instrumento de mantenimiento
+
+Esto es lo que el proyecto de mantenimiento pide y un escaneo suelto no da. La pregunta de la
+asignatura no es «¿el código está en A?» sino **«¿este mantenimiento dejó el código igual o
+peor?»**. SonarQube la contesta con su panel de *New Code*, pero **solo si cada análisis lleva
+versión**: hoy el único análisis registrado dice `projectVersion: "not provided"`, así que no hay
+contra qué comparar.
+
+| Momento del mantenimiento | Qué se corre | Qué se lee |
+| --- | --- | --- |
+| **Antes** de tocar el código (línea base) | `escanear-sonar.ps1 -Version "base-<fecha>"` | Las métricas globales. Es el punto de partida |
+| **Al terminar** el mantenimiento | `escanear-sonar.ps1 -Version "<id del mantenimiento>"` | La pestaña **New Code**: cobertura **del código nuevo**, *smells* nuevos, duplicación nueva |
+| **En la reunión** | nada | La puerta sobre código nuevo: ✅ si el mantenimiento no degradó nada |
+
+**El criterio que proponemos para cada mantenimiento aprobado**, y que es verificable sin discutir
+opiniones en la revisión técnica:
+
+> Un mantenimiento **no degrada la mantenibilidad** si, tras su análisis, la letra global no baja,
+> la deuda técnica no crece más de 30 minutos, y el código nuevo no introduce *smells* de severidad
+> `blocker` ni `critical`.
+
+| Por qué importa para nuestro rol | |
+| --- | --- |
+| **Da un indicador objetivo a F3** | [H-05](A4-hallazgos-rnf.md) decía que el rechazo de un PR por «legibilidad» se lee como opinión personal. Esto lo vuelve criterio del proyecto |
+| **Mide el riesgo que el manual anticipa** | El manual contempla uso intensivo de IA en los 15 días, y el riesgo característico del código generado es duplicación y complejidad: justo lo que *New Code* aísla |
+| **No cuesta permisos** | Corre en el portátil. Lo único que exige `admin` es automatizarlo en el CI |
+
+> **La reserva honesta de este esquema.** Mientras viva en un portátil, la comparación la hace una
+> persona a mano y **no muerde**: nada impide integrar un mantenimiento sin escanearlo. Eso solo lo
+> arregla el CI, y el CI está bloqueado por el permiso de H-01. Hay que decirlo así en el informe:
+> **tenemos el indicador, no todavía el control.**
 
 ---
 
@@ -405,7 +577,19 @@ Guardar la salida de cada comando: **es la evidencia**, y sin ella el veredicto 
 - [ ] **Entregar este documento a Santiago Torres y Juan José Narváez** — compromiso C-05,
       **vencido desde el 11 de noviembre**. Es lo que necesitan para F4.
 - [ ] Ejecutar `RNF-01-06-rendimiento.jmx` con 20 usuarios contra PostgreSQL local.
-- [ ] Escanear los dos repositorios con SonarQube y adjuntar la calificación de mantenibilidad.
+- [x] ~~Escanear el **backend** con SonarQube~~ — hecho el 16-nov: mantenibilidad **A**, deuda
+      15 min, puerta **OK**. Evidencia en `herramientas-rnf/evidencias/`.
+- [x] ~~Escanear el frontend~~ — hecho el 16-nov por la noche: **A**, deuda 65 min, duplicación 3,7 %.
+- [x] ~~Reescanear el frontend para que la puerta se evalúe~~ — hecho: puerta **OK**, 4
+      condiciones evaluadas.
+- [ ] Renombrar el proyecto del frontend a «SIGRA frontend» en *Project Settings* (26.11 no tiene
+      API para renombrar).
+- [ ] Llevar los **cuatro hallazgos de accesibilidad** del frontend al recorrido por teclado de
+      RNF-21 (ver [H-04](A4-hallazgos-rnf.md)).
+- [ ] **Pedir `SONAR_TOKEN` al admin en el mismo mensaje que las variables de SCA** — misma
+      pantalla de *Settings*, un solo pedido en vez de dos.
+- [ ] Correr la línea base con `-Version` antes del próximo mantenimiento, para que *New Code*
+      tenga contra qué comparar (§7.3).
 - [ ] Obtener el **Apéndice 4.2** para cerrar el criterio de RNF-19 — compromiso C-03, vencido.
 - [ ] Obtener el **Apéndice 4.1** y contrastarlo con la matriz RBAC implementada — C-07, bloqueado
       por C-03.

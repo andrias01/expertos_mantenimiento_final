@@ -7,7 +7,8 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 | --- | --- |
 | **Apertura del registro** | 7 de noviembre de 2026 |
 | **Revisión contra el SRS** | 7 de noviembre de 2026 — un hallazgo retirado, uno reformulado, tres nuevos |
-| **Cuarta revisión** | **16 de noviembre de 2026, tarde** — primera medición de carga: entra **H-17**, el primer incumplimiento de un umbral numérico del SRS que se logra medir |
+| **Quinta revisión** | **16 de noviembre de 2026, cierre del día** — una tercera corrida de carga, **idéntica en parámetros** a la que abrió H-17, da el resultado contrario. H-17 sigue abierto y en severidad alta, pero su **magnitud pasa a revisión** y deja de bloquear la entrega |
+| **Cuarta revisión** | **16 de noviembre de 2026, tarde** — primera medición de carga: entra **H-17**, la tensión medida entre RNF-10 y RNF-03 |
 | **Tercera revisión** | **16 de noviembre de 2026** — H-08 confirmado integrado en `develop`; H-10 completado en los dos lados; las dos observaciones de la auditoría de José quedan como **OBS-01 y OBS-02**, fuera del registro de RNF por no tener anclaje en el SRS |
 | **Segunda revisión** | **15 de noviembre de 2026** — dos hallazgos cerrados con evidencia, dos en corrección, uno sube de severidad, cuatro nuevos |
 | **Alcance de este lote** | Diagnóstico de la capacidad de verificación de los 21 RNF del SRS (Entrega 1) y **verificación inicial** (Entrega 2) |
@@ -39,14 +40,14 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 | [H-10](#h-10-media--rnf-11-tls-12-no-es-verificable-sin-entorno-de-producción) | Media | Seguridad | RNF-11 (TLS 1.2+) no es verificable sin entorno de producción | José | 🟢 **Cerrado** · 15-nov · la premisa cambió: hay producción |
 | [H-01](#h-01-alta--el-análisis-de-dependencias-del-backend-está-apagado) | **Alta** | Seguridad | El análisis de dependencias del backend está apagado | José | 🔴 **Abierto · 9 días** · **ya con el dato: 4 CRITICAL y 10 HIGH** |
 | [H-11](#h-11-alta--0000053-sin-dueño-y-con-impacto-rnf-por-confirmar) | **Alta** | Rendimiento / fiabilidad | 0000053 sin dueño; impacto RNF y causa por confirmar | Andrés | 🔴 **Abierto** · sin cambio en Mantis al 16-nov |
-| [H-17](#h-17-alta--rnf-03-no-se-cumple-con-20-usuarios-concurrentes-y-la-causa-es-rnf-10) | **Alta** | Rendimiento | RNF-03 no se cumple con 20 usuarios concurrentes; la causa es el factor de BCrypt que exige RNF-10 | Andrés | 🔴 **Nuevo** · 16-nov · **medido** |
+| [H-17](#h-17-alta--el-login-se-degrada-bajo-presión-de-cpu-por-el-bcrypt-que-exige-rnf-10) | **Alta** | Rendimiento | El login se degrada bajo presión de CPU por el factor de BCrypt que exige RNF-10; **cuánto, todavía no es reproducible** | Andrés | 🟠 **Nuevo · 16-nov** · medido, **magnitud en revisión** (tercera corrida contradice a la primera) |
 | [H-03](#h-03-media--alta-el-15-nov--el-e2e-de-navegador-cubre-un-solo-flujo) | **Alta** ⬆ | Mantenibilidad | El E2E de navegador cubre un solo flujo, y el producto creció ocho módulos | Ambos | 🔴 **Abierto · sube de media a alta** |
 | [H-02](#h-02-alta--nueve-requisitos-de-rendimiento-sin-un-solo-instrumento-de-medición) | **Alta** | Rendimiento | Nueve requisitos de rendimiento sin un solo instrumento de medición | Andrés | 🟡 **En corrección** · instrumento creado, sin ejecutar |
 | [H-09](#h-09-media--rnf-18-no-tiene-medición-de-uptime-ni-de-mttr) | Media | Disponibilidad | RNF-18 no tiene medición de uptime ni de MTTR | José | 🟡 **En corrección** · uptime medido; MTTR sin evento |
 | [H-12](#h-12-media--los-dos-rnf-que-el-equipo-nos-asignó-se-resolvieron-sin-nuestra-validación) | Media | Mantenibilidad | Los dos RNF que el equipo nos asignó se resolvieron sin nuestra validación | Ambos | 🔴 **Nuevo** · 15-nov |
 | [H-13](#h-13-media--ninguna-incidencia-está-cerrada-en-mantis) | Media | Trazabilidad | Ninguna de las 31 incidencias está en estado `cerrada` en Mantis | Ambos | 🔴 **Nuevo** · 15-nov |
 | [H-04](#h-04-media--rnf-21-no-tiene-verificación-automatizada) | Media | Accesibilidad | RNF-21 no tiene verificación automatizada | Andrés | 🟡 **Abierto** · corregido a mano por UI/UX, sin automatizar |
-| [H-05](#h-05-media--no-hay-análisis-estático-de-código) | Media | Mantenibilidad | No hay análisis estático de código | Ambos | 🟢 **CERRADO** · Sonar escaneado: mantenibilidad **A**, deuda 15 min |
+| [H-05](#h-05-media--no-hay-análisis-estático-de-código) | Media | Mantenibilidad | No hay análisis estático de código | Ambos | 🟡 **Cerrado en el backend** · Sonar: mantenibilidad **A**, deuda 15 min. **Frontend sin escanear y el criterio de cierre escrito —linter en el CI— no se cumple** |
 | [H-14](#h-14-baja--el-entorno-local-no-puede-compilar-el-frontend) | Baja | Mantenibilidad | El entorno local no puede compilar el frontend (Node por debajo del mínimo) | Andrés | 🔴 **Abierto** · 15-nov |
 | [H-07](#h-07-baja--el-readme-del-backend-contradice-a-buildgradle-sobre-jacoco) | Baja | Mantenibilidad | El README del backend contradice a `build.gradle` sobre JaCoCo | Ambos | 🔴 **Abierto** · ahora también desactualizado por el fix de H-08 |
 | [H-06](#h-06--retirado-por-falso) | — | — | ~~Ningún RNF numerado cubre disponibilidad~~ | — | **Retirado por falso** · 7-nov |
@@ -56,15 +57,28 @@ Especialistas en requisitos no funcionales: Andrés Felipe Vélez Alcaraz · Jos
 | | 8-nov | 15-nov | **16-nov** |
 | --- | --- | --- | --- |
 | Abiertos | 9 | 7 | **8** |
-| En corrección | 0 | 4 | **3** |
-| Cerrados con evidencia | 0 | 2 | **3** |
+| En corrección | 0 | 4 | **4** |
+| Cerrados con evidencia | 0 | 2 | **2** |
 | De severidad alta | 3 | 4 | **4** (H-01, H-03, H-11, **H-17**) |
 | Total del registro | 10 | 14 | **15** |
 
+> **Corrección del propio registro, hecha el 16-nov por la tarde.** Esta tabla llegó a decir
+> **3 cerrados** contando H-05. Al revisar su criterio de cierre escrito —*«el CI ejecuta el linter
+> y falla si hay hallazgos»*— **no se cumple**, y el hallazgo abarcaba los dos repositorios
+> mientras solo se escaneó el backend. Vuelve a **en corrección**. Es nuestra propia regla de método
+> aplicada a nosotros: el instrumento montado no es el criterio
+> cumplido.
+
 **H-17 es distinto de todos los anteriores y conviene notarlo:** es el primero que sale de una
 **medición** y no de inspeccionar configuración. Durante nueve días el registro habló de
-«instrumentos que faltan»; este es el primer umbral numérico del SRS que podemos demostrar que no
-se cumple.
+«instrumentos que faltan»; este sale de un instrumento ya corriendo.
+
+Y trajo una segunda lección, menos cómoda: **al repetir la misma corrida, el resultado cambió por
+completo**. El hallazgo se mantiene porque la causa —la tensión entre el BCrypt factor 12 que
+exige RNF-10 y los tiempos que exige RNF-03— está identificada y es estructural; lo que está en
+revisión es **cuánto** pesa. Queda escrito tal cual, con las dos corridas a la vista, porque un
+registro de hallazgos que solo muestra las mediciones que confirmaron la sospecha no sirve para
+nada.
 
 Además, **dos observaciones que no son hallazgos de RNF** (OBS-01 y OBS-02): reales, reportables y
 útiles, pero sin anclaje en el SRS. Ver la sección de observaciones al final.
@@ -598,6 +612,31 @@ DevTools si se hace manual.
 
 **Estado.** 🟡 **Abierto · hay corrección manual, sigue sin automatizar.**
 
+**Seguimiento · 16 de noviembre de 2026, por la noche — hay una primera señal automática, y no la buscábamos.**
+El escaneo del frontend con SonarQube devolvió 7 *code smells*, y **cuatro son de accesibilidad**:
+
+| Regla | Dónde | Qué dice |
+| --- | --- | --- |
+| `Web:S6845` | `calificaciones/.../planilla-notas-page.html:228` | `<span tabindex="0" aria-label="Registrado fuera de fecha">`: elemento **no interactivo en el orden de tabulación**, y es **la pantalla de notas**, justo donde RNF-21 exige recorrido por teclado. Parece una ayuda deliberada; el precio es una parada de tabulación por fila |
+| `Web:S6825` ×3 | `reportes/.../matriculas-programa-semestre-tab.html:95, 114, 128` | `aria-hidden="true"` en `<th>` y `<td>` decorativos. `td`/`th` **no son focusables por defecto**, así que el riesgo práctico es bajo |
+| `Web:S9379` | `auth/.../login-page.html:51` | `autofocus` en el campo de correo |
+
+**Qué cambia y qué no.** Cambia que *«RNF-21 no tiene ninguna verificación automatizada»* ya no es
+exacto: hay reglas de accesibilidad corriendo sobre las plantillas en cada escaneo, sin instalar
+nada en el repositorio del producto. **No cambia el hallazgo**, por tres razones que conviene
+decir antes de que las pregunten:
+
+1. **Sonar no mide contraste**, que es el primer umbral literal de RNF-21. Eso sigue siendo
+   Lighthouse o axe.
+2. **Sonar no recorre la aplicación**: lee plantillas. El «teclado completo en notas y
+   observaciones» del SRS **solo se demuestra navegando**.
+3. **No muerde**: corre a mano en un portátil, no en el CI.
+
+**Lo que sí hace, y es concreto:** los cuatro entran como **puntos a comprobar en el recorrido
+manual por teclado**, con archivo y línea. Ninguno se declara incumplimiento por aparecer en
+Sonar; el de `aria-hidden` en particular hay que **confirmarlo navegando** antes de llamarlo
+hallazgo. Detalle en [herramientas-rnf §4.8](herramientas-rnf/README.md).
+
 **Seguimiento · 15 de noviembre de 2026.** Hay que reconocer trabajo ajeno que nos toca el tema:
 Andrea Avendaño (UI/UX) revisó la documentación para extraer los requisitos de accesibilidad
 (ACT-095) y corrigió hallazgos de frontend —**contraste 4,5:1**, paginador común en Evaluaciones,
@@ -654,7 +693,10 @@ instalado).
 **Criterio de cierre.** El CI ejecuta el linter y falla si hay hallazgos. Evidencia: paso del
 workflow en una corrida.
 
-**Estado.** 🟢 **CERRADO · 16 de noviembre de 2026.**
+**Estado.** 🟡 **En corrección · 16 de noviembre de 2026, por la noche.** **Los dos repositorios están
+escaneados**, con mantenibilidad **A** en ambos. Lo que impide cerrarlo es el criterio que nosotros
+mismos escribimos: **el CI no ejecuta el análisis**, y eso depende de un permiso `admin` que no
+tenemos (ver la reserva sobre el cierre, al final de este hallazgo).
 
 **Instrumento montado y ejecutado.** SonarQube Community 26.11 en Docker
 ([herramientas-rnf §4](herramientas-rnf/README.md)), con una puerta de calidad cuya primera
@@ -690,6 +732,40 @@ resultado bueno y conviene decirlo tal cual, sin rebajarlo.
 > | ¿Las librerías que usamos tienen CVE? | Trivy | **4 CRITICAL, 10 HIGH** |
 >
 > Presentar el tablero de Sonar y decir «cero vulnerabilidades» sería un informe falso.
+
+**Los 3 *code smells*, con nombre.** No son opinables y conviene llevarlos resueltos a la reunión:
+las tres son `java:S2187` («Add some tests to this class»), de severidad **BLOCKER**, y las tres
+están en **clases de prueba**, no en código de producción:
+
+| Archivo | Línea |
+| --- | --- |
+| `src/test/java/co/edu/uco/sigra/common/exception/ConstructorRespuestaErrorTest.java` | 25 |
+| `src/test/java/co/edu/uco/sigra/common/exception/HallazgosContratoErrorTest.java` | 62 |
+| `src/test/java/co/edu/uco/sigra/common/exception/PrecedenciaAdvicesTest.java` | 63 |
+
+La regla se dispara cuando una clase cuyo nombre termina en `Test` no tiene métodos `@Test`
+directos, que es exactamente lo que pasa cuando las pruebas viven en clases `@Nested`. **Es un
+falso positivo de patrón, no deuda real** —y así hay que decirlo—, pero deja una lectura
+incómoda que sí hay que anticipar: *«0 bugs, y 3 hallazgos BLOCKER»*. El criterio de A3 §7.2 habla
+de **bugs** `blocker` o `critical`, y de esos hay **cero**; estos son *code smells*. Cuesta
+15 minutos quitarlos (anotar las clases contenedoras) y limpia el tablero.
+
+**Reserva sobre el cierre, y es nuestra propia regla.** El criterio de cierre que escribimos arriba
+dice *«el CI ejecuta el linter y falla si hay hallazgos»*. **Eso no se cumple:** el análisis corre
+en un contenedor del portátil de Andrés, a mano, y el CI sigue sin linter. Y el hallazgo se levantó
+sobre **los dos repositorios**: a 16 de noviembre `api/projects/search` devuelve **un solo
+proyecto**, `sigra-backend`. Por eso el estado baja de 🟢 a 🟡:
+
+| Mitad del hallazgo | Estado real |
+| --- | --- |
+| Backend, análisis estático existente | 🟢 Hecho y con evidencia en disco |
+| Frontend, análisis estático existente | 🟢 **Escaneado el 16-nov por la noche**, y reescaneado para que su puerta se evaluara: **puerta `OK`**, mantenibilidad **A**, deuda 65 min, duplicación 3,7 %, 0 bugs, 7 *code smells*. La única «vulnerabilidad» es un **falso positivo comprobado** |
+| El CI lo ejecuta y muerde | 🔴 **No.** Requiere `SONAR_TOKEN` en los secretos → es el mismo permiso `admin` de [H-01](#h-01-alta--el-análisis-de-dependencias-del-backend-está-apagado) |
+
+**Dónde está la evidencia ahora.** Ya no solo en el tablero: `herramientas-rnf/evidencias/`
+guarda `sonar-backend-2026-11-16-{medidas,puerta,issues,hotspots,analisis}.json`, bajados de la API.
+Importa porque el tablero vive dentro del volumen `sonarqube-data`: si el volumen se borra, la
+evidencia se iba con él y el informe citaría una máquina apagada.
 
 **Lo que queda, y no es parte de este hallazgo.** SonarCloud en el CI sigue necesitando que un
 admin agregue `SONAR_TOKEN` — eso vive en [H-01](#h-01-alta--el-análisis-de-dependencias-del-backend-está-apagado).
@@ -1127,13 +1203,56 @@ el presupuesto de `angular.json` sin error de versión.
 
 ---
 
-## H-17 (alta) — RNF-03 no se cumple con 20 usuarios concurrentes, y la causa es RNF-10
+## H-17 (alta) — El login se degrada bajo presión de CPU por el BCrypt que exige RNF-10
 
 **Atributo de calidad afectado.** Rendimiento.
 **RNF comprometidos.** **RNF-01** (20 usuarios concurrentes cumpliendo los tiempos de RNF-03 a
 RNF-08) y **RNF-03** (95 % de las autenticaciones en menos de 4 s). La causa está en **RNF-10**
 (BCrypt con factor de trabajo mínimo 12).
 **Medido por.** Andrés Felipe Vélez, 16 de noviembre de 2026.
+
+> ### ⚠️ Actualización del 16 de noviembre, al cierre del día — leer antes que el resto
+>
+> Este hallazgo se abrió con el titular **«RNF-03 no se cumple: p95 5 493 ms»**. Horas después, a
+> las 16:00, **se repitió la corrida de carga con parámetros idénticos** —`usuarios=20`,
+> `rampa=20`, `iteraciones=5`, `correo=admin.bruno@uco.net.co`, `puerto=8081`, todos registrados
+> en `mantenimiento-rnf/jmeter.log`— y el resultado fue el contrario:
+>
+> | | Corrida de carga 09:15 | **Corrida de carga 16:00** |
+> | --- | --- | --- |
+> | Login p50 | 3 774 ms | **307 ms** |
+> | Login p95 | **5 493 ms** 🔴 | **1 035 ms** ✅ |
+> | Muestras sobre 4 s | **46 de 100** | **0 de 100** |
+> | `/profesores` p95 | 1 394 ms | 29,8 ms |
+>
+> Evidencia: `jmeter/resultados/rnf01-06-local-2.jtl` y su informe HTML.
+>
+> **La diferencia no está en el plan de pruebas; está en la máquina.** La reserva nº 1 de abajo
+> —«medido en un portátil de 12 CPU con seis contenedores encima, SonarQube incluido»— deja de ser
+> una cautela de redacción y pasa a ser **el factor que domina la medición**. El detalle que lo
+> prueba: en la corrida de *control* un login **escalonado** costó 546 ms, mientras que en la de
+> las 16:00 un login **solapado con otros 19** costó 307 ms de mediana. Un login aislado no puede
+> ser más lento que veinte simultáneos salvo que la CPU estuviera ocupada en otra cosa.
+>
+> **Qué sigue en pie del hallazgo:** la **tensión entre RNF-10 y RNF-03 es real y está
+> identificada** —el login es la única operación que se degrada bajo presión de CPU, y la causa es
+> `new BCryptPasswordEncoder(12)` en `SecurityConfig.java:39`—. Lo que **no** está establecido es
+> su **magnitud**, y por tanto tampoco el incumplimiento de RNF-03.
+>
+> **Qué cambia en consecuencia:**
+>
+> - El veredicto de RNF-03 en [A6](A6-semaforo-rnf.md) vuelve de 🔴 a 🟡 («medido, no
+>   reproducible»). No es un ascenso: es reconocer que **no tenemos el dato**.
+> - **Este hallazgo no debe usarse para bloquear la entrega** mientras la magnitud esté en
+>   revisión. La decisión **D-6** de A6 sigue siendo pertinente —la lectura de RNF-01 como
+>   «usuarios en sesión» es razonable por sí misma— pero ya no se presenta como forzada por un
+>   incumplimiento medido.
+> - **Acción pendiente, media hora de trabajo:** repetir la corrida de carga **tres veces seguidas
+>   con la máquina en estado conocido**, anotando qué contenedores están arriba, y reportar la
+>   mediana. Eso cierra el hallazgo en un sentido o en el otro.
+>
+> **Y la lección de método, que vale más que el número:** una sola corrida no es una medición. Lo
+> que nos salvó de publicar un incumplimiento infundado fue **volver a correr la misma prueba**.
 
 **Qué se encontró.** Primera medición de carga de la historia del proyecto, sobre el entorno
 aislado (`sigra-backend-rnf` en 8081 contra `sigra-pg-rnf`), backend `bb72c07`. Dos corridas de
@@ -1155,7 +1274,11 @@ superaron los 4 s** del umbral. Todas respondieron `200`: no es un fallo funcion
 en `-Jiteraciones=1` contra `-Jiteraciones=5`.
 
 **Evidencia.** `jmeter/resultados/rnf01-control.jtl` (80 muestras) y
-`jmeter/resultados/rnf01-06-local.jtl` (400 muestras), con el informe HTML de la segunda.
+`jmeter/resultados/rnf01-06-local.jtl` (400 muestras), con el informe HTML de la segunda. **Y la
+tercera corrida, que es la que obliga a la actualización de arriba:**
+`jmeter/resultados/rnf01-06-local-2.jtl` (400 muestras, 16:00) con su informe en
+`rnf01-06-local-2-reporte/index.html`. Las tres están tabuladas juntas en
+[A6 §3.4](A6-semaforo-rnf.md) y en [A3 §2.2.1](A3-criterios-verificacion.md).
 
 **Causa raíz, identificada.** `SecurityConfig.java:39` declara `new BCryptPasswordEncoder(12)`.
 Factor 12 son 4 096 rondas de hash, del orden de 300-500 ms de CPU **por autenticación**. Con 20
@@ -1185,10 +1308,13 @@ sugerir a la ligera.
 2. **Aceptar la tensión como deuda técnica documentada**, con la medición adjunta.
 3. **Medir en hardware representativo** antes de concluir sobre producción.
 
-**Severidad y por qué.** **Alta.** Es el primer incumplimiento de un umbral numérico del SRS que
-logramos **medir**, y afecta al flujo de entrada de todos los roles. Por el §7, alta bloquea la
-entrega — pero la salida aquí no es código, es la **decisión de alcance** del punto 1, que cuesta
-un párrafo.
+**Severidad y por qué.** **Alta**, y se mantiene **aunque la magnitud esté en revisión**: lo que
+afecta al flujo de entrada de todos los roles no es el número concreto sino la tensión
+RNF-10 ↔ RNF-03, que es estructural y sigue ahí. Lo que **sí cambia** es que, por la actualización
+del cierre del día, **este hallazgo no bloquea la entrega** mientras no se repita la medición en
+condiciones controladas: no se bloquea una entrega con un dato que no es reproducible. La salida
+sigue sin ser código —es la **decisión de alcance** del punto 1, que cuesta un párrafo— y ahora
+va acompañada de la corrida de confirmación.
 
 **Reservas que acompañan al hallazgo, y van siempre con él:**
 
@@ -1197,6 +1323,12 @@ un párrafo.
 2. El perfil de carga es **más agresivo que el uso real** para el login, por lo dicho arriba.
 3. Lo que la medición demuestra, y es suficiente para abrir el hallazgo: **con llegada simultánea
    sostenida el umbral de RNF-03 no se cumple, y la causa está identificada.**
+4. **Añadida al cierre del 16-nov, y es la que más pesa:** la reserva nº 1 no era teórica. Una
+   tercera corrida con **parámetros idénticos** a la de carga, con la máquina descargada, dio
+   p95 **1 035 ms** y **cero** incumplimientos. Por tanto el punto 3 queda acotado así: con
+   llegada simultánea sostenida **y la CPU disputada**, RNF-03 no se cumple. Cuánta CPU hace
+   falta disputar para que deje de cumplirse es, hoy, una pregunta abierta. Ver la actualización
+   al principio de este hallazgo.
 
 **Dueño.** La decisión de alcance: **Product Owner**. La medición en hardware representativo:
 nosotros, si hay dónde.
