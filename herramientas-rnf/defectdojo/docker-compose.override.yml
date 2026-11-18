@@ -1,0 +1,37 @@
+# Override para el docker-compose.yml de django-DefectDojo.
+#
+# COPIAR este archivo DENTRO de la carpeta clonada django-DefectDojo/, junto al
+# docker-compose.yml original. Docker Compose lo toma solo por el nombre; no hay
+# que pasarlo con -f.
+#
+# Hace dos cosas, y nada mas:
+#
+#   1. Mete a uwsgi y celeryworker en la red 'sigra-rnf', la misma donde ya viven
+#      sonarqube y sigra-pg-rnf. Sin esto, DefectDojo no puede llamar a la API de
+#      SonarQube (seccion 7 del README): 'localhost:9000' dentro de un contenedor
+#      no es el SonarQube del anfitrion.
+#      Hay que listar 'default' a mano: en cuanto un override declara 'networks'
+#      en un servicio, ese servicio DEJA de unirse a la red por defecto, y sin
+#      ella DefectDojo no ve ni su propio PostgreSQL.
+#
+#   2. NO toca los puertos. El puerto se cambia con DD_PORT en el .env, porque las
+#      listas 'ports' de Compose se CONCATENAN en vez de reemplazarse: publicar
+#      aqui "8084:8080" dejaria tambien el 8080 original publicado, y el 8080 es
+#      de sigra-backend. Ver seccion 1 del README.
+
+services:
+
+  uwsgi:
+    networks:
+      - default
+      - sigra-rnf
+
+  celeryworker:
+    networks:
+      - default
+      - sigra-rnf
+
+networks:
+  sigra-rnf:
+    name: sigra-rnf
+    external: true

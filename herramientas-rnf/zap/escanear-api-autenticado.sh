@@ -41,9 +41,12 @@ MSYS_NO_PATHCONV=1 docker run --rm --add-host=host.docker.internal:host-gateway 
   zaproxy/zap-stable zap-api-scan.py \
   -t /zap/wrk/openapi-8081.json -f openapi \
   -O http://host.docker.internal:8081 \
-  -J "zap-api-$ETIQUETA-$FECHA.json" -r "zap-api-$ETIQUETA-$FECHA.html" -I \
+  -J "zap-api-$ETIQUETA-$FECHA.json" -r "zap-api-$ETIQUETA-$FECHA.html" \
+  -x "zap-api-$ETIQUETA-$FECHA.xml" -I \
   -z "-configfile /zap/wrk/jwt.prop"
 
 # 5. El token queda en claro en jwt.prop: borrarlo.
 rm -f "$W/jwt.prop"
-echo "Informes en evidencias/zap/zap-api-$ETIQUETA-$FECHA.{json,html}"
+# El XML (-x) no se usa para leer: es el UNICO formato que acepta el parser
+# "ZAP Scan" de DefectDojo. Ver defectdojo/README.md seccion 6.
+echo "Informes en evidencias/zap/zap-api-$ETIQUETA-$FECHA.{json,html,xml}"
